@@ -5,16 +5,27 @@ var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 
 //define the schema for our user model
-var userSchema = mongoose.Schema({	
-	_id:{ type: Number, default: 1 },
+var userSchema = mongoose.Schema({
 	name: String,
-	mail: String,
+	mail: {
+		type : String,
+		unique : true,
+		required : true,
+		dropDups: true
+	},
 	password: String,
 	status: String,
-	created_date: Date,
-	updated_date: Date,
+	created_date: {
+		type: Date,
+		default: new Date()
+	},
+	updated_date: {
+		type: Date,
+		default: new Date()
+	},
 	active_hash: String,
-	role_id: { type: Number, default: 2 }
+	resetPasswordToken: String,
+	resetPasswordExpires: Date
 });
 
 

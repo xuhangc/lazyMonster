@@ -2,6 +2,9 @@
   "name": "lazyMonster",
   "version": "0.0.0",
   "private": true,
+  "scripts":{
+    "start": "nodemon app.js"
+  },
   "dependencies": {
     "async": "latest",
     "basic-auth-connect": "latest",
