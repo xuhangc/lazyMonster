@@ -2,8 +2,6 @@ var numeral = require('numeral');
 var bcrypt = require('bcrypt-nodejs');
 var dateFormat = require('dateformat');
 var PythonShell = require('python-shell');
-var node_xj = require("xls-to-json-lc");
-var xlsxj = require("xlsx-to-json");
 var multer = require('multer')
 var upload = multer({
   dest: 'uploads/'
