@@ -2,7 +2,9 @@
   "name": "lazyMonster",
   "version": "0.0.0",
   "private": true,
-  "scripts":{
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect",
     "start": "nodemon app.js"
   },
   "dependencies": {
@@ -41,10 +43,6 @@
     "simple-encryptor": "latest",
     "underscore": "latest",
     "snyk": "^1.88.2"
-  },
-  "scripts": {
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
   },
   "snyk": true
 }
