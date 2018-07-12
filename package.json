@@ -36,6 +36,12 @@
     "request": "latest",
     "serve-favicon": "^2.5.0",
     "simple-encryptor": "latest",
-    "underscore": "latest"
-  }
+    "underscore": "latest",
+    "snyk": "^1.88.2"
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
