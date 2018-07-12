@@ -49,7 +49,7 @@ app.set('view engine', 'ejs');
 //app.use(session({ secret: 'iloveyoudear...' })); // session secret
 
 app.use(session({
-    secret: 'I Love India...',
+    secret: "Don't ask, don't tell",
     resave: true,
     saveUninitialized: true
 }));
