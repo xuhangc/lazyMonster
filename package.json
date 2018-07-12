@@ -43,10 +43,7 @@
     "serve-favicon": "^2.5.0",
     "simple-encryptor": "latest",
     "snyk": "^1.88.2",
-    "underscore": "latest",
-    "xls-to-json-lc": "^0.3.4",
-    "xlsx-to-json": "^0.3.0",
-    "xlsx-to-json-lc": "^0.5.0"
+    "underscore": "latest"
   },
   "snyk": true
 }
