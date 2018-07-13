@@ -1,6 +1,6 @@
 *.log
 node_modules/
-upload/
+uploads/
 # OS generated files #
 ######################
 .DS_Store

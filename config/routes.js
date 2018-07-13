@@ -26,5 +26,5 @@ module.exports = function (app, passport) {
         failureFlash: true // allow flash messages
     }));
 
-    app.post('/upload', home.loggedIn, upload.single('logo'), home.upload);
+    app.post('/upload', home.loggedIn, upload.any(), home.upload);
 }
