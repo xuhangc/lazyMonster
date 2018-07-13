@@ -51,10 +51,10 @@ exports.login = function(req, res) {
 exports.upload = function(req, res) {
     var files = req.files;
     for (var i = 0; i < files.length; i++) {
-      console.log('文件类型：%s', files[i].mimetype);
-      console.log('原始文件名：%s', files[i].originalname);
-      console.log('文件大小：%s', files[i].size);
-      console.log('文件保存路径：%s', files[i].path);
+      console.log('type %s', files[i].mimetype);
+      console.log('original name：%s', files[i].originalname);
+      console.log('size：%s', files[i].size);
+      console.log('save path：%s', files[i].path);
     }
     res.send({ret_code: '0'});
 }
