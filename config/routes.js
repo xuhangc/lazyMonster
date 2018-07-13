@@ -1,9 +1,14 @@
 var home = require('../app/controllers/home');
 var multer = require('multer');
-var fs = require('fs');
-var upload = multer({
-  dest: 'uploads/'
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname );
+  }
 });
+var upload = multer({ storage: storage });
 //you can include all your controllers
 
 module.exports = function (app, passport) {
