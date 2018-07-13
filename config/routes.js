@@ -1,16 +1,8 @@
 var home = require('../app/controllers/home');
 var multer = require('multer');
 var fs = require('fs');
-var storage = multer.diskStorage({
-    // upload file destination
-    destination: req.session.user._id,
-    // rename
-    filename: function (req, file, cb) {
-        cb(null,  file.originalname);
-     }
-});
 var upload = multer({
-    storage: storage
+  dest: 'uploads/'
 });
 //you can include all your controllers
 
