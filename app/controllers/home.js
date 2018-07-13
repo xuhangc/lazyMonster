@@ -5,6 +5,7 @@ var PythonShell = require('python-shell');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 var multer = require('multer');
+var path = require('path');
 
 exports.loggedIn = function(req, res, next) {
   if (req.session.user) { // req.session.passport._id
@@ -72,8 +73,14 @@ exports.upload = function(req, res) {
     //       }
     //   });
     // });
-    PythonShell.run('py.py', function (err) {
-      if (err) throw err;
-      console.log('finished');
+    var options = {
+      mode: 'text',
+      pythonOptions: ['-u'], // get print results in real-time
+      scriptPath: path.join(__dirname + "../../../python"),
+      args: ['value1', 'value2']
+    };
+    var shell = new PythonShell('py.py', options);
+    shell.on('message', function (message) {
+      console.log(message);
     });
 }
