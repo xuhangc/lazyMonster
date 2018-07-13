@@ -2,7 +2,8 @@ var numeral = require('numeral');
 var bcrypt = require('bcrypt-nodejs');
 var dateFormat = require('dateformat');
 var PythonShell = require('python-shell');
-var multer = require('multer')
+var multer = require('multer');
+var fs = require('fs');
 var upload = multer({
   dest: 'uploads/'
 })
@@ -68,5 +69,9 @@ exports.login = function(req, res) {
     });
 
   }
+
+}
+
+exports.submit = function(req, res) {
 
 }
