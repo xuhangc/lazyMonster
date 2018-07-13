@@ -5,7 +5,7 @@
   "scripts": {
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect",
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "dependencies": {
     "async": "latest",
