@@ -3,6 +3,8 @@ var bcrypt = require('bcrypt-nodejs');
 var dateFormat = require('dateformat');
 var PythonShell = require('python-shell');
 var fs = require('fs');
+var mkdirp = require('mkdirp');
+var multer = require('multer');
 
 exports.loggedIn = function(req, res, next) {
   if (req.session.user) { // req.session.passport._id
@@ -45,12 +47,22 @@ exports.login = function(req, res) {
 }
 
 exports.upload = function(req, res) {
-    var files = req.files;
-    for (var i = 0; i < files.length; i++) {
-      console.log('type %s', files[i].mimetype);
-      console.log('original name：%s', files[i].originalname);
-      console.log('size：%s', files[i].size);
-      console.log('save path：%s', files[i].path);
-    }
-    res.send({ret_code: '0'});
+    // var files = req.files;
+    // for (var i = 0; i < files.length; i++) {
+    //   console.log('type %s', files[i].mimetype);
+    //   console.log('original name：%s', files[i].originalname);
+    //   console.log('size：%s', files[i].size);
+    //   console.log('save path：%s', files[i].path);
+    // }
+    // res.send({ret_code: '0'});
+    var dir_name = Date.now();
+    mkdirp('uploads/' + dir_name, function(err) {
+      var upload = multer({ dest: 'uploads/' + dir_name }).any();
+      upload(req, res, function(err) {
+          if(err) {
+              return res.end("Error uploading file.");
+          }
+          res.end("File is uploaded");
+      });
+    });
 }
