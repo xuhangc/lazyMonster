@@ -1,5 +1,9 @@
 var home = require('../app/controllers/home');
-
+var multer = require('multer');
+var fs = require('fs');
+var upload = multer({
+  dest: 'uploads/'
+});
 //you can include all your controllers
 
 module.exports = function (app, passport) {
@@ -22,5 +26,5 @@ module.exports = function (app, passport) {
         failureFlash: true // allow flash messages
     }));
 
-    app.post('/submit', home.loggedIn, home.submit);
+    app.post('/upload', home.loggedIn, upload.single('logo'), home.upload);
 }
