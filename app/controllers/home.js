@@ -74,7 +74,7 @@ exports.upload = function(req, res) {
     //   });
     // });
     var options = {
-      mode: 'text',
+      mode: 'json',
       pythonOptions: ['-u'], // get print results in real-time
       scriptPath: path.join(__dirname + "../../../python"),
       args: ['value1', 'value2']
@@ -82,5 +82,10 @@ exports.upload = function(req, res) {
     var shell = new PythonShell('py.py', options);
     shell.on('message', function (message) {
       console.log(message);
+    });
+    shell.end(function (err) {
+      console.log('The script work has been finished.');
+      if(err) { res.status(200).send({ error: err }); }
+      else { res.status(200).send({ message : 'Success' }); }
     });
 }
