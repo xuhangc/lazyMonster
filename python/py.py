@@ -1,24 +1,12 @@
 import glob
 import json
 import sys
-
 import xlrd
-# Takes first name and last name via command
-# line arguments and then display them
+import os
 
-# print "Output from Python"
-# print "First name: " + sys.argv[1]
-# '''
-# print "Last name: " + sys.argv[2]
-# import json
-# import time
-# print json.dumps({'bar': ('baz', None, 1.0, 2), 'hi':'1'})
-# time.sleep(3)
-# print json.dumps({'bar': ('baz', None, 1.0, 2), 'hi':'2'})
-# time.sleep(3)
-# '''
-
+os.chdir(sys.argv[1])
 file_list = glob.glob('*.xlsx')
+print(json.dumps({'location': file_list}));
 workbook = xlrd.open_workbook(file_list[0])
 worksheet = workbook.sheet_by_name('Retest information')
 

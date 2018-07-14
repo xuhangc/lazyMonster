@@ -69,11 +69,13 @@ exports.upload = function(req, res) {
               console.log('size：%s', files[i].size);
               console.log('save path：%s', files[i].path);
             }
+            var filepath = path.join(__dirname + "../../../uploads/" + dir_name);
+            console.log(filepath);
             var options = {
               mode: 'json',
               pythonOptions: ['-u'], // get print results in real-time
               scriptPath: path.join(__dirname + "../../../python"),
-              args: ['uploads/' + dir_name]
+              args: [filepath]
             };
             var shell = new PythonShell('py.py', options);
             shell.on('message', function (message) {
