@@ -11,7 +11,7 @@ module.exports = function (app, passport) {
     app.get('/home', home.loggedIn, home.home);//home
 
     app.get('/qc', home.loggedIn, show.qc);//qc
-    // app.get('/raw', home.loggedIn, home.raw);//raw
+    app.get('/raw', home.loggedIn, show.raw);//raw
     // app.get('/retest', home.loggedIn, home.retest);//retest
     // app.get('/eachqc', home.loggedIn, home.eachqc);//eachqc
 

@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var QCSummarySchema = mongoose.Schema({
-    PCRRunNum: String,
+    PCRRunNumber: String,
     ExtractionDate: String,
     SampleName: String,
     WellPosition: String,

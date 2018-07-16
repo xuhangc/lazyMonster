@@ -10,7 +10,7 @@ import sys
 
 new_wb = Workbook()
 retest_list = []
-main()
+
 
 # Modified date format, rounding and other
 def qc_summary(folder_name):
@@ -34,7 +34,7 @@ def qc_summary(folder_name):
 
     # create a new workbook , and initialize its worksheet name, header
     new_ws_qc = new_wb.create_sheet(title="QCs Summary", index=0)
-    new_ws_qc.cell(row=1, column=1).value = "PCRRunNum"
+    new_ws_qc.cell(row=1, column=1).value = "PCRRunNumber"
     new_ws_qc.cell(row=1, column=2).value = "ExtractionDate"
     new_ws_qc.cell(row=1, column=3).value = "SampleName"
     new_ws_qc.cell(row=1, column=4).value = "WellPosition"
@@ -204,21 +204,12 @@ def raw_data(folder_name):
         for j in range(1, 20, 1):
             row_data[keys[j - 1]] = new_ws_sr.cell(row=row_number, column=j).value
         rawdata_list.append(row_data)
-    print(json.dumps(qc_summary_list))
+    print(json.dumps(rawdata_list))
+
 
 def retest_fun(folder_name):
-    p = Path(folder_name)
-    # extract excel files directly from directories
-    file_list = []
-    qc_list = []
-    qPCR_file_list = list(p.glob('2377_009*.xlsx'))
-    for qPCR_file in qPCR_file_list:
-        if fnmatch.fnmatch(str(qPCR_file), '*QC.xlsx'):
-            qc_list.append(True)
-        else:
-            file_list.append(str(qPCR_file))
-    if len(file_list) != len(qc_list):
-        qc_list.append(False)
+
+    raw_data(folder_name)
 
     new_ws_r = new_wb.create_sheet(title="Retest information", index=0)
     new_ws_r.cell(row=1, column=1).value = "ExtractionNumber"
@@ -287,9 +278,23 @@ def each_qc(folder_name):
         if row_counter == 1:
             for j in range(1, 17, 1):
                 if j == 1:
-                    new_ws_cic.cell(row=row_counter, column=j).value = "PCR Run #"
+                    new_ws_cic.cell(row=row_counter, column=j).value = "PCRRunNumber"
                 elif j == 2:
-                    new_ws_cic.cell(row=row_counter, column=j).value = "Extraction Date"
+                    new_ws_cic.cell(row=row_counter, column=j).value = "ExtractionDate"
+                elif j == 4:
+                    new_ws_cic.cell(row=row_counter, column=j).value = "WellPosition"
+                elif j == 6:
+                    new_ws_cic.cell(row=row_counter, column=j).value = "SampleName"
+                elif j == 7:
+                    new_ws_cic.cell(row=row_counter, column=j).value = "TargetName"
+                elif j == 12:
+                    new_ws_cic.cell(row=row_counter, column=j).value = "CtMean"
+                elif j == 13:
+                    new_ws_cic.cell(row=row_counter, column=j).value = "CtSD"
+                elif j == 15:
+                    new_ws_cic.cell(row=row_counter, column=j).value = "QuantityMean"
+                elif j == 16:
+                    new_ws_cic.cell(row=row_counter, column=j).value = "QuantitySD"
                 else:
                     new_ws_cic.cell(row=row_counter, column=j).value = cur_ws.cell(row=43, column=j - 2).value
             row_counter = row_counter + 1
@@ -316,7 +321,7 @@ def each_qc(folder_name):
                     new_ws_cic.cell(row=row_counter, column=j).value = cur_ws.cell(row=row_number, column=j - 2).value
             row_counter = row_counter + 1
 
-    qc_list = []
+    each_qc_list = []
     keys = []
     for j in range(1, 17, 1):
         keys.append(new_ws_cic.cell(row=1, column=j).value)
@@ -326,8 +331,8 @@ def each_qc(folder_name):
         row_data = {}
         for j in range(1, 17, 1):
             row_data[keys[j - 1]] = new_ws_cic.cell(row=row_number, column=j).value
-        qc_summary_list.append(row_data)
-    print(json.dumps(qc_list))
+        each_qc_list.append(row_data)
+    print(json.dumps(each_qc_list))
 
 
 def main():
@@ -339,6 +344,9 @@ def main():
         retest_fun(sys.argv[1])
     elif sys.argv[2] == 'eachqc':
         each_qc(sys.argv[1])
+
+
+main()
 
     # new_ws_cic = new_wb.create_sheet(title="Result for each QC well", index=0)
     # row_list = [47, 48, 49, 59, 60, 61, 71, 72, 73, 83, 84, 85, 128, 129, 130]

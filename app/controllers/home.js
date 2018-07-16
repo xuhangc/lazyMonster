@@ -6,6 +6,7 @@ var mkdirp = require('mkdirp');
 var multer = require('multer');
 var path = require('path');
 var QCSummary = require('../models/QCSummary');
+var rawDataAggregation = require('../models/rawDataAggregation')
 var mongoose = require('mongoose');
 
 exports.loggedIn = function(req, res, next) {
@@ -82,7 +83,7 @@ exports.upload = function(req, res) {
               if (req.params.operation == 'qc') {
                 for(var i = 0; i < message.length; i++) {
                   var elem = new QCSummary({
-                      PCRRunNum: message[i].PCRRunNum,
+                      PCRRunNumber: message[i].PCRRunNumber,
                       ExtractionDate: message[i].ExtractionDate,
                       SampleName: message[i].SampleName,
                       WellPosition: message[i].WellPosition,
@@ -97,8 +98,31 @@ exports.upload = function(req, res) {
                   });
                   elem.save();
                 }
-              }
-              else {
+              } else if (req.params.operation == 'raw') {
+                  for (var i = 0; i < message.length; i++) {
+                      var elem = new rawDataAggregation({
+                          ExtractionNumber: message[i].ExtractionNumber,
+                          PCRRunNumber: message[i].PCRRunNumber,
+                          ExtractionSampleNumber: message[i].ExtractionSampleNumber,
+                          PunchNumber: message[i].PunchNumber,
+                          AnimalID: message[i].AnimalID,
+                          TissueorSampleType: message[i].TissueorSampleType,
+                          CollectionDate: message[i].CollectionDate,
+                          DNAPerrxn: message[i].DNAPerrxn,
+                          SampleName: message[i].SampleName,
+                          WellPosition: message[i].WellPosition,
+                          CtMean: message[i].CtMean,
+                          CtSD: message[i].CtSD,
+                          QuantityMean: message[i].QuantityMean,
+                          QuantitySD: message[i].QuantitySD,
+                          QtyCVPercent: message[i].QtyCVPercent,
+                          CNPerug: message[i].CNPerug,
+                          Flag: message[i].Flag,
+                          QC: message[i].QC
+                      });
+                      elem.save();
+                  }
+              } else {
                 console.log(message);
               }
             });
