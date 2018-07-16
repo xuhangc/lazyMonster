@@ -6,7 +6,9 @@ var mkdirp = require('mkdirp');
 var multer = require('multer');
 var path = require('path');
 var QCSummary = require('../models/QCSummary');
-var rawDataAggregation = require('../models/rawDataAggregation')
+var rawDataAggregation = require('../models/rawDataAggregation');
+var retestInfoAggregation = require('../models/retestInfoAggregation');
+var QCinDetail = require('../models/QCinDetail');
 var mongoose = require('mongoose');
 
 exports.loggedIn = function(req, res, next) {
@@ -81,24 +83,26 @@ exports.upload = function(req, res) {
             var shell = new PythonShell('qPCR_aggregation_v2.py', options);
             shell.on('message', function (message) {
               if (req.params.operation == 'qc') {
-                for(var i = 0; i < message.length; i++) {
-                  var elem = new QCSummary({
-                      PCRRunNumber: message[i].PCRRunNumber,
-                      ExtractionDate: message[i].ExtractionDate,
-                      SampleName: message[i].SampleName,
-                      WellPosition: message[i].WellPosition,
-                      CtMean: message[i].CtMean,
-                      CtSD: message[i].CtSD,
-                      QuantityMeanPer10uL: message[i].QuantityMeanPer10uL,
-                      QuantitySDPer10uL: message[i].QuantitySDPer10uL,
-                      QuantityCVPer10uL: message[i].QuantityCVPer10uL,
-                      QuantityNominalPer10uL: message[i].QuantityNominalPer10uL,
-                      PercentRE: message[i].PercentRE,
-                      QC: message[i].QC
-                  });
-                  elem.save();
+                  console.log(message);
+                  for (var i = 0; i < message.length; i++) {
+                      var elem = new QCSummary({
+                          PCRRunNumber: message[i].PCRRunNumber,
+                          ExtractionDate: message[i].ExtractionDate,
+                          SampleName: message[i].SampleName,
+                          WellPosition: message[i].WellPosition,
+                          CtMean: message[i].CtMean,
+                          CtSD: message[i].CtSD,
+                          QuantityMeanPer10uL: message[i].QuantityMeanPer10uL,
+                          QuantitySDPer10uL: message[i].QuantitySDPer10uL,
+                          QuantityCVPer10uL: message[i].QuantityCVPer10uL,
+                          QuantityNominalPer10uL: message[i].QuantityNominalPer10uL,
+                          PercentRE: message[i].PercentRE,
+                          QC: message[i].QC
+                      });
+                      elem.save();
                 }
               } else if (req.params.operation == 'raw') {
+                  console.log(message);
                   for (var i = 0; i < message.length; i++) {
                       var elem = new rawDataAggregation({
                           ExtractionNumber: message[i].ExtractionNumber,
@@ -119,6 +123,54 @@ exports.upload = function(req, res) {
                           CNPerug: message[i].CNPerug,
                           Flag: message[i].Flag,
                           QC: message[i].QC
+                      });
+                      elem.save();
+                  }
+              } else if (req.params.operation == 'retest') {
+                  console.log(message);
+                  for (var i = 0; i < message.length; i++) {
+                      var elem = new retestInfoAggregation({
+                          ExtractionNumber: message[i].ExtractionNumber,
+                          PCRRunNumber: message[i].PCRRunNumber,
+                          ExtractionSampleNumber: message[i].ExtractionSampleNumber,
+                          PunchNumber: message[i].PunchNumber,
+                          AnimalID: message[i].AnimalID,
+                          TissueorSampleType: message[i].TissueorSampleType,
+                          CollectionDate: message[i].CollectionDate,
+                          DNAPerrxn: message[i].DNAPerrxn,
+                          SampleName: message[i].SampleName,
+                          WellPosition: message[i].WellPosition,
+                          CtMean: message[i].CtMean,
+                          CtSD: message[i].CtSD,
+                          QuantityMean: message[i].QuantityMean,
+                          QuantitySD: message[i].QuantitySD,
+                          QtyCVPercent: message[i].QtyCVPercent,
+                          CNPerug: message[i].CNPerug,
+                          Flag: message[i].Flag,
+                          QC: message[i].QC
+                      });
+                      elem.save();
+                  }
+              } else if (req.params.operation == 'eachqc') {
+                  console.log(message);
+                  for (var i = 0; i < message.length; i++) {
+                      var elem = new QCinDetail ({
+                          PCRRunNumber: message[i].PCRRunNumber,
+                          ExtractionDate: message[i].ExtractionDate,
+                          Well: message[i].Well,
+                          WellPosition: message[i].WellPosition,
+                          Omit: message[i].Omit,
+                          SampleName: message[i].SampleName,
+                          TargetName: message[i].TargetName,
+                          Task: message[i].Task,
+                          Reporter: message[i].Reporter,
+                          Quencher: message[i].Quencher,
+                          CT: message[i].CT,
+                          CtMean: message[i].CtMean,
+                          CtSD: message[i].CtSD,
+                          Quantity: message[i].Quantity,
+                          QuantityMean: message[i].QuantityMean,
+                          QuantitySD: message[i].QuantitySD
                       });
                       elem.save();
                   }

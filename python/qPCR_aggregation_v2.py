@@ -107,7 +107,7 @@ def qc_summary(folder_name):
     print(json.dumps(qc_summary_list))
 
 
-def raw_data(folder_name):
+def raw_data(folder_name, command):
     p = Path(folder_name)
     # extract excel files directly from directories
     file_list = []
@@ -204,12 +204,12 @@ def raw_data(folder_name):
         for j in range(1, 20, 1):
             row_data[keys[j - 1]] = new_ws_sr.cell(row=row_number, column=j).value
         rawdata_list.append(row_data)
-    print(json.dumps(rawdata_list))
+
+    if command == 'raw':
+        print(json.dumps(rawdata_list))
 
 
-def retest_fun(folder_name):
-
-    raw_data(folder_name)
+def retest_fun():
 
     new_ws_r = new_wb.create_sheet(title="Retest information", index=0)
     new_ws_r.cell(row=1, column=1).value = "ExtractionNumber"
@@ -339,9 +339,10 @@ def main():
     if sys.argv[2] == 'qc':
         qc_summary(sys.argv[1])
     elif sys.argv[2] == 'raw':
-        raw_data(sys.argv[1])
+        raw_data(sys.argv[1], sys.argv[2])
     elif sys.argv[2] == 'retest':
-        retest_fun(sys.argv[1])
+        raw_data(sys.argv[1], sys.argv[2])
+        retest_fun()
     elif sys.argv[2] == 'eachqc':
         each_qc(sys.argv[1])
 

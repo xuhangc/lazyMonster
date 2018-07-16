@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QC data in detail Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#table_id').DataTable();
+        });
+    </script>
+</head>
+<body>
+<table id="table_id" class="display">
+    <thead>
+    <tr>
+        <th>PCRRunNumber</th>
+        <th>ExtractionDate</th>
+        <th>Well</th>
+        <th>WellPosition</th>
+        <th>Omit</th>
+        <th>SampleName</th>
+        <th>TargetName</th>
+        <th>Task</th>
+        <th>Reporter</th>
+        <th>Quencher</th>
+        <th>CT</th>
+        <th>CtMean</th>
+        <th>CtSD</th>
+        <th>Quantity</th>
+        <th>QuantityMean</th>
+        <th>QuantitySD</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for(var i = 0; i < result.length; i++) {%>
+    <tr>
+        <td><%= result[i].PCRRunNumber %></td>
+        <td><%= result[i].ExtractionDate %></td>
+        <td><%= result[i].Well %></td>
+        <td><%= result[i].WellPosition %></td>
+        <td><%= result[i].Omit %></td>
+        <td><%= result[i].SampleName %></td>
+        <td><%= result[i].TargetName %></td>
+        <td><%= result[i].Task %></td>
+        <td><%= result[i].Reporter %></td>
+        <td><%= result[i].Quencher %></td>
+        <td><%= result[i].CT %></td>
+        <td><%= result[i].CtMean %></td>
+        <td><%= result[i].CtSD %></td>
+        <td><%= result[i].Quantity %></td>
+        <td><%= result[i].QuantityMean %></td>
+        <td><%= result[i].QuantitySD %></td>
+    </tr>
+    <% } %>
+    </tbody>
+</table>
+<a href = "/home">Home</a>
+</body>
+</html>

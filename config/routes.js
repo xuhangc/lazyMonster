@@ -12,8 +12,8 @@ module.exports = function (app, passport) {
 
     app.get('/qc', home.loggedIn, show.qc);//qc
     app.get('/raw', home.loggedIn, show.raw);//raw
-    // app.get('/retest', home.loggedIn, home.retest);//retest
-    // app.get('/eachqc', home.loggedIn, home.eachqc);//eachqc
+    app.get('/retest', home.loggedIn, show.retest);//retest
+    app.get('/eachqc', home.loggedIn, show.eachqc);//eachqc
 
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/home', // redirect to the secure profile section
