@@ -1,4 +1,5 @@
 var home = require('../app/controllers/home');
+var show = require('../app/controllers/show');
 //you can include all your controllers
 
 module.exports = function (app, passport) {
@@ -9,7 +10,7 @@ module.exports = function (app, passport) {
     app.get('/', home.loggedIn, home.home);//home
     app.get('/home', home.loggedIn, home.home);//home
 
-    // app.get('/qc', home.loggedIn, home.qc);//qc
+    app.get('/qc', home.loggedIn, show.qc);//qc
     // app.get('/raw', home.loggedIn, home.raw);//raw
     // app.get('/retest', home.loggedIn, home.retest);//retest
     // app.get('/eachqc', home.loggedIn, home.eachqc);//eachqc

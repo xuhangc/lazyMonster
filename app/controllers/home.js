@@ -1,5 +1,4 @@
 var numeral = require('numeral');
-var bcrypt = require('bcrypt-nodejs');
 var dateFormat = require('dateformat');
 var PythonShell = require('python-shell');
 var fs = require('fs');
