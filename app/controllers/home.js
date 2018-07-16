@@ -76,34 +76,38 @@ exports.upload = function(req, res) {
               mode: 'json',
               pythonOptions: ['-u'], // get print results in real-time
               scriptPath: path.join(__dirname + "../../../python"),
-              args: [filepath]
+              args: [filepath, req.params.operation]
             };
             var shell = new PythonShell('qPCR_aggregation_v2.py', options);
             shell.on('message', function (message) {
-              // console.log(message);
-              for(var i = 0; i < message.length; i++) {
-                var elem = new QCSummary({
-                    PCRRunNum: message[i].PCRRunNum,
-                    ExtractionDate: message[i].ExtractionDate,
-                    SampleName: message[i].SampleName,
-                    WellPosition: message[i].WellPosition,
-                    CtMean: message[i].CtMean,
-                    CtSD: message[i].CtSD,
-                    QuantityMeanPer10uL: message[i].QuantityMeanPer10uL,
-                    QuantitySDPer10uL: message[i].QuantitySDPer10uL,
-                    QuantityCVPer10uL: message[i].QuantityCVPer10uL,
-                    QuantityNominalPer10uL: message[i].QuantityNominalPer10uL,
-                    PercentRE: message[i].PercentRE,
-                    QC: message[i].QC
-                });
-                elem.save();
+              if (req.params.operation == 'qc') {
+                for(var i = 0; i < message.length; i++) {
+                  var elem = new QCSummary({
+                      PCRRunNum: message[i].PCRRunNum,
+                      ExtractionDate: message[i].ExtractionDate,
+                      SampleName: message[i].SampleName,
+                      WellPosition: message[i].WellPosition,
+                      CtMean: message[i].CtMean,
+                      CtSD: message[i].CtSD,
+                      QuantityMeanPer10uL: message[i].QuantityMeanPer10uL,
+                      QuantitySDPer10uL: message[i].QuantitySDPer10uL,
+                      QuantityCVPer10uL: message[i].QuantityCVPer10uL,
+                      QuantityNominalPer10uL: message[i].QuantityNominalPer10uL,
+                      PercentRE: message[i].PercentRE,
+                      QC: message[i].QC
+                  });
+                  elem.save();
+                }
+              }
+              else {
+                console.log(message);
               }
             });
             shell.end(function (err) {
               console.log('The script work has been finished.');
               if(err) { res.status(200).send({ error: err }); }
               else {
-                res.status(200).send({ message : 'Success' });
+                res.redirect('/home');
               }
             });
           }

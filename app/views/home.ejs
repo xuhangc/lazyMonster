@@ -3,14 +3,45 @@
   <head>
     <title>Home Page</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+      $('input[type=radio][name=operation]').change(function() {
+          if ($(this).attr('id') == 'QC Summary') {
+            $('#form').attr('action', '/upload/qc');
+          }
+          else if ($(this).attr('id') == 'Raw') {
+            $('#form').attr('action', '/upload/raw');
+          }
+          else if ($(this).attr('id') == 'Retest') {
+            $('#form').attr('action', '/upload/retest');
+          }
+          else {
+            $('#form').attr('action', '/upload/eachqc');
+          }
+      });
+    });
+    </script>
   </head>
   <body>
     <h1>Home Page</h1>
     <p>Welcome to Home Page</p>
-    <form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="radio" id="QC Summary" name="operation" checked />
+    <label for="QC Summary">QC Summary</label>
+    <input type="radio" id="Raw" name="operation" />
+    <label for="Raw">Raw</label>
+    <input type="radio" id="Retest" name="operation" />
+    <label for="Retest">Retest</label>
+    <input type="radio" id="Each QC" name="operation" />
+    <label for="Each QC">Each QC</label>
+    <form id = "form" action="/upload/qc" method="post" enctype="multipart/form-data">
       <h2>upload</h2>
       <input type="file" name="excel" webkitdirectory directory>
       <input type="submit" value="submit">
     </form>
+    <a href = "/qc">QC Summary</a><br>
+    <a href = "/raw">Raw</a><br>
+    <a href = "/retest">Retest</a><br>
+    <a href = "/eachqc">Each QC</a>
   </body>
 </html>
