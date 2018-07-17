@@ -1,53 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>QC Summary Page</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
     <script>
-    $(document).ready(function() {
-        $('#table_id').DataTable();
-    });
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
     </script>
-  </head>
-  <body>
-    <table id="table_id" class="display">
-      <thead>
-          <tr>
-              <th>PCRRunNumber</th>
-              <th>ExtractionDate</th>
-              <th>SampleName</th>
-              <th>WellPosition</th>
-              <th>CtMean</th>
-              <th>CtSD</th>
-              <th>QuantityMeanPer10uL</th>
-              <th>QuantitySDPer10uL</th>
-              <th>QuantityCVPer10uL</th>
-              <th>QuantityNominalPer10uL</th>
-              <th>PercentRE</th>
-              <th>QC</th>
-          </tr>
-      </thead>
-      <tbody>
-          <% for(var i = 0; i < result.length; i++) {%>
-            <tr>
-                <td><%= result[i].PCRRunNumber %></td>
-                <td><%= result[i].ExtractionDate %></td>
-                <td><%= result[i].SampleName %></td>
-                <td><%= result[i].WellPosition %></td>
-                <td><%= result[i].CtMean %></td>
-                <td><%= result[i].CtSD %></td>
-                <td><%= result[i].QuantityMeanPer10uL %></td>
-                <td><%= result[i].QuantitySDPer10uL %></td>
-                <td><%= result[i].QuantityCVPer10uL %></td>
-                <td><%= result[i].QuantityNominalPer10uL %></td>
-                <td><%= result[i].PercentRE %></td>
-                <td><%= result[i].QC %></td>
-            </tr>
-          <% } %>
-      </tbody>
-    </table>
-    <a href = "/home">Home</a>
-  </body>
+</head>
+<body>
+<table id="table_id" class="display">
+    <thead>
+    <tr>
+        <th>PCRRunNumber</th>
+        <th>ExtractionDate</th>
+        <th>SampleName</th>
+        <th>WellPosition</th>
+        <th>CtMean</th>
+        <th>CtSD</th>
+        <th>QuantityMeanPer10uL</th>
+        <th>QuantitySDPer10uL</th>
+        <th>QuantityCVPer10uL</th>
+        <th>QuantityNominalPer10uL</th>
+        <th>PercentRE</th>
+        <th>QC</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for(var i = 0; i < result.length; i++) { %>
+    <tr>
+        <td><%= result[i].PCRRunNumber %></td>
+        <td><%= result[i].ExtractionDate %></td>
+        <td><%= result[i].SampleName %></td>
+        <td><%= result[i].WellPosition %></td>
+        <td><%= result[i].CtMean %></td>
+        <td><%= result[i].CtSD %></td>
+        <td><%= result[i].QuantityMeanPer10uL %></td>
+        <td><%= result[i].QuantitySDPer10uL %></td>
+        <td><%= result[i].QuantityCVPer10uL %></td>
+        <td><%= result[i].QuantityNominalPer10uL %></td>
+        <td><%= result[i].PercentRE %></td>
+        <td><%= result[i].QC %></td>
+    </tr>
+    <% } %>
+    </tbody>
+</table>
+<a href="/home">Home</a>
+</body>
 </html>
