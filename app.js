@@ -49,9 +49,13 @@ app.set('view engine', 'ejs');
 //app.use(session({ secret: 'iloveyoudear...' })); // session secret
 
 app.use(session({
-    secret: "Don't ask, don't tell",
+    secret: "I love Kyle Su", // session secret
     resave: true,
-    saveUninitialized: true
+    rolling: true,
+    saveUninitialized: false,
+    cookie: {
+        expires: 10 * 1000  //  auto log out after 10 min
+    }
 }));
 
 app.use(passport.initialize());
