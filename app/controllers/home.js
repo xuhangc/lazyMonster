@@ -10,6 +10,7 @@ var rawDataAggregation = require('../models/rawDataAggregation');
 var retestInfoAggregation = require('../models/retestInfoAggregation');
 var QCinDetail = require('../models/QCinDetail');
 var mongoose = require('mongoose');
+var rimraf = require('rimraf');
 
 exports.loggedIn = function (req, res, next) {
     if (req.session.user) { // req.session.passport._id
@@ -199,7 +200,7 @@ exports.upload = function (req, res) {
                         res.status(200).send({error: err});
                     }
                     else {
-                        fs.unlink(filepath, function (err) {
+                        rimraf(filepath, function (err) {
                             if (err) throw err;
                             res.redirect('/' + req.params.operation);
                         });

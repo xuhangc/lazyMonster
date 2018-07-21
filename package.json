@@ -39,6 +39,7 @@
     "passport-local": "latest",
     "python-shell": "^0.5.0",
     "request": "latest",
+    "rimraf": "^2.6.2",
     "serve-favicon": "^2.5.0",
     "simple-encryptor": "latest",
     "snyk": "^1.88.2",
