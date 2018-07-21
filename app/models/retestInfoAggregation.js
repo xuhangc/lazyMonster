@@ -1,6 +1,10 @@
 var mongoose = require('mongoose')
 
 var retestInfoAggreSchema = mongoose.Schema({
+    UserId: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'ex_users'
+    },
     ExtractionNumber: String,
     PCRRunNumber: String,
     ExtractionSampleNumber: String,

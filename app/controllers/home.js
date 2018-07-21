@@ -53,6 +53,8 @@ exports.login = function (req, res) {
 
 exports.upload = function (req, res) {
     var dir_name = Date.now();
+    console.log(req.session.user._id);
+    console.log(req.user._id);
     mkdirp('uploads/' + dir_name, function (err) {
         var storage = multer.diskStorage({
             destination: 'uploads/' + dir_name,
@@ -60,7 +62,16 @@ exports.upload = function (req, res) {
                 cb(null, file.originalname);
             }
         });
-        var upload = multer({storage: storage}).any();
+        var upload = multer({
+            storage: storage,
+            fileFilter: function (req, file, callback) {
+                var ext = path.extname(file.originalname);
+                if (ext !== '.xlsx') {
+                    return callback(null, false);
+                }
+                callback(null, true)
+            }
+        }).any();
         upload(req, res, function (err) {
             if (err) {
                 return res.end("Error uploading file.");
@@ -78,7 +89,7 @@ exports.upload = function (req, res) {
                     mode: 'json',
                     pythonOptions: ['-u'], // get print results in real-time
                     scriptPath: path.join(__dirname + "../../../python"),
-                    args: [filepath, req.params.operation]
+                    args: [filepath, req.params.operation, req.session.user.mail]
                 };
                 var shell = new PythonShell('qPCR_aggregation_v2.py', options);
                 shell.on('message', function (message) {
@@ -86,6 +97,7 @@ exports.upload = function (req, res) {
                         // console.log(message);
                         for (var i = 0; i < message.length; i++) {
                             var elem = new QCSummary({
+                                UserId: req.session.user._id,
                                 PCRRunNumber: message[i].PCRRunNumber,
                                 ExtractionDate: message[i].ExtractionDate,
                                 SampleName: message[i].SampleName,
@@ -105,6 +117,7 @@ exports.upload = function (req, res) {
                         // console.log(message);
                         for (var i = 0; i < message.length; i++) {
                             var elem = new rawDataAggregation({
+                                UserId: req.session.user._id,
                                 ExtractionNumber: message[i].ExtractionNumber,
                                 PCRRunNumber: message[i].PCRRunNumber,
                                 ExtractionSampleNumber: message[i].ExtractionSampleNumber,
@@ -130,6 +143,7 @@ exports.upload = function (req, res) {
                         // console.log(message);
                         for (var i = 0; i < message.length; i++) {
                             var elem = new retestInfoAggregation({
+                                UserId: req.session.user._id,
                                 ExtractionNumber: message[i].ExtractionNumber,
                                 PCRRunNumber: message[i].PCRRunNumber,
                                 ExtractionSampleNumber: message[i].ExtractionSampleNumber,
@@ -155,6 +169,7 @@ exports.upload = function (req, res) {
                         // console.log(message);
                         for (var i = 0; i < message.length; i++) {
                             var elem = new QCinDetail({
+                                UserId: req.session.user._id,
                                 PCRRunNumber: message[i].PCRRunNumber,
                                 ExtractionDate: message[i].ExtractionDate,
                                 Well: message[i].Well,
@@ -184,7 +199,10 @@ exports.upload = function (req, res) {
                         res.status(200).send({error: err});
                     }
                     else {
-                        res.redirect('/home');
+                        fs.unlink(filepath, function (err) {
+                            if (err) throw err;
+                            res.redirect('/' + req.params.operation);
+                        });
                     }
                 });
             }

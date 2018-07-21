@@ -1,6 +1,10 @@
 var mongoose = require('mongoose');
 
 var QCinDetailSchema = mongoose.Schema({
+    UserId: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'ex_users'
+    },
     PCRRunNumber: String,
     ExtractionDate: String,
     Well: String,
