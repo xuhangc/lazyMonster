@@ -62,6 +62,13 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
+// app.get('*', function(req,res,next) {
+//       if(req.headers['x-forwarded-proto'] != 'https')
+//         res.redirect('https://'+req.hostname + ":" + port +req.url)
+//       else
+//         next() /* Continue to other routes if we're not redirecting */
+// });
+
 // routes ======================================================================
 require('./config/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
