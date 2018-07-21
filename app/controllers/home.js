@@ -83,7 +83,7 @@ exports.upload = function (req, res) {
                 var shell = new PythonShell('qPCR_aggregation_v2.py', options);
                 shell.on('message', function (message) {
                     if (req.params.operation == 'qc') {
-                        console.log(message);
+                        // console.log(message);
                         for (var i = 0; i < message.length; i++) {
                             var elem = new QCSummary({
                                 PCRRunNumber: message[i].PCRRunNumber,
@@ -102,7 +102,7 @@ exports.upload = function (req, res) {
                             elem.save();
                         }
                     } else if (req.params.operation == 'raw') {
-                        console.log(message);
+                        // console.log(message);
                         for (var i = 0; i < message.length; i++) {
                             var elem = new rawDataAggregation({
                                 ExtractionNumber: message[i].ExtractionNumber,
@@ -127,7 +127,7 @@ exports.upload = function (req, res) {
                             elem.save();
                         }
                     } else if (req.params.operation == 'retest') {
-                        console.log(message);
+                        // console.log(message);
                         for (var i = 0; i < message.length; i++) {
                             var elem = new retestInfoAggregation({
                                 ExtractionNumber: message[i].ExtractionNumber,
@@ -152,7 +152,7 @@ exports.upload = function (req, res) {
                             elem.save();
                         }
                     } else if (req.params.operation == 'eachqc') {
-                        console.log(message);
+                        // console.log(message);
                         for (var i = 0; i < message.length; i++) {
                             var elem = new QCinDetail({
                                 PCRRunNumber: message[i].PCRRunNumber,
