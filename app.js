@@ -74,7 +74,8 @@ require('./config/routes.js')(app, passport); // load our routes and pass in our
 
 
 //launch ======================================================================
-app.listen(port);
+const server = app.listen(port);
+server.timeout = 2400000;    //timeout setting 40 mins
 console.log('The magic happens on port ' + port);
 
 //catch 404 and forward to error handler
