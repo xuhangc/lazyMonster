@@ -1,6 +1,10 @@
 var mongoose = require('mongoose');
 
 var QCSummarySchema = mongoose.Schema({
+    UserId: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'ex_users'
+    },
     PCRRunNumber: String,
     ExtractionDate: String,
     SampleName: String,

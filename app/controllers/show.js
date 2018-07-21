@@ -5,7 +5,7 @@ var QCinDetail = require('../models/QCinDetail')
 var mongoose = require('mongoose');
 
 exports.qc = function (req, res) {
-    QCSummary.find({}, function (err, result) {
+    QCSummary.find({UserId: req.session.user._id}, function (err, result) {
         res.render('qc.ejs', {
             error: req.flash("error"),
             success: req.flash("success"),
@@ -16,7 +16,7 @@ exports.qc = function (req, res) {
 }
 
 exports.raw = function (req, res) {
-    rawDataAggregation.find({}, function (err, result) {
+    rawDataAggregation.find({UserId: req.session.user._id}, function (err, result) {
         res.render('raw.ejs', {
             error: req.flash("error"),
             success: req.flash("success"),
@@ -27,7 +27,7 @@ exports.raw = function (req, res) {
 }
 
 exports.retest = function (req, res) {
-    retestInfoAggregation.find({}, function (err, result) {
+    retestInfoAggregation.find({UserId: req.session.user._id}, function (err, result) {
         res.render('retest.ejs', {
             error: req.flash("error"),
             success: req.flash("success"),
@@ -38,7 +38,7 @@ exports.retest = function (req, res) {
 }
 
 exports.eachqc = function (req, res) {
-    QCinDetail.find({}, function (err, result) {
+    QCinDetail.find({UserId: req.session.user._id}, function (err, result) {
         res.render('eachqc.ejs', {
             error: req.flash("error"),
             success: req.flash("success"),
