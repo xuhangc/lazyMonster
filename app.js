@@ -54,7 +54,7 @@ app.use(session({
     rolling: true,
     saveUninitialized: false,
     cookie: {
-        expires: 10 * 1000  //  auto log out after 10 min
+        expires: 10 * 60 * 1000  //  auto log out after 10 min
     }
 }));
 
