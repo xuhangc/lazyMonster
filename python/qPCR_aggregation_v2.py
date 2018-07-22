@@ -11,8 +11,9 @@ import time
 new_wb = Workbook()
 retest_list = []
 
+
 # Modified date format, rounding and other
-def qpcr_qc_summary(folder_name, user_id):
+def qpcr_qc_summary(folder_name, savepath, filename):
 
     file_list = qpcr_extract_excels(folder_name)
 
@@ -90,11 +91,13 @@ def qpcr_qc_summary(folder_name, user_id):
         qc_summary_list.append(row_data)
     print(json.dumps(qc_summary_list))
 
-    timestr = time.strftime("%Y-%m-%d_%H%M%S")
-    new_wb.save('qPCR_QC_Summary.xlsx')
+    os.chdir(savepath)
+    # timestr = time.strftime("%Y-%m-%d_%H%M%S")
+    # new_wb.save('qPCR_QC_Summary.xlsx')
+    new_wb.save(filename + 'qPCR_QC_Summary.xlsx')
 
 
-def qpcr_raw_data(folder_name, command, user_id):
+def qpcr_raw_data(folder_name, command, savepath, filename):
 
     file_list = qpcr_extract_excels(folder_name)
 
@@ -184,11 +187,11 @@ def qpcr_raw_data(folder_name, command, user_id):
 
     if command == 'raw':
         print(json.dumps(rawdata_list))
-        timestr = time.strftime("%Y-%m-%d_%H%M%S")
-        new_wb.save(user_id + 'qPCR_Sample_Result_Summary' + timestr + '.xlsx')
+        os.chdir(savepath)
+        new_wb.save(filename + 'qPCR_Sample_Result_Summary.xlsx')
 
 
-def qpcr_retest_fun(user_id):
+def qpcr_retest_fun(savepath, filename):
 
     new_ws_r = new_wb.create_sheet(title="Retest information", index=0)
     new_ws_r.cell(row=1, column=1).value = "ExtractionNumber"
@@ -228,12 +231,12 @@ def qpcr_retest_fun(user_id):
             row_data[keys[j - 1]] = new_ws_r.cell(row=row_number, column=j).value
         retest_summary_list.append(row_data)
     print(json.dumps(retest_summary_list))
-    timestr = time.strftime("%Y-%m-%d_%H%M%S")
-    new_wb.save(user_id + 'qPCR_Sample_Retest_Summary' + timestr + '.xlsx')
+    os.chdir(savepath)
+    new_wb.save(filename + 'qPCR_Retest_Summary.xlsx')
 
 
 
-def qpcr_each_qc(folder_name, user_id):
+def qpcr_each_qc(folder_name, savepath, filename):
 
     file_list = qpcr_extract_excels(folder_name)
 
@@ -305,8 +308,8 @@ def qpcr_each_qc(folder_name, user_id):
             row_data[keys[j - 1]] = new_ws_cic.cell(row=row_number, column=j).value
         each_qc_list.append(row_data)
     print(json.dumps(each_qc_list))
-    timestr = time.strftime("%Y-%m-%d_%H%M%S")
-    new_wb.save(user_id + 'qPCR_QC_Detail_Summary' + timestr + '.xlsx')
+    os.chdir(savepath)
+    new_wb.save(filename + 'qPCR_QC_Detail_Summary.xlsx')
 
 
 def qpcr_extract_excels(folder_name):
@@ -349,16 +352,14 @@ def qpcr_extract_excels(folder_name):
 
 def main():
     if sys.argv[2] == 'qc':
-        qpcr_qc_summary(sys.argv[1], sys.argv[3])
+        qpcr_qc_summary(sys.argv[1], sys.argv[3], sys.argv[4])
     elif sys.argv[2] == 'raw':
-        qpcr_raw_data(sys.argv[1], sys.argv[2], sys.argv[3])
+        qpcr_raw_data(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
     elif sys.argv[2] == 'retest':
-        qpcr_raw_data(sys.argv[1], sys.argv[2], sys.argv[3])
-        qpcr_retest_fun(sys.argv[3])
+        qpcr_raw_data(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+        qpcr_retest_fun(sys.argv[3], sys.argv[4])
     elif sys.argv[2] == 'eachqc':
-        qpcr_each_qc(sys.argv[1], sys.argv[3])
-
-
+        qpcr_each_qc(sys.argv[1], sys.argv[3], sys.argv[4])
 
 
 if __name__ == '__main__':

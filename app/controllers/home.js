@@ -12,6 +12,15 @@ var QCinDetail = require('../models/QCinDetail');
 var mongoose = require('mongoose');
 var rimraf = require('rimraf');
 
+Date.prototype.yyyymmddhhmm = function () {
+    var yyyy = this.getFullYear();
+    var mm = this.getMonth() < 9 ? "0" + (this.getMonth() + 1) : (this.getMonth() + 1); // getMonth() is zero-based
+    var dd = this.getDate() < 10 ? "0" + this.getDate() : this.getDate();
+    var hh = this.getHours() < 10 ? "0" + this.getHours() : this.getHours();
+    var min = this.getMinutes() < 10 ? "0" + this.getMinutes() : this.getMinutes();
+    return "".concat(yyyy).concat(mm).concat(dd).concat(hh).concat(min);
+};
+
 exports.loggedIn = function (req, res, next) {
     if (req.session.user) { // req.session.passport._id
         next();
@@ -86,126 +95,132 @@ exports.upload = function (req, res) {
                 //   console.log('save path：%s', files[i].path);
                 // }
                 var filepath = path.join(__dirname + "../../../uploads/" + dir_name);
-                var options = {
-                    mode: 'json',
-                    pythonOptions: ['-u'], // get print results in real-time
-                    scriptPath: path.join(__dirname + "../../../python"),
-                    args: [filepath, req.params.operation, req.session.user.mail]
-                };
-                var shell = new PythonShell('qPCR_aggregation_v2.py', options);
-                shell.on('message', function (message) {
-                    if (req.params.operation == 'qc') {
-                        // console.log(message);
-                        for (var i = 0; i < message.length; i++) {
-                            var elem = new QCSummary({
-                                UserId: req.session.user._id,
-                                PCRRunNumber: message[i].PCRRunNumber,
-                                ExtractionDate: message[i].ExtractionDate,
-                                SampleName: message[i].SampleName,
-                                WellPosition: message[i].WellPosition,
-                                CtMean: message[i].CtMean,
-                                CtSD: message[i].CtSD,
-                                QuantityMeanPer10uL: message[i].QuantityMeanPer10uL,
-                                QuantitySDPer10uL: message[i].QuantitySDPer10uL,
-                                QuantityCVPer10uL: message[i].QuantityCVPer10uL,
-                                QuantityNominalPer10uL: message[i].QuantityNominalPer10uL,
-                                PercentRE: message[i].PercentRE,
-                                QC: message[i].QC
-                            });
-                            elem.save();
+                var savepath = path.join(__dirname + "../../../uploads/" + req.session.user._id);
+                var d = new Date();
+                var filename = d.yyyymmddhhmm();
+                mkdirp('uploads/' + req.session.user._id, function (err) {
+                    var options = {
+                        mode: 'json',
+                        pythonOptions: ['-u'], // get print results in real-time
+                        scriptPath: path.join(__dirname + "../../../python"),
+                        args: [filepath, req.params.operation, savepath, filename]
+                    };
+                    var shell = new PythonShell('qPCR_aggregation_v2.py', options);
+                    shell.on('message', function (message) {
+                        if (req.params.operation == 'qc') {
+                            // console.log(message);
+                            for (var i = 0; i < message.length; i++) {
+                                var elem = new QCSummary({
+                                    UserId: req.session.user._id,
+                                    PCRRunNumber: message[i].PCRRunNumber,
+                                    ExtractionDate: message[i].ExtractionDate,
+                                    SampleName: message[i].SampleName,
+                                    WellPosition: message[i].WellPosition,
+                                    CtMean: message[i].CtMean,
+                                    CtSD: message[i].CtSD,
+                                    QuantityMeanPer10uL: message[i].QuantityMeanPer10uL,
+                                    QuantitySDPer10uL: message[i].QuantitySDPer10uL,
+                                    QuantityCVPer10uL: message[i].QuantityCVPer10uL,
+                                    QuantityNominalPer10uL: message[i].QuantityNominalPer10uL,
+                                    PercentRE: message[i].PercentRE,
+                                    QC: message[i].QC
+                                });
+                                elem.save();
+                            }
+                        } else if (req.params.operation == 'raw') {
+                            // console.log(message);
+                            for (var i = 0; i < message.length; i++) {
+                                var elem = new rawDataAggregation({
+                                    UserId: req.session.user._id,
+                                    ExtractionNumber: message[i].ExtractionNumber,
+                                    PCRRunNumber: message[i].PCRRunNumber,
+                                    ExtractionSampleNumber: message[i].ExtractionSampleNumber,
+                                    PunchNumber: message[i].PunchNumber,
+                                    AnimalID: message[i].AnimalID,
+                                    TissueorSampleType: message[i].TissueorSampleType,
+                                    CollectionDate: message[i].CollectionDate,
+                                    DNAPerrxn: message[i].DNAPerrxn,
+                                    SampleName: message[i].SampleName,
+                                    WellPosition: message[i].WellPosition,
+                                    CtMean: message[i].CtMean,
+                                    CtSD: message[i].CtSD,
+                                    QuantityMean: message[i].QuantityMean,
+                                    QuantitySD: message[i].QuantitySD,
+                                    QtyCVPercent: message[i].QtyCVPercent,
+                                    CNPerug: message[i].CNPerug,
+                                    Flag: message[i].Flag,
+                                    QC: message[i].QC
+                                });
+                                elem.save();
+                            }
+                        } else if (req.params.operation == 'retest') {
+                            // console.log(message);
+                            for (var i = 0; i < message.length; i++) {
+                                var elem = new retestInfoAggregation({
+                                    UserId: req.session.user._id,
+                                    ExtractionNumber: message[i].ExtractionNumber,
+                                    PCRRunNumber: message[i].PCRRunNumber,
+                                    ExtractionSampleNumber: message[i].ExtractionSampleNumber,
+                                    PunchNumber: message[i].PunchNumber,
+                                    AnimalID: message[i].AnimalID,
+                                    TissueorSampleType: message[i].TissueorSampleType,
+                                    CollectionDate: message[i].CollectionDate,
+                                    DNAPerrxn: message[i].DNAPerrxn,
+                                    SampleName: message[i].SampleName,
+                                    WellPosition: message[i].WellPosition,
+                                    CtMean: message[i].CtMean,
+                                    CtSD: message[i].CtSD,
+                                    QuantityMean: message[i].QuantityMean,
+                                    QuantitySD: message[i].QuantitySD,
+                                    QtyCVPercent: message[i].QtyCVPercent,
+                                    CNPerug: message[i].CNPerug,
+                                    Flag: message[i].Flag,
+                                    QC: message[i].QC
+                                });
+                                elem.save();
+                            }
+                        } else if (req.params.operation == 'eachqc') {
+                            // console.log(message);
+                            for (var i = 0; i < message.length; i++) {
+                                var elem = new QCinDetail({
+                                    UserId: req.session.user._id,
+                                    PCRRunNumber: message[i].PCRRunNumber,
+                                    ExtractionDate: message[i].ExtractionDate,
+                                    Well: message[i].Well,
+                                    WellPosition: message[i].WellPosition,
+                                    Omit: message[i].Omit,
+                                    SampleName: message[i].SampleName,
+                                    TargetName: message[i].TargetName,
+                                    Task: message[i].Task,
+                                    Reporter: message[i].Reporter,
+                                    Quencher: message[i].Quencher,
+                                    CT: message[i].CT,
+                                    CtMean: message[i].CtMean,
+                                    CtSD: message[i].CtSD,
+                                    Quantity: message[i].Quantity,
+                                    QuantityMean: message[i].QuantityMean,
+                                    QuantitySD: message[i].QuantitySD
+                                });
+                                elem.save();
+                            }
+                        } else {
+                            console.log(message);
                         }
-                    } else if (req.params.operation == 'raw') {
-                        // console.log(message);
-                        for (var i = 0; i < message.length; i++) {
-                            var elem = new rawDataAggregation({
-                                UserId: req.session.user._id,
-                                ExtractionNumber: message[i].ExtractionNumber,
-                                PCRRunNumber: message[i].PCRRunNumber,
-                                ExtractionSampleNumber: message[i].ExtractionSampleNumber,
-                                PunchNumber: message[i].PunchNumber,
-                                AnimalID: message[i].AnimalID,
-                                TissueorSampleType: message[i].TissueorSampleType,
-                                CollectionDate: message[i].CollectionDate,
-                                DNAPerrxn: message[i].DNAPerrxn,
-                                SampleName: message[i].SampleName,
-                                WellPosition: message[i].WellPosition,
-                                CtMean: message[i].CtMean,
-                                CtSD: message[i].CtSD,
-                                QuantityMean: message[i].QuantityMean,
-                                QuantitySD: message[i].QuantitySD,
-                                QtyCVPercent: message[i].QtyCVPercent,
-                                CNPerug: message[i].CNPerug,
-                                Flag: message[i].Flag,
-                                QC: message[i].QC
-                            });
-                            elem.save();
+                    });
+                    shell.end(function (err) {
+                        console.log('The script work has been finished.');
+                        if (err) {
+                            res.status(200).send({error: err});
                         }
-                    } else if (req.params.operation == 'retest') {
-                        // console.log(message);
-                        for (var i = 0; i < message.length; i++) {
-                            var elem = new retestInfoAggregation({
-                                UserId: req.session.user._id,
-                                ExtractionNumber: message[i].ExtractionNumber,
-                                PCRRunNumber: message[i].PCRRunNumber,
-                                ExtractionSampleNumber: message[i].ExtractionSampleNumber,
-                                PunchNumber: message[i].PunchNumber,
-                                AnimalID: message[i].AnimalID,
-                                TissueorSampleType: message[i].TissueorSampleType,
-                                CollectionDate: message[i].CollectionDate,
-                                DNAPerrxn: message[i].DNAPerrxn,
-                                SampleName: message[i].SampleName,
-                                WellPosition: message[i].WellPosition,
-                                CtMean: message[i].CtMean,
-                                CtSD: message[i].CtSD,
-                                QuantityMean: message[i].QuantityMean,
-                                QuantitySD: message[i].QuantitySD,
-                                QtyCVPercent: message[i].QtyCVPercent,
-                                CNPerug: message[i].CNPerug,
-                                Flag: message[i].Flag,
-                                QC: message[i].QC
+                        else {
+                            rimraf(filepath, function (err) {
+                                if (err) throw err;
+                                res.redirect('/' + req.params.operation);
                             });
-                            elem.save();
                         }
-                    } else if (req.params.operation == 'eachqc') {
-                        // console.log(message);
-                        for (var i = 0; i < message.length; i++) {
-                            var elem = new QCinDetail({
-                                UserId: req.session.user._id,
-                                PCRRunNumber: message[i].PCRRunNumber,
-                                ExtractionDate: message[i].ExtractionDate,
-                                Well: message[i].Well,
-                                WellPosition: message[i].WellPosition,
-                                Omit: message[i].Omit,
-                                SampleName: message[i].SampleName,
-                                TargetName: message[i].TargetName,
-                                Task: message[i].Task,
-                                Reporter: message[i].Reporter,
-                                Quencher: message[i].Quencher,
-                                CT: message[i].CT,
-                                CtMean: message[i].CtMean,
-                                CtSD: message[i].CtSD,
-                                Quantity: message[i].Quantity,
-                                QuantityMean: message[i].QuantityMean,
-                                QuantitySD: message[i].QuantitySD
-                            });
-                            elem.save();
-                        }
-                    } else {
-                        console.log(message);
-                    }
+                    });
                 });
-                shell.end(function (err) {
-                    console.log('The script work has been finished.');
-                    if (err) {
-                        res.status(200).send({error: err});
-                    }
-                    else {
-                        rimraf(filepath, function (err) {
-                            if (err) throw err;
-                            res.redirect('/' + req.params.operation);
-                        });
-                    }
-                });
+
             }
         });
     });
