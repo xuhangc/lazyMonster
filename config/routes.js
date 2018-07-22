@@ -1,5 +1,6 @@
 var home = require('../app/controllers/home');
 var show = require('../app/controllers/show');
+var download = require('../app/controllers/download')
 //you can include all your controllers
 
 module.exports = function (app, passport) {
@@ -14,6 +15,8 @@ module.exports = function (app, passport) {
     app.get('/raw', home.loggedIn, show.raw);//raw
     app.get('/retest', home.loggedIn, show.retest);//retest
     app.get('/eachqc', home.loggedIn, show.eachqc);//eachqc
+
+    app.get('/qc/download', home.loggedIn, download.qPCRqcSummaryDownload); //qc download
 
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/home', // redirect to the secure profile section
