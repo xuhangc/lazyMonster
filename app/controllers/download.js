@@ -7,31 +7,18 @@ var mkdirp = require('mkdirp');
 var multer = require('multer');
 var path = require('path');
 var rimraf = require('rimraf');
-require('events').EventEmitter.prototype._maxListeners = 100;
+var mongoXlsx = require('mongo-xlsx');
 
 exports.qPCRqcSummaryDownload = function (req, res) {
-    var savepath = path.join(__dirname + "../../../downloads/" + req.session.user._id);
-
-    // fs.readdir(savepath, (err, files) => {
-    //     files.forEach(file => {
-    //         if (file.indexOf("qPCR_QC_Summary") != -1) {
-    //             file = '/' + file;
-    //             res.download(savepath, file, function (err) {
-    //                 console.log(file);
-    //             });
-    //         }
-    //     });
-    // })
-
-
-
-    var file = savepath + '/201807222111qPCR_QC_Summary.xlsx';
-    // var file = ['/201807222007qPCR_QC_Summary.xlsx', '/201807221745qPCR_QC_Summary.xlsx'];
-    res.download(file);
-    // res.redirect('/home');
-
-    // res.download(savepath, file, function (err) {
-    //     console.log('Burrito');
-    // })
-    console.log('Burrito');
+    QCSummary.find({UserId:req.user._id}, { _id: 0, UserId: 0, __v: 0 }, function(err, data) {
+      var model = mongoXlsx.buildDynamicModel(data);
+      mongoXlsx.mongoData2Xlsx(data, model, function(err, data) {
+        res.download(data.fullPath, "new name.xlsx", function(err) {
+          fs.unlink(data.fullPath, function(err) {
+            if (err) console.log(err);
+            else return;
+          });
+        });
+      });
+    });
 }
