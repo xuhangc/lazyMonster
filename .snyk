@@ -6,3 +6,30 @@ patch:
   'npm:mime:20170907':
     - express-mailer > nodemailer > mailcomposer > mime:
         patched: '2018-07-12T02:33:36.346Z'
+    - express-mailer > nodemailer > mailcomposer > mime:
+        patched: '2018-07-23T00:32:11.902Z'
+  'npm:hoek:20180212':
+    - npm > libcipm > npm-lifecycle > node-gyp > request > hawk > sntp > hoek:
+        patched: '2018-07-23T00:32:11.902Z'
+    - npm > npm-lifecycle > node-gyp > request > hawk > hoek:
+        patched: '2018-07-23T00:32:11.902Z'
+    - npm > npm-lifecycle > node-gyp > request > hawk > sntp > hoek:
+        patched: '2018-07-23T00:32:11.902Z'
+    - npm > npm-lifecycle > node-gyp > request > hawk > cryptiles > boom > hoek:
+        patched: '2018-07-23T00:32:11.902Z'
+    - npm > libcipm > npm-lifecycle > node-gyp > request > hawk > hoek:
+        patched: '2018-07-23T00:32:11.902Z'
+    - npm > libcipm > npm-lifecycle > node-gyp > request > hawk > boom > hoek:
+        patched: '2018-07-23T00:32:11.902Z'
+    - npm > npm-lifecycle > node-gyp > request > hawk > boom > hoek:
+        patched: '2018-07-23T00:32:11.902Z'
+    - npm > libcipm > npm-lifecycle > node-gyp > request > hawk > cryptiles > boom > hoek:
+        patched: '2018-07-23T00:32:11.902Z'
+    - npm > node-gyp > request > hawk > hoek:
+        patched: '2018-07-23T00:32:11.902Z'
+    - npm > node-gyp > request > hawk > boom > hoek:
+        patched: '2018-07-23T00:32:11.902Z'
+    - npm > node-gyp > request > hawk > sntp > hoek:
+        patched: '2018-07-23T00:32:11.902Z'
+    - npm > node-gyp > request > hawk > cryptiles > boom > hoek:
+        patched: '2018-07-23T00:32:11.902Z'
