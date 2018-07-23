@@ -12,15 +12,26 @@ require('events').EventEmitter.prototype._maxListeners = 100;
 exports.qPCRqcSummaryDownload = function (req, res) {
     var savepath = path.join(__dirname + "../../../downloads/" + req.session.user._id);
 
-    fs.readdir(savepath, (err, files) => {
-        files.forEach(file => {
-            if (file.indexOf("qPCR_QC_Summary") != -1) {
-                var filePath = path.join(savepath + '/' + file);
-                var fileStream = fs.createWriteStream(filePath);
-                res.pipe(fileStream);
-            }
-        });
-    })
+    // fs.readdir(savepath, (err, files) => {
+    //     files.forEach(file => {
+    //         if (file.indexOf("qPCR_QC_Summary") != -1) {
+    //             file = '/' + file;
+    //             res.download(savepath, file, function (err) {
+    //                 console.log(file);
+    //             });
+    //         }
+    //     });
+    // })
+
+
+
+    var file = savepath + '/201807222111qPCR_QC_Summary.xlsx';
+    // var file = ['/201807222007qPCR_QC_Summary.xlsx', '/201807221745qPCR_QC_Summary.xlsx'];
+    res.download(file);
     // res.redirect('/home');
-    console.log("Download finish, Burrito");
+
+    // res.download(savepath, file, function (err) {
+    //     console.log('Burrito');
+    // })
+    console.log('Burrito');
 }
