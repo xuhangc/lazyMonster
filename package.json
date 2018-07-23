@@ -43,7 +43,7 @@
     "rimraf": "^2.6.2",
     "serve-favicon": "^2.5.0",
     "simple-encryptor": "latest",
-    "snyk": "^1.88.2",
+    "snyk": "^1.89.0",
     "underscore": "latest"
   },
   "snyk": true
