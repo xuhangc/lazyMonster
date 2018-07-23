@@ -5,6 +5,11 @@ var QCinDetailSchema = mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'ex_users'
     },
+    createdAt: {
+        type: Date,
+        expires: '15s',
+        default: Date.now
+    },
     PCRRunNumber: String,
     ExtractionDate: String,
     Well: String,

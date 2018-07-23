@@ -91,10 +91,10 @@ def qpcr_qc_summary(folder_name, savepath, filename):
         qc_summary_list.append(row_data)
     print(json.dumps(qc_summary_list))
 
-    os.chdir(savepath)
+    # os.chdir(savepath)
     # timestr = time.strftime("%Y-%m-%d_%H%M%S")
     # new_wb.save('qPCR_QC_Summary.xlsx')
-    new_wb.save(filename + 'qPCR_QC_Summary.xlsx')
+    # new_wb.save(filename + 'qPCR_QC_Summary.xlsx')
 
 
 def qpcr_raw_data(folder_name, command, savepath, filename):
@@ -187,8 +187,8 @@ def qpcr_raw_data(folder_name, command, savepath, filename):
 
     if command == 'qPCRraw':
         print(json.dumps(rawdata_list))
-        os.chdir(savepath)
-        new_wb.save(filename + 'qPCR_Sample_Result_Summary.xlsx')
+        # os.chdir(savepath)
+        # new_wb.save(filename + 'qPCR_Sample_Result_Summary.xlsx')
 
 
 def qpcr_retest_fun(savepath, filename):
@@ -231,8 +231,8 @@ def qpcr_retest_fun(savepath, filename):
             row_data[keys[j - 1]] = new_ws_r.cell(row=row_number, column=j).value
         retest_summary_list.append(row_data)
     print(json.dumps(retest_summary_list))
-    os.chdir(savepath)
-    new_wb.save(filename + 'qPCR_Retest_Summary.xlsx')
+    # os.chdir(savepath)
+    # new_wb.save(filename + 'qPCR_Retest_Summary.xlsx')
 
 
 
@@ -308,8 +308,8 @@ def qpcr_each_qc(folder_name, savepath, filename):
             row_data[keys[j - 1]] = new_ws_cic.cell(row=row_number, column=j).value
         each_qc_list.append(row_data)
     print(json.dumps(each_qc_list))
-    os.chdir(savepath)
-    new_wb.save(filename + 'qPCR_QC_Detail_Summary.xlsx')
+    # os.chdir(savepath)
+    # new_wb.save(filename + 'qPCR_QC_Detail_Summary.xlsx')
 
 
 def qpcr_extract_excels(folder_name):

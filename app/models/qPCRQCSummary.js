@@ -5,6 +5,10 @@ var QCSummarySchema = mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'ex_users'
     },
+    createdAt: {
+        type: Date,
+        expires: 30
+    },
     PCRRunNumber: String,
     ExtractionDate: String,
     SampleName: String,
