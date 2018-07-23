@@ -19,4 +19,4 @@ var QCSummarySchema = mongoose.Schema({
     QC: String
 });
 
-module.exports = mongoose.model('QCSummary', QCSummarySchema);
+module.exports = mongoose.model('qPCRQCSummary', QCSummarySchema);

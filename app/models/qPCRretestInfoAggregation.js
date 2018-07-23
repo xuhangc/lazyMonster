@@ -25,4 +25,4 @@ var retestInfoAggreSchema = mongoose.Schema({
     QC: String
 });
 
-module.exports = mongoose.model('retestInfoAggregation', retestInfoAggreSchema);
+module.exports = mongoose.model('qPCRretestInfoAggregation', retestInfoAggreSchema);

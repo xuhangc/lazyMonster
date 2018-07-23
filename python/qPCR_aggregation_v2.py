@@ -185,7 +185,7 @@ def qpcr_raw_data(folder_name, command, savepath, filename):
             row_data[keys[j - 1]] = new_ws_sr.cell(row=row_number, column=j).value
         rawdata_list.append(row_data)
 
-    if command == 'raw':
+    if command == 'qPCRraw':
         print(json.dumps(rawdata_list))
         os.chdir(savepath)
         new_wb.save(filename + 'qPCR_Sample_Result_Summary.xlsx')
@@ -351,14 +351,14 @@ def qpcr_extract_excels(folder_name):
 
 
 def main():
-    if sys.argv[2] == 'qc':
+    if sys.argv[2] == 'qPCRqc':
         qpcr_qc_summary(sys.argv[1], sys.argv[3], sys.argv[4])
-    elif sys.argv[2] == 'raw':
+    elif sys.argv[2] == 'qPCRraw':
         qpcr_raw_data(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-    elif sys.argv[2] == 'retest':
+    elif sys.argv[2] == 'qPCRretest':
         qpcr_raw_data(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
         qpcr_retest_fun(sys.argv[3], sys.argv[4])
-    elif sys.argv[2] == 'eachqc':
+    elif sys.argv[2] == 'qPCReachqc':
         qpcr_each_qc(sys.argv[1], sys.argv[3], sys.argv[4])
 
 

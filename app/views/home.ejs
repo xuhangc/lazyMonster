@@ -8,16 +8,16 @@
         $(document).ready(function () {
             $('input[type=radio][name=operation]').change(function () {
                 if ($(this).attr('id') == 'QC Summary') {
-                    $('#form').attr('action', '/upload/qc');
+                    $('#form').attr('action', '/upload/qPCRqc');
                 }
                 else if ($(this).attr('id') == 'Raw') {
-                    $('#form').attr('action', '/upload/raw');
+                    $('#form').attr('action', '/upload/qPCRraw');
                 }
                 else if ($(this).attr('id') == 'Retest') {
-                    $('#form').attr('action', '/upload/retest');
+                    $('#form').attr('action', '/upload/qPCRretest');
                 }
                 else {
-                    $('#form').attr('action', '/upload/eachqc');
+                    $('#form').attr('action', '/upload/qPCReachqc');
                 }
             });
         });
@@ -27,21 +27,21 @@
 <h1>Home Page</h1>
 <p>Welcome to Home Page</p>
 <input type="radio" id="QC Summary" name="operation" checked/>
-<label for="QC Summary">QC Summary</label>
+<label for="QC Summary">qPCR QC Summary</label>
 <input type="radio" id="Raw" name="operation"/>
-<label for="Raw">Raw</label>
+<label for="Raw">qPCR Sample Result Summary</label>
 <input type="radio" id="Retest" name="operation"/>
-<label for="Retest">Retest</label>
+<label for="Retest">qPCR Retest Summary</label>
 <input type="radio" id="Each QC" name="operation"/>
-<label for="Each QC">Each QC</label>
-<form id="form" action="/upload/qc" method="post" enctype="multipart/form-data">
+<label for="Each QC">qPCR QC Detail Summary</label>
+<form id="form" action="/upload/qPCRqc" method="post" enctype="multipart/form-data">
     <h2>upload</h2>
     <input type="file" name="excel" webkitdirectory directory>
     <input type="submit" value="start">
 </form>
-<a href="/qc">QC Summary</a><br>
-<a href="/raw">Raw</a><br>
-<a href="/retest">Retest</a><br>
-<a href="/eachqc">Each QC</a>
+<a href="/qPCRqc">QC Summary</a><br>
+<a href="/qPCRraw">Raw</a><br>
+<a href="/qPCRretest">Retest</a><br>
+<a href="/qPCReachqc">Each QC</a>
 </body>
 </html>

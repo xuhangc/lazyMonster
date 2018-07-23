@@ -34,6 +34,7 @@
     "nodemailer": "^4.6.7",
     "nodemailer-smtp-transport": "^2.5.0",
     "nodemon": "latest",
+    "npm": "^6.2.0",
     "numeral": "latest",
     "passport": "latest",
     "passport-local": "latest",

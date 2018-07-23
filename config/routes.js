@@ -11,12 +11,12 @@ module.exports = function (app, passport) {
     app.get('/', home.loggedIn, home.home);//home
     app.get('/home', home.loggedIn, home.home);//home
 
-    app.get('/qc', home.loggedIn, show.qc);//qc
-    app.get('/raw', home.loggedIn, show.raw);//raw
-    app.get('/retest', home.loggedIn, show.retest);//retest
-    app.get('/eachqc', home.loggedIn, show.eachqc);//eachqc
+    app.get('/qPCRqc', home.loggedIn, show.qPCRqc);//qc
+    app.get('/qPCRraw', home.loggedIn, show.qPCRraw);//raw
+    app.get('/qPCRretest', home.loggedIn, show.qPCRretest);//retest
+    app.get('/qPCReachqc', home.loggedIn, show.qPCReachqc);//eachqc
 
-    app.get('/qc/download', home.loggedIn, download.qPCRqcSummaryDownload); //qc download
+    app.get('/qPCRqc/download', home.loggedIn, download.qPCRqcSummaryDownload); //qc download
 
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/home', // redirect to the secure profile section

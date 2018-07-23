@@ -25,4 +25,4 @@ var rawDataAggreSchema = mongoose.Schema({
     QC: String
 });
 
-module.exports = mongoose.model('rawDataAggregation', rawDataAggreSchema);
+module.exports = mongoose.model('qPCRrawDataAggregation', rawDataAggreSchema);

@@ -23,4 +23,4 @@ var QCinDetailSchema = mongoose.Schema({
     QuantitySD: String
 });
 
-module.exports = mongoose.model('QCinDetail', QCinDetailSchema)
+module.exports = mongoose.model('qPCRQCinDetail', QCinDetailSchema)

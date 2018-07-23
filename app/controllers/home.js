@@ -5,10 +5,10 @@ var fs = require('fs');
 var mkdirp = require('mkdirp');
 var multer = require('multer');
 var path = require('path');
-var QCSummary = require('../models/QCSummary');
-var rawDataAggregation = require('../models/rawDataAggregation');
-var retestInfoAggregation = require('../models/retestInfoAggregation');
-var QCinDetail = require('../models/QCinDetail');
+var qPCRQCSummary = require('../models/qPCRQCSummary');
+var qPCRrawDataAggregation = require('../models/qPCRrawDataAggregation');
+var qPCRretestInfoAggregation = require('../models/qPCRretestInfoAggregation');
+var qPCRQCinDetail = require('../models/qPCRQCinDetail');
 var mongoose = require('mongoose');
 var rimraf = require('rimraf');
 
@@ -95,10 +95,10 @@ exports.upload = function (req, res) {
                 //   console.log('save path：%s', files[i].path);
                 // }
                 var filepath = path.join(__dirname + "../../../uploads/" + dir_name);
-                var savepath = path.join(__dirname + "../../../uploads/" + req.session.user._id);
+                var savepath = path.join(__dirname + "../../../downloads/" + req.session.user._id);
                 var d = new Date();
                 var filename = d.yyyymmddhhmm();
-                mkdirp('uploads/' + req.session.user._id, function (err) {
+                mkdirp('downloads/' + req.session.user._id, function (err) {
                     var options = {
                         mode: 'json',
                         pythonOptions: ['-u'], // get print results in real-time
@@ -107,10 +107,10 @@ exports.upload = function (req, res) {
                     };
                     var shell = new PythonShell('qPCR_aggregation_v2.py', options);
                     shell.on('message', function (message) {
-                        if (req.params.operation == 'qc') {
+                        if (req.params.operation == 'qPCRqc') {
                             // console.log(message);
                             for (var i = 0; i < message.length; i++) {
-                                var elem = new QCSummary({
+                                var elem = new qPCRQCSummary({
                                     UserId: req.session.user._id,
                                     PCRRunNumber: message[i].PCRRunNumber,
                                     ExtractionDate: message[i].ExtractionDate,
@@ -127,10 +127,10 @@ exports.upload = function (req, res) {
                                 });
                                 elem.save();
                             }
-                        } else if (req.params.operation == 'raw') {
+                        } else if (req.params.operation == 'qPCRraw') {
                             // console.log(message);
                             for (var i = 0; i < message.length; i++) {
-                                var elem = new rawDataAggregation({
+                                var elem = new qPCRrawDataAggregation({
                                     UserId: req.session.user._id,
                                     ExtractionNumber: message[i].ExtractionNumber,
                                     PCRRunNumber: message[i].PCRRunNumber,
@@ -153,10 +153,10 @@ exports.upload = function (req, res) {
                                 });
                                 elem.save();
                             }
-                        } else if (req.params.operation == 'retest') {
+                        } else if (req.params.operation == 'qPCRretest') {
                             // console.log(message);
                             for (var i = 0; i < message.length; i++) {
-                                var elem = new retestInfoAggregation({
+                                var elem = new qPCRretestInfoAggregation({
                                     UserId: req.session.user._id,
                                     ExtractionNumber: message[i].ExtractionNumber,
                                     PCRRunNumber: message[i].PCRRunNumber,
@@ -179,10 +179,10 @@ exports.upload = function (req, res) {
                                 });
                                 elem.save();
                             }
-                        } else if (req.params.operation == 'eachqc') {
+                        } else if (req.params.operation == 'qPCReachqc') {
                             // console.log(message);
                             for (var i = 0; i < message.length; i++) {
-                                var elem = new QCinDetail({
+                                var elem = new qPCRQCinDetail({
                                     UserId: req.session.user._id,
                                     PCRRunNumber: message[i].PCRRunNumber,
                                     ExtractionDate: message[i].ExtractionDate,

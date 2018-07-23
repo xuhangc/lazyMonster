@@ -1,12 +1,12 @@
-var QCSummary = require('../models/QCSummary');
-var rawDataAggregation = require('../models/rawDataAggregation')
-var retestInfoAggregation = require('../models/retestInfoAggregation')
-var QCinDetail = require('../models/QCinDetail')
+var qPCRQCSummary = require('../models/qPCRQCSummary');
+var qPCRRawDataAggregation = require('../models/qPCRrawDataAggregation')
+var qPCRRetestInfoAggregation = require('../models/qPCRretestInfoAggregation')
+var qPCRQCinDetail = require('../models/qPCRQCinDetail')
 var mongoose = require('mongoose');
 
-exports.qc = function (req, res) {
-    QCSummary.find({UserId: req.session.user._id}, function (err, result) {
-        res.render('qc.ejs', {
+exports.qPCRqc = function (req, res) {
+    qPCRQCSummary.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('qPCRqc.ejs', {
             error: req.flash("error"),
             success: req.flash("success"),
             session: req.session,
@@ -15,9 +15,9 @@ exports.qc = function (req, res) {
     });
 }
 
-exports.raw = function (req, res) {
-    rawDataAggregation.find({UserId: req.session.user._id}, function (err, result) {
-        res.render('raw.ejs', {
+exports.qPCRraw = function (req, res) {
+    qPCRRawDataAggregation.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('qPCRraw.ejs', {
             error: req.flash("error"),
             success: req.flash("success"),
             session: req.session,
@@ -26,9 +26,9 @@ exports.raw = function (req, res) {
     });
 }
 
-exports.retest = function (req, res) {
-    retestInfoAggregation.find({UserId: req.session.user._id}, function (err, result) {
-        res.render('retest.ejs', {
+exports.qPCRretest = function (req, res) {
+    qPCRRetestInfoAggregation.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('qPCRretest.ejs', {
             error: req.flash("error"),
             success: req.flash("success"),
             session: req.session,
@@ -37,9 +37,9 @@ exports.retest = function (req, res) {
     });
 }
 
-exports.eachqc = function (req, res) {
-    QCinDetail.find({UserId: req.session.user._id}, function (err, result) {
-        res.render('eachqc.ejs', {
+exports.qPCReachqc = function (req, res) {
+    qPCRQCinDetail.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('qPCReachqc.ejs', {
             error: req.flash("error"),
             success: req.flash("success"),
             session: req.session,
