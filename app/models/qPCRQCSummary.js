@@ -7,7 +7,11 @@ var QCSummarySchema = mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        expires: 30
+        required: true,
+        default: function () {
+            // 60 seconds from now
+            return new Date(Date.now() + 60000);
+        }
     },
     PCRRunNumber: String,
     ExtractionDate: String,
