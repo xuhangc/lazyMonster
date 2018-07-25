@@ -29,6 +29,12 @@ module.exports = function (app, passport) {
     app.get('/qPCRretest/download', home.loggedIn, download.qPCRretestInfoAggregationDownload);
     app.get('/qPCReachqc/download', home.loggedIn, download.qPCRQCinDetailDownload);
 
+    app.get('/wesLinearRegressionDataSummary/download', home.loggedIn, download.wesLinearRegressionDownload);
+    app.get('/wesStandardCurveDataSummary/download', home.loggedIn, download.wesStandardCurveDownload);
+    app.get('/wesUpperandLowerBondSummary/download', home.loggedIn, download.wesUpperandLowerBondDownload);
+    app.get('/wesQCDataSummary/download', home.loggedIn, download.wesQCDataDownload);
+    app.get('/wesSampleAnalysisDataSummary/download', home.loggedIn, download.wesSampleAnalysisDownload);
+
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/home', // redirect to the secure profile section
         failureRedirect: '/signup', // redirect back to the signup page if there is an error
