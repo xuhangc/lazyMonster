@@ -25,4 +25,4 @@ var QCinDetailSchema = mongoose.Schema({
 
 QCinDetailSchema.index({createdAt: 1}, {expireAfterSeconds: 360});
 
-module.exports = mongoose.model('qPCRQCinDetail', QCinDetailSchema)
+module.exports = mongoose.model('qPCRQCinDetail', QCinDetailSchema);

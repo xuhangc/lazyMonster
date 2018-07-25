@@ -104,7 +104,7 @@ exports.upload = function (req, res) {
                         mode: 'json',
                         pythonOptions: ['-u'], // get print results in real-time
                         scriptPath: path.join(__dirname + "../../../python"),
-                        args: [filepath, req.params.operation, savepath, filename]
+                        args: [filepath, req.params.operation]
                     };
                     var shell = new PythonShell('qPCR_aggregation_v2.py', options);
                     shell.on('message', function (message) {

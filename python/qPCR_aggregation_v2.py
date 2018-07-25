@@ -13,7 +13,7 @@ retest_list = []
 
 
 # Modified date format, rounding and other
-def qpcr_qc_summary(folder_name, savepath, filename):
+def qpcr_qc_summary(folder_name):
 
     file_list = qpcr_extract_excels(folder_name)
 
@@ -97,7 +97,7 @@ def qpcr_qc_summary(folder_name, savepath, filename):
     # new_wb.save(filename + 'qPCR_QC_Summary.xlsx')
 
 
-def qpcr_raw_data(folder_name, command, savepath, filename):
+def qpcr_raw_data(folder_name, command):
 
     file_list = qpcr_extract_excels(folder_name)
 
@@ -191,7 +191,7 @@ def qpcr_raw_data(folder_name, command, savepath, filename):
         # new_wb.save(filename + 'qPCR_Sample_Result_Summary.xlsx')
 
 
-def qpcr_retest_fun(savepath, filename):
+def qpcr_retest_fun():
 
     new_ws_r = new_wb.create_sheet(title="Retest information", index=0)
     new_ws_r.cell(row=1, column=1).value = "ExtractionNumber"
@@ -236,7 +236,7 @@ def qpcr_retest_fun(savepath, filename):
 
 
 
-def qpcr_each_qc(folder_name, savepath, filename):
+def qpcr_each_qc(folder_name):
 
     file_list = qpcr_extract_excels(folder_name)
 
@@ -352,14 +352,14 @@ def qpcr_extract_excels(folder_name):
 
 def main():
     if sys.argv[2] == 'qPCRqc':
-        qpcr_qc_summary(sys.argv[1], sys.argv[3], sys.argv[4])
+        qpcr_qc_summary(sys.argv[1])
     elif sys.argv[2] == 'qPCRraw':
-        qpcr_raw_data(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+        qpcr_raw_data(sys.argv[1], sys.argv[2])
     elif sys.argv[2] == 'qPCRretest':
-        qpcr_raw_data(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-        qpcr_retest_fun(sys.argv[3], sys.argv[4])
+        qpcr_raw_data(sys.argv[1], sys.argv[2])
+        qpcr_retest_fun()
     elif sys.argv[2] == 'qPCReachqc':
-        qpcr_each_qc(sys.argv[1], sys.argv[3], sys.argv[4])
+        qpcr_each_qc(sys.argv[1])
 
 
 if __name__ == '__main__':

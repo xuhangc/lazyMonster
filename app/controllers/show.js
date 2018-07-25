@@ -1,7 +1,14 @@
 var qPCRQCSummary = require('../models/qPCRQCSummary');
-var qPCRRawDataAggregation = require('../models/qPCRrawDataAggregation')
-var qPCRRetestInfoAggregation = require('../models/qPCRretestInfoAggregation')
-var qPCRQCinDetail = require('../models/qPCRQCinDetail')
+var qPCRRawDataAggregation = require('../models/qPCRrawDataAggregation');
+var qPCRRetestInfoAggregation = require('../models/qPCRretestInfoAggregation');
+var qPCRQCinDetail = require('../models/qPCRQCinDetail');
+
+var wesLinearRegression = require('../models/wesLinearRegression');
+var wesStandardCurve = require('../models/wesStandardCurve');
+var wesUpperandLowerBond = require('../models/wesUpperandLowerBond');
+var wesQCData = require('../models/wesQCData');
+var wesSampleAnalysis = require('../models/wesSampleAnalysis');
+
 var mongoose = require('mongoose');
 
 exports.qPCRqc = function (req, res) {
@@ -47,3 +54,60 @@ exports.qPCReachqc = function (req, res) {
         });
     });
 }
+
+exports.wesLinearRegressionDataSummary = function (req, res) {
+    wesLinearRegression.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('wesLinearRegressionDataSummary.ejs', {
+            error: req.flash("error"),
+            success: req.flash("success"),
+            session: req.session,
+            result: result
+        });
+    });
+}
+
+
+exports.wesStandardCurveDataSummary = function (req, res) {
+    wesStandardCurve.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('wesStandardCurveDataSummary.ejs', {
+            error: req.flash("error"),
+            success: req.flash("success"),
+            session: req.session,
+            result: result
+        });
+    });
+}
+
+exports.wesUpperandLowerBondSummary = function (req, res) {
+    wesUpperandLowerBond.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('wesUpperandLowerBondSummary.ejs', {
+            error: req.flash("error"),
+            success: req.flash("success"),
+            session: req.session,
+            result: result
+        });
+    });
+}
+
+exports.wesQCDataSummary = function (req, res) {
+    wesQCData.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('wesQCDataSummary.ejs', {
+            error: req.flash("error"),
+            success: req.flash("success"),
+            session: req.session,
+            result: result
+        });
+    });
+}
+
+exports.wesSampleAnalysisDataSummary = function (req, res) {
+    wesSampleAnalysis.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('wesSampleAnalysisDataSummary.ejs', {
+            error: req.flash("error"),
+            success: req.flash("success"),
+            session: req.session,
+            result: result
+        });
+    });
+}
+

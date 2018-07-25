@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wes Sample Analysis Data Summary Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+</head>
+<body>
+<table id="table_id" class="display">
+    <thead>
+    <tr>
+        <th>Run number</th>
+        <th>Time Point</th>
+        <th>Animal ID</th>
+        <th>Conc (ng/mL)</th>
+        <th>Dilution</th>
+        <th>Adjusted Conc (ng/mL)</th>
+        <th>Comment</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for(var i = 0; i < result.length; i++) { %>
+    <tr>
+        <td><%= result[i].RunNumber %></td>
+        <td><%= result[i].TimePoint %></td>
+        <td><%= result[i].AnimalID %></td>
+        <td><%= result[i].ConcngPermL %></td>
+        <td><%= result[i].Dilution %></td>
+        <td><%= result[i].AdjustedConcngPermL %></td>
+        <td><%= result[i].Comment %></td>
+    </tr>
+    <% } %>
+    </tbody>
+</table>
+<form action="/home">
+    <input type="submit" value="Back to Home">
+</form>
+<form action="/wesSampleAnalysisDataSummary/download">
+    <input type="submit" value="Download Wes Sample Analysis Data Summary Result">
+</form>
+</body>
+</html>
