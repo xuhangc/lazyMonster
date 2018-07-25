@@ -23,6 +23,8 @@ var retestInfoAggreSchema = mongoose.Schema({
     CNPerug: String,
     Flag: String,
     QC: String
-});
+}, {timestamps: true});
+
+retestInfoAggreSchema.index({createdAt: 1}, {expireAfterSeconds: 120});
 
 module.exports = mongoose.model('qPCRretestInfoAggregation', retestInfoAggreSchema);

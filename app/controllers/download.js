@@ -11,7 +11,7 @@ var mongoXlsx = require('mongo-xlsx');
 var mongoose = require('mongoose');
 
 exports.qPCRqcSummaryDownload = function (req, res) {
-    qPCRQCSummary.find({UserId: req.user._id}, {_id: 0, UserId: 0, __v: 0}, function (err, data) {
+    qPCRQCSummary.find({UserId: req.user._id}, {_id: 0, UserId: 0, __v: 0, createdAt: 0, updatedAt: 0}, function (err, data) {
         var model = mongoXlsx.buildDynamicModel(data);
         mongoXlsx.mongoData2Xlsx(data, model, function (err, data) {
             res.download(data.fullPath, "qPCR_QC_Summary.xlsx", function (err) {
@@ -23,9 +23,10 @@ exports.qPCRqcSummaryDownload = function (req, res) {
                             console.log('collection removed');
                         });
                     }
-                    ;
                 });
             });
         });
     });
 }
+
+

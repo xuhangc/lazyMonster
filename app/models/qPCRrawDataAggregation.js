@@ -23,6 +23,8 @@ var rawDataAggreSchema = mongoose.Schema({
     CNPerug: String,
     Flag: String,
     QC: String
-});
+}, {timestamps: true});
+
+rawDataAggreSchema.index({createdAt: 1}, {expireAfterSeconds: 120});
 
 module.exports = mongoose.model('qPCRrawDataAggregation', rawDataAggreSchema);

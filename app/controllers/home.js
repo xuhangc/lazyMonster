@@ -25,7 +25,7 @@ exports.loggedIn = function (req, res, next) {
     if (req.session.user) { // req.session.passport._id
         next();
     } else {
-        res.redirect('/login');
+        res.redirect('/signup');
     }
 }
 
@@ -65,6 +65,7 @@ exports.upload = function (req, res) {
     var dir_name = Date.now();
     console.log(req.session.user._id);
     console.log(req.user._id);
+    console.log(req.params.operation);
     mkdirp('uploads/' + dir_name, function (err) {
         var storage = multer.diskStorage({
             destination: 'uploads/' + dir_name,

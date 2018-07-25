@@ -5,11 +5,6 @@ var QCinDetailSchema = mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'ex_users'
     },
-    createdAt: {
-        type: Date,
-        expires: '15s',
-        default: Date.now
-    },
     PCRRunNumber: String,
     ExtractionDate: String,
     Well: String,
@@ -26,6 +21,8 @@ var QCinDetailSchema = mongoose.Schema({
     Quantity: String,
     QuantityMean: String,
     QuantitySD: String
-});
+}, {timestamps: true});
+
+QCinDetailSchema.index({createdAt: 1}, {expireAfterSeconds: 120});
 
 module.exports = mongoose.model('qPCRQCinDetail', QCinDetailSchema)

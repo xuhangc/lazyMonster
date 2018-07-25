@@ -5,10 +5,6 @@ var QCSummarySchema = mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'ex_users'
     },
-    createdAt: {
-        type: Date,
-        expires: 30
-    },
     PCRRunNumber: String,
     ExtractionDate: String,
     SampleName: String,
@@ -20,7 +16,9 @@ var QCSummarySchema = mongoose.Schema({
     QuantityCVPer10uL: String,
     QuantityNominalPer10uL: String,
     PercentRE: String,
-    QC: String
-});
+    QC: String,
+}, {timestamps: true});
+
+QCSummarySchema.index({createdAt: 1}, {expireAfterSeconds: 120});
 
 module.exports = mongoose.model('qPCRQCSummary', QCSummarySchema);

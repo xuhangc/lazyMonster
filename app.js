@@ -49,7 +49,7 @@ app.set('view engine', 'ejs');
 //app.use(session({ secret: 'iloveyoudear...' })); // session secret
 
 app.use(session({
-    secret: "I love Kyle Su", // session secret
+    secret: "Popeyes", // session secret
     resave: true,
     rolling: true,
     saveUninitialized: false,
@@ -61,6 +61,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+app.use("/assets", express.static(__dirname + "/assets"));
+app.use("/public", express.static(__dirname + "/public"));
 
 // app.get('*', function(req,res,next) {
 //       if(req.headers['x-forwarded-proto'] != 'https')

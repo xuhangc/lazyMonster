@@ -5,7 +5,7 @@
   "scripts": {
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect",
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "dependencies": {
     "async": "latest",
@@ -34,7 +34,7 @@
     "node-constants": "latest",
     "nodemailer": "^4.6.7",
     "nodemailer-smtp-transport": "^2.5.0",
-    "nodemon": "latest",
+    "nodemon": "^1.18.3",
     "npm": "^6.2.0",
     "numeral": "latest",
     "passport": "latest",

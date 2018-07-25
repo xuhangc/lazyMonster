@@ -1,0 +1,29 @@
+.header {
+    background-color: #ffffff;
+    border-bottom-style: solid;
+    border-bottom-width: 12px;
+    border-bottom-color: #65bc47;
+    height: 129px;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    max-width: 1920px;
+}
+
+.header-inner {
+    max-width: 1460px;
+    margin: 0 auto 0 auto;
+    padding: 0 30px 0 30px;
+}
+
+.spark-logo {
+    float: left;
+    margin-top: 26px;
+    width: 190px;
+    height: 69px;
+}
+
+.main-body {
+    align-content: center;
+    padding-top: 150px;
+}
