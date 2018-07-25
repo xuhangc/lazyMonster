@@ -19,6 +19,6 @@ var QCSummarySchema = mongoose.Schema({
     QC: String,
 }, {timestamps: true});
 
-QCSummarySchema.index({createdAt: 1}, {expireAfterSeconds: 120});
+QCSummarySchema.index({createdAt: 1}, {expireAfterSeconds: 360});
 
 module.exports = mongoose.model('qPCRQCSummary', QCSummarySchema);

@@ -17,6 +17,9 @@ module.exports = function (app, passport) {
     app.get('/qPCReachqc', home.loggedIn, show.qPCReachqc);//eachqc
 
     app.get('/qPCRqc/download', home.loggedIn, download.qPCRqcSummaryDownload); //qc download
+    app.get('/qPCRraw/download', home.loggedIn, download.qPCRrawDataAggregationDownload);
+    app.get('/qPCRretest/download', home.loggedIn, download.qPCRretestInfoAggregationDownload);
+    app.get('/qPCReachqc/download', home.loggedIn, download.qPCRQCinDetailDownload);
 
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/home', // redirect to the secure profile section

@@ -23,6 +23,6 @@ var QCinDetailSchema = mongoose.Schema({
     QuantitySD: String
 }, {timestamps: true});
 
-QCinDetailSchema.index({createdAt: 1}, {expireAfterSeconds: 120});
+QCinDetailSchema.index({createdAt: 1}, {expireAfterSeconds: 360});
 
 module.exports = mongoose.model('qPCRQCinDetail', QCinDetailSchema)

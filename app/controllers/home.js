@@ -25,7 +25,7 @@ exports.loggedIn = function (req, res, next) {
     if (req.session.user) { // req.session.passport._id
         next();
     } else {
-        res.redirect('/signup');
+        res.redirect('/login');
     }
 }
 

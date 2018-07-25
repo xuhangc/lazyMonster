@@ -25,6 +25,6 @@ var rawDataAggreSchema = mongoose.Schema({
     QC: String
 }, {timestamps: true});
 
-rawDataAggreSchema.index({createdAt: 1}, {expireAfterSeconds: 120});
+rawDataAggreSchema.index({createdAt: 1}, {expireAfterSeconds: 360});
 
 module.exports = mongoose.model('qPCRrawDataAggregation', rawDataAggreSchema);

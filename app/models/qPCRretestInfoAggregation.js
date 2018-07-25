@@ -25,6 +25,6 @@ var retestInfoAggreSchema = mongoose.Schema({
     QC: String
 }, {timestamps: true});
 
-retestInfoAggreSchema.index({createdAt: 1}, {expireAfterSeconds: 120});
+retestInfoAggreSchema.index({createdAt: 1}, {expireAfterSeconds: 360});
 
 module.exports = mongoose.model('qPCRretestInfoAggregation', retestInfoAggreSchema);
