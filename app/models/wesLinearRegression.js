@@ -6,9 +6,9 @@ var wesLinearRegressionSchema = mongoose.Schema({
         ref: 'ex_users'
     },
     RunNumber: String,
-    Slope: String,
-    Intercept: String,
-    RSquare: String,
+    Slope: Number,
+    Intercept: Number,
+    RSquare: Number,
 }, {timestamps: true});
 
 wesLinearRegressionSchema.index({createdAt: 1}, {expireAfterSeconds: 600});

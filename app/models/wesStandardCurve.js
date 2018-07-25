@@ -6,10 +6,10 @@ var wesStandardCurveSchema = mongoose.Schema({
         ref: 'ex_users'
     },
     RunNumber: String,
-    Std: String,
-    TPP1ConcngPermL: String,
-    Area: String,
-    BackCalculatedConcngPermL: String,
+    Std: Number,
+    TPP1ConcngPermL: Number,
+    Area: Number,
+    BackCalculatedConcngPermL: Number,
     PercentRE: String,
 }, {timestamps: true});
 

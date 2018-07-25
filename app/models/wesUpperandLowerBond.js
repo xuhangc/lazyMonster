@@ -6,8 +6,8 @@ var wesUpperandLowerBondSchema = mongoose.Schema({
         ref: 'ex_users'
     },
     RunNumber: String,
-    ULOQ: String,
-    LLOQ: String,
+    ULOQ: Number,
+    LLOQ: Number,
 }, {timestamps: true});
 
 wesUpperandLowerBondSchema.index({createdAt: 1}, {expireAfterSeconds: 600});

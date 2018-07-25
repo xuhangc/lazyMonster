@@ -20,7 +20,9 @@ module.exports = function (app, passport) {
     app.get('/wesStandardCurveDataSummary', home.loggedIn, show.wesStandardCurveDataSummary); //wes Standard Curve
     app.get('/wesUpperandLowerBondSummary', home.loggedIn, show.wesUpperandLowerBondSummary); //wes Upper and Lower Bond
     app.get('/wesQCDataSummary', home.loggedIn, show.wesQCDataSummary); //wes QC data
-    app.get('/wesSampleAnalysisDataSummary', home.loggedIn, show.wesSampleAnalysisDataSummary); //wes QC data
+    app.get('/wesSampleAnalysisDataSummary', home.loggedIn, show.wesSampleAnalysisDataSummary); //wes Sample Analysis data
+
+    app.get('/nabDataSummary', home.loggedIn, show.nabDataSummary); // NAb data
 
     app.get('/qPCRqc/download', home.loggedIn, download.qPCRqcSummaryDownload); //qc download
     app.get('/qPCRraw/download', home.loggedIn, download.qPCRrawDataAggregationDownload);

@@ -9,6 +9,8 @@ var wesUpperandLowerBond = require('../models/wesUpperandLowerBond');
 var wesQCData = require('../models/wesQCData');
 var wesSampleAnalysis = require('../models/wesSampleAnalysis');
 
+var nabData = require('../models/nabData');
+
 var mongoose = require('mongoose');
 
 exports.qPCRqc = function (req, res) {
@@ -103,6 +105,17 @@ exports.wesQCDataSummary = function (req, res) {
 exports.wesSampleAnalysisDataSummary = function (req, res) {
     wesSampleAnalysis.find({UserId: req.session.user._id}, function (err, result) {
         res.render('wesSampleAnalysisDataSummary.ejs', {
+            error: req.flash("error"),
+            success: req.flash("success"),
+            session: req.session,
+            result: result
+        });
+    });
+}
+
+exports.nabDataSummary = function (req, res) {
+    nabData.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('nabDataSummary.ejs', {
             error: req.flash("error"),
             success: req.flash("success"),
             session: req.session,

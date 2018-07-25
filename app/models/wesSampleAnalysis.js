@@ -7,10 +7,10 @@ var wesSampleAnalysisSchema = mongoose.Schema({
     },
     RunNumber: String,
     TimePoint: String,
-    AnimalID: String,
-    ConcngPermL: String,
-    Dilution: String,
-    AdjustedConcngPermL: String,
+    AnimalID: Number,
+    ConcngPermL: Number,
+    Dilution: Number,
+    AdjustedConcngPermL: Number,
     Comment: String,
 }, {timestamps: true});
 

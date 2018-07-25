@@ -7,9 +7,9 @@ var wesQCDataSchema = mongoose.Schema({
     },
     RunNumber: String,
     QCIn1To10CSF: String,
-    SpikedConcngPermL: String,
-    ConcngPermL: String,
-    PercentRE: String,
+    SpikedConcngPermL: Number,
+    ConcngPermL: Number,
+    PercentRE: Number,
 }, {timestamps: true});
 
 wesQCDataSchema.index({createdAt: 1}, {expireAfterSeconds: 600});

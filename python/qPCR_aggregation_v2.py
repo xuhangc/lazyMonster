@@ -14,7 +14,6 @@ retest_list = []
 
 # Modified date format, rounding and other
 def qpcr_qc_summary(folder_name):
-
     file_list = qpcr_extract_excels(folder_name)
 
     # create a new workbook , and initialize its worksheet name, header
@@ -98,7 +97,6 @@ def qpcr_qc_summary(folder_name):
 
 
 def qpcr_raw_data(folder_name, command):
-
     file_list = qpcr_extract_excels(folder_name)
 
     new_ws_sr = new_wb.create_sheet(title="Raw Data Aggregation", index=0)
@@ -192,7 +190,6 @@ def qpcr_raw_data(folder_name, command):
 
 
 def qpcr_retest_fun():
-
     new_ws_r = new_wb.create_sheet(title="Retest information", index=0)
     new_ws_r.cell(row=1, column=1).value = "ExtractionNumber"
     new_ws_r.cell(row=1, column=2).value = "PCRRunNumber"
@@ -235,9 +232,7 @@ def qpcr_retest_fun():
     # new_wb.save(filename + 'qPCR_Retest_Summary.xlsx')
 
 
-
 def qpcr_each_qc(folder_name):
-
     file_list = qpcr_extract_excels(folder_name)
 
     new_ws_cic = new_wb.create_sheet(title="Result for each QC well", index=0)
@@ -313,7 +308,6 @@ def qpcr_each_qc(folder_name):
 
 
 def qpcr_extract_excels(folder_name):
-
     file_list = []
     # assign p as the correct directory
     p = Path(folder_name)
@@ -350,6 +344,320 @@ def qpcr_extract_excels(folder_name):
     return file_list
 
 
+def wes_extract_excels(folder_name):
+    file_list = []
+    # assign p as the correct directory
+    p = Path(folder_name)
+
+    CSF_Sample_file_list = list(p.glob('CSF Sample*.xlsx'))
+    for CSF_Sample_file in CSF_Sample_file_list:
+        file_list.append(str(CSF_Sample_file))
+
+    return file_list
+
+
+def wes_linear_regression(folder_name):
+    file_list = wes_extract_excels(folder_name)
+
+    new_ws_l = new_wb.create_sheet(title="Linear Regression Data Summary", index=0)
+    new_ws_l.cell(row=1, column=1).value = "RunNumber"
+    new_ws_l.cell(row=1, column=2).value = "Slope"
+    new_ws_l.cell(row=1, column=3).value = "Intercept"
+    new_ws_l.cell(row=1, column=4).value = "RSquare"
+
+    row_counter = 2
+    for file_name in file_list:
+        # extract run number
+        file_name_slice = file_name.split(".xlsx")
+        this_run_number = int(file_name_slice[0].split()[-1])
+        if file_name.split()[-3] == "masked":
+            this_run_number = str(this_run_number) + " masked"
+
+        cur_wb = load_workbook(file_name, data_only=True)
+        cur_ws = cur_wb['Data Analysis']
+        for j in range(1, 5, 1):
+            if j == 1:
+                new_ws_l.cell(row=row_counter, column=j).value = this_run_number
+            else:
+                new_ws_l.cell(row=row_counter, column=j).value = cur_ws.cell(row=7, column=j + 5).value
+        row_counter = row_counter + 1
+
+    linear_regression_list = []
+    keys = []
+    for j in range(1, 5, 1):
+        keys.append(new_ws_l.cell(row=1, column=j).value)
+    for row_number in range(1, row_counter):
+        if row_number == 1:
+            continue
+        row_data = {}
+        for j in range(1, 5, 1):
+            row_data[keys[j - 1]] = new_ws_l.cell(row=row_number, column=j).value
+        linear_regression_list.append(row_data)
+    print(json.dumps(linear_regression_list))
+
+
+def wes_standard_curve(folder_name):
+    file_list = wes_extract_excels(folder_name)
+
+    new_ws_sc = new_wb.create_sheet(title="Standard Curve Data Summary", index=0)
+    new_ws_sc.cell(row=1, column=1).value = "RunNumber"
+    new_ws_sc.cell(row=1, column=2).value = "Std"
+    new_ws_sc.cell(row=1, column=3).value = "TPP1ConcngPermL"
+    new_ws_sc.cell(row=1, column=4).value = "Area"
+    new_ws_sc.cell(row=1, column=5).value = "BackCalculatedConcngPermL"
+    new_ws_sc.cell(row=1, column=6).value = "PercentRE"
+
+    row_counter = 2
+    for file_name in file_list:
+        # extract run number
+        file_name_slice = file_name.split(".xlsx")
+        this_run_number = int(file_name_slice[0].split()[-1])
+        if file_name.split()[-3] == "masked":
+            this_run_number = str(this_run_number) + " masked"
+
+        cur_wb = load_workbook(file_name, data_only=True)
+        cur_ws = cur_wb['Data Analysis']
+        row_start = 6
+        while cur_ws.cell(row=row_start, column=1).value is not None:
+            for j in range(1, 7, 1):
+                if j == 1:
+                    new_ws_sc.cell(row=row_counter, column=j).value = this_run_number
+                elif j == 2:
+                    new_ws_sc.cell(row=row_counter, column=j).value = cur_ws.cell(row=row_start, column=j - 1).value
+                else:
+                    if cur_ws.cell(row=row_start, column=j - 1).value == "mask" or cur_ws.cell(row=row_start,
+                                                                                               column=j - 1).value == "masked":
+                        new_ws_sc.cell(row=row_counter, column=j).value = cur_ws.cell(row=row_start, column=j - 1).value
+                    else:
+                        new_ws_sc.cell(row=row_counter, column=j).value = round(
+                            float(cur_ws.cell(row=row_start, column=j - 1).value), 3)
+            row_start = row_start + 1
+            row_counter = row_counter + 1
+
+    standard_curve_list = []
+    keys = []
+    for j in range(1, 7, 1):
+        keys.append(new_ws_sc.cell(row=1, column=j).value)
+    for row_number in range(1, row_counter):
+        if row_number == 1:
+            continue
+        row_data = {}
+        for j in range(1, 7, 1):
+            row_data[keys[j - 1]] = new_ws_sc.cell(row=row_number, column=j).value
+        standard_curve_list.append(row_data)
+    print(json.dumps(standard_curve_list))
+
+
+def wes_upper_and_lower_bond(folder_name):
+    file_list = wes_extract_excels(folder_name)
+
+    new_ws_ul = new_wb.create_sheet(title="Upper and Lower bond Summary", index=0)
+    new_ws_ul.cell(row=1, column=1).value = "RunNumber"
+    new_ws_ul.cell(row=1, column=2).value = "ULOQ"
+    new_ws_ul.cell(row=1, column=3).value = "LLOQ"
+
+    row_counter = 2
+    for file_name in file_list:
+        # extract run number
+        file_name_slice = file_name.split(".xlsx")
+        this_run_number = int(file_name_slice[0].split()[-1])
+        if file_name.split()[-3] == "masked":
+            this_run_number = str(this_run_number) + " masked"
+        cur_wb = load_workbook(file_name, data_only=True)
+        cur_ws = cur_wb['Data Analysis']
+        row_start = 6
+        row_end = 12
+        for j in range(1, 4, 1):
+            if j == 1:
+                new_ws_ul.cell(row=row_counter, column=j).value = this_run_number
+            elif j == 2:
+                if cur_ws.cell(row=row_start, column=5).value != "masked" and cur_ws.cell(row=row_start,
+                                                                                          column=5).value != "mask" and \
+                        abs(float(cur_ws.cell(row=row_start, column=5).value)) < 30:
+                    new_ws_ul.cell(row=row_counter, column=j).value = round(
+                        float(cur_ws.cell(row=row_start, column=j).value - 5), 3)
+                elif cur_ws.cell(row=row_start + 1, column=5).value != "masked" and cur_ws.cell(row=row_start + 1,
+                                                                                                column=5).value != "mask" \
+                        and abs(float(cur_ws.cell(row=row_start + 1, column=5).value)) < 20:
+                    new_ws_ul.cell(row=row_counter, column=j).value = round(
+                        float(cur_ws.cell(row=row_start + 1, column=j).value - 5), 3)
+                else:
+                    new_ws_ul.cell(row=row_counter, column=j).value = "Fail"
+            elif j == 3:
+                if cur_ws.cell(row=row_end, column=5).value != "masked" and cur_ws.cell(row=row_end,
+                                                                                        column=5).value != "mask" and \
+                        abs(float(cur_ws.cell(row=row_end, column=5).value)) < 30:
+                    new_ws_ul.cell(row=row_counter, column=j).value = round(
+                        float(cur_ws.cell(row=row_end, column=j - 1).value), 3)
+                elif cur_ws.cell(row=row_end - 1, column=5).value != "masked" and cur_ws.cell(row=row_end - 1,
+                                                                                              column=5).value != "mask" and \
+                        abs(float(cur_ws.cell(row=row_end - 1, column=5).value)) < 20:
+                    new_ws_ul.cell(row=row_counter, column=j).value = round(
+                        float(cur_ws.cell(row=row_end - 1, column=j - 1).value), 3)
+                else:
+                    new_ws_ul.cell(row=row_counter, column=j).value = "Fail"
+        row_counter = row_counter + 1
+
+    upper_and_lower_bond_list = []
+    keys = []
+    for j in range(1, 4, 1):
+        keys.append(new_ws_ul.cell(row=1, column=j).value)
+    for row_number in range(1, row_counter):
+        if row_number == 1:
+            continue
+        row_data = {}
+        for j in range(1, 4, 1):
+            row_data[keys[j - 1]] = new_ws_ul.cell(row=row_number, column=j).value
+        upper_and_lower_bond_list.append(row_data)
+    print(json.dumps(upper_and_lower_bond_list))
+
+
+def wes_qc_data(folder_name):
+    file_list = wes_extract_excels(folder_name)
+
+    new_ws_qc = new_wb.create_sheet(title="QC Data Summary", index=3)
+    new_ws_qc.cell(row=1, column=1).value = "RunNumber"
+    new_ws_qc.cell(row=1, column=2).value = "QCIn1To10CSF"
+    new_ws_qc.cell(row=1, column=3).value = "SpikedConcngPermL"
+    new_ws_qc.cell(row=1, column=4).value = "ConcngPermL"
+    new_ws_qc.cell(row=1, column=5).value = "PercentRE"
+
+    row_counter = 2
+    for file_name in file_list:
+        # extract run number
+        file_name_slice = file_name.split(".xlsx")
+        this_run_number = int(file_name_slice[0].split()[-1])
+        if file_name.split()[-3] == "masked":
+            this_run_number = str(this_run_number) + " masked"
+        cur_wb = load_workbook(file_name, data_only=True)
+        cur_ws = cur_wb['Data Analysis']
+        row_start = 16
+        while cur_ws.cell(row=row_start, column=1).value is not None:
+            for j in range(1, 6, 1):
+                if j == 1:
+                    new_ws_qc.cell(row=row_counter, column=j).value = this_run_number
+                elif j == 2:
+                    new_ws_qc.cell(row=row_counter, column=j).value = cur_ws.cell(row=row_start, column=j - 1).value
+                else:
+                    new_ws_qc.cell(row=row_counter, column=j).value = round(
+                        float(cur_ws.cell(row=row_start, column=j - 1).value), 3)
+            row_start = row_start + 1
+            row_counter = row_counter + 1
+
+    qc_data_list = []
+    keys = []
+    for j in range(1, 6, 1):
+        keys.append(new_ws_qc.cell(row=1, column=j).value)
+    for row_number in range(1, row_counter):
+        if row_number == 1:
+            continue
+        row_data = {}
+        for j in range(1, 6, 1):
+            row_data[keys[j - 1]] = new_ws_qc.cell(row=row_number, column=j).value
+        qc_data_list.append(row_data)
+    print(json.dumps(qc_data_list))
+
+
+def wes_sample_analysis(folder_name):
+    file_list = wes_extract_excels(folder_name)
+
+    new_ws_sa = new_wb.create_sheet(title="Sample Analysis Data Summary", index=4)
+    new_ws_sa.cell(row=1, column=1).value = "RunNumber"
+    new_ws_sa.cell(row=1, column=2).value = "TimePoint"
+    new_ws_sa.cell(row=1, column=3).value = "AnimalID"
+    new_ws_sa.cell(row=1, column=4).value = "ConcngPermL"
+    new_ws_sa.cell(row=1, column=5).value = "Dilution"
+    new_ws_sa.cell(row=1, column=6).value = "AdjustedConcngPermL"
+    new_ws_sa.cell(row=1, column=7).value = "Comment"
+
+    row_counter = 2
+    for file_name in file_list:
+        # extract run number
+        file_name_slice = file_name.split(".xlsx")
+        this_run_number = int(file_name_slice[0].split()[-1])
+        if file_name.split()[-3] == "masked":
+            this_run_number = str(this_run_number) + " masked"
+        cur_wb = load_workbook(file_name, data_only=True)
+        cur_ws = cur_wb['Data Analysis']
+        row_start = 21
+        if this_run_number == 1:
+            while cur_ws.cell(row=row_start, column=1).value is not None:
+                for j in range(1, 8, 1):
+                    if j == 1:
+                        new_ws_sa.cell(row=row_counter, column=j).value = this_run_number
+                    elif j == 4 or j == 6:
+                        new_ws_sa.cell(row=row_counter, column=j).value = round(float(cur_ws.cell(row=row_start, column=j - 1).value), 3)
+                    else:
+                        new_ws_sa.cell(row=row_counter, column=j).value = cur_ws.cell(row=row_start, column=j - 1).value
+                row_start = row_start + 1
+                row_counter = row_counter + 1
+        else:
+            while cur_ws.cell(row=row_start, column=1).value is not None:
+                comment = False
+                time_info_list = []
+                for j in range(1, 8, 1):
+                    if j == 1:
+                        new_ws_sa.cell(row=row_counter, column=j).value = this_run_number
+                    elif j == 2:
+                        time_info_list = str(cur_ws.cell(row=row_start, column=j - 1).value).split()
+                        time_point = ""
+                        for fragment in time_info_list:
+                            if fragment == time_info_list[0]:
+                                continue
+                            else:
+                                time_point = time_point + " " + fragment
+                        new_ws_sa.cell(row=row_counter, column=j).value = time_point
+                    elif j == 3:
+                        new_ws_sa.cell(row=row_counter, column=j).value = int(time_info_list[0])
+                    elif j == 4:
+                        if cur_ws.cell(row=row_start, column=j - 1).value == "AQL" or \
+                                cur_ws.cell(row=row_start, column=j - 1).value == "BLQ" or \
+                                cur_ws.cell(row=row_start, column=j - 1).value == "BQL" or \
+                                cur_ws.cell(row=row_start, column=j - 1).value == "ULQ":
+                            cur_ws = cur_wb['Raw Data']
+                            new_ws_sa.cell(row=row_counter, column=j).value = round(float(cur_ws.cell(row=row_start - 8,
+                                                                                                      column=11).value),
+                                                                                    3)
+                            cur_ws = cur_wb['Data Analysis']
+                            comment = True
+                        else:
+                            new_ws_sa.cell(row=row_counter, column=j).value = round(float(cur_ws.cell(row=row_start,
+                                                                                                      column=j - 1).value),
+                                                                                    3)
+                    elif j == 6:
+                        if cur_ws.cell(row=row_start, column=j - 1).value == "NA" or \
+                                cur_ws.cell(row=row_start, column=j - 1).value == "BLQ":
+                            new_ws_sa.cell(row=row_counter, column=j).value = round(
+                                float(new_ws_sa.cell(row=row_counter, column=j - 1).value) *
+                                float(new_ws_sa.cell(row=row_counter, column=j - 2).value), 3)
+                        else:
+                            new_ws_sa.cell(row=row_counter, column=j).value = round(float(cur_ws.cell(row=row_start,
+                                                                                                      column=j - 1).value),
+                                                                                    3)
+                    elif j == 7:
+                        if comment:
+                            new_ws_sa.cell(row=row_counter, column=j).value = cur_ws.cell(row=row_start,
+                                                                                          column=j - 4).value
+                    else:
+                        new_ws_sa.cell(row=row_counter, column=j).value = cur_ws.cell(row=row_start, column=j - 1).value
+
+                row_start = row_start + 1
+                row_counter = row_counter + 1
+
+    sample_analysis_list = []
+    keys = []
+    for j in range(1, 8, 1):
+        keys.append(new_ws_sa.cell(row=1, column=j).value)
+    for row_number in range(1, row_counter):
+        if row_number == 1:
+            continue
+        row_data = {}
+        for j in range(1, 8, 1):
+            row_data[keys[j - 1]] = new_ws_sa.cell(row=row_number, column=j).value
+        sample_analysis_list.append(row_data)
+    print(json.dumps(sample_analysis_list))
+
+
 def main():
     if sys.argv[2] == 'qPCRqc':
         qpcr_qc_summary(sys.argv[1])
@@ -360,8 +668,19 @@ def main():
         qpcr_retest_fun()
     elif sys.argv[2] == 'qPCReachqc':
         qpcr_each_qc(sys.argv[1])
+    elif sys.argv[2] == 'wesLinearRegressionDataSummary':
+        wes_linear_regression(sys.argv[1])
+    elif sys.argv[2] == 'wesStandardCurveDataSummary':
+        wes_standard_curve(sys.argv[1])
+    elif sys.argv[2] == 'wesUpperandLowerBondSummary':
+        wes_upper_and_lower_bond(sys.argv[1])
+    elif sys.argv[2] == 'wesQCDataSummary':
+        wes_qc_data(sys.argv[1])
+    elif sys.argv[2] == 'wesSampleAnalysisDataSummary':
+        wes_sample_analysis(sys.argv[1])
+    elif sys.argv[2] == 'nabDataSummary':
+        nab_data(sys.argv[1])
 
 
 if __name__ == '__main__':
     main()
-

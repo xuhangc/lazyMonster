@@ -28,9 +28,11 @@ $(document).ready(function () {
                 $("#form").attr("action", "/upload/qPCRretest");
                 break;
             case "QC Detail Summary":
+                window.alert();
                 $("#form").attr("action", "/upload/qPCReachqc");
                 break;
             case "Wes Linear Regression Data Summary":
+                window.alert();
                 $("#form").attr("action", "/upload/wesLinearRegressionDataSummary");
                 break;
             case "Wes Standard Curve Data Summary":
@@ -52,5 +54,46 @@ $(document).ready(function () {
                 $("#form").attr("action", "/upload/qPCRqc");
                 break;
         }
+
+        // if ($(this).val() == 'qPCR') {
+        //     switch ($(this).val()) {
+        //         case "Sample Result Summary":
+        //             $("#form").attr("action", "/upload/qPCRraw");
+        //             break;
+        //         case "Retest Summary":
+        //             $("#form").attr("action", "/upload/qPCRretest");
+        //             break;
+        //         case "QC Detail Summary":
+        //             $("#form").attr("action", "/upload/qPCReachqc");
+        //             break;
+        //         default:
+        //             $("#form").attr("action", "/upload/qPCRqc");
+        //             break;
+        //     }
+        // } else if ($(this).val() == 'wes') {
+        //     switch ($(this).val()) {
+        //         default:
+        //             window.alert();
+        //             $("#form").attr("action", "/upload/wesLinearRegressionDataSummary");
+        //             break;
+        //         case "Wes Standard Curve Data Summary":
+        //             $("#form").attr("action", "/upload/wesStandardCurveDataSummary");
+        //             break;
+        //         case "Wes Upper and Lower bond Summary":
+        //             $("#form").attr("action", "/upload/wesUpperandLowerBondSummary");
+        //             break;
+        //         case "Wes QC Data Summary":
+        //             $("#form").attr("action", "/upload/wesQCDataSummary");
+        //             break;
+        //         case "Wes Sample Analysis Data Summary":
+        //             $("#form").attr("action", "/upload/wesSampleAnalysisDataSummary");
+        //     }
+        // } else {
+        //     switch ($(this).val()) {
+        //         default:
+        //             $("#form").attr("action", "/upload/nabDataSummary");
+        //             break;
+        //     }
+        // }
     });
 });
