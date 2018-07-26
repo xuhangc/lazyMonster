@@ -327,11 +327,14 @@ exports.upload = function (req, res) {
                     shell.end(function (err) {
                         console.log('The script work has been finished.');
                         if (err) {
+                            console.log('Error or Warning from Python script')
                             res.status(200).send({error: err});
                         }
                         else {
+                            console.log('no error in python');
                             rimraf(filepath, function (err) {
                                 if (err) throw err;
+                                console.log('able to delete uploaded files');
                                 res.redirect('/' + req.params.operation);
                             });
                         }
