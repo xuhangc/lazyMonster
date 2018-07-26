@@ -658,6 +658,116 @@ def wes_sample_analysis(folder_name):
     print(json.dumps(sample_analysis_list))
 
 
+def nab_data(folder_name):
+
+    p = Path(folder_name)
+    file_path_list = p.glob('Spark200 Gluc 2D*.xlsx')
+    file_list = []
+    for file_name in file_path_list:
+        file_list.append(str(file_name))
+
+    new_ws_nab = new_wb.create_sheet(title="NAB Summary", index=0)
+    new_ws_nab.cell(row=1, column=1).value = "RunNumber"
+    new_ws_nab.cell(row=1, column=2).value = "SampleNumber"
+    new_ws_nab.cell(row=1, column=3).value = "SubjectID"
+    new_ws_nab.cell(row=1, column=4).value = "VisitName"
+    new_ws_nab.cell(row=1, column=5).value = "CollectionDate"
+    new_ws_nab.cell(row=1, column=6).value = "MINAverage"
+    new_ws_nab.cell(row=1, column=7).value = "MAXAverage"
+    new_ws_nab.cell(row=1, column=8).value = "MAXEVAverage"
+    new_ws_nab.cell(row=1, column=9).value = "FACT1To100Average"
+    new_ws_nab.cell(row=1, column=10).value = "MINCVPercentage"
+    new_ws_nab.cell(row=1, column=11).value = "MAXCVPercentage"
+    new_ws_nab.cell(row=1, column=12).value = "MAXEVCVPercentage"
+    new_ws_nab.cell(row=1, column=13).value = "FACT1To100CVPercentage"
+    new_ws_nab.cell(row=1, column=14).value = "PercentageIMAXFACT1To100"
+    new_ws_nab.cell(row=1, column=15).value = "EVInterferenceMAXMAXEV"
+    new_ws_nab.cell(row=1, column=16).value = "EVEfficiencyFACT1To100FACT1To100EV"
+    new_ws_nab.cell(row=1, column=17).value = "SN"
+    new_ws_nab.cell(row=1, column=18).value = "S1To1IMAXPercentage"
+    new_ws_nab.cell(row=1, column=19).value = "S1To2Point5IMAXPercentage"
+    new_ws_nab.cell(row=1, column=20).value = "S1To5IMAXPercentage"
+    new_ws_nab.cell(row=1, column=21).value = "S1To10IMAXPercentage"
+    new_ws_nab.cell(row=1, column=22).value = "S1To100IMAXPercentage"
+    new_ws_nab.cell(row=1, column=23).value = "S1To1000IMAXPercentage"
+    new_ws_nab.cell(row=1, column=24).value = "S1To1IEVPercentage"
+    new_ws_nab.cell(row=1, column=25).value = "S1To2Point5IEVPercentage"
+    new_ws_nab.cell(row=1, column=26).value = "S1To5IEVPercentage"
+    new_ws_nab.cell(row=1, column=27).value = "S1To10IEVPercentage"
+    new_ws_nab.cell(row=1, column=28).value = "S1To100IEVPercentage"
+    new_ws_nab.cell(row=1, column=29).value = "S1To1000IEVPercentage"
+    new_ws_nab.cell(row=1, column=30).value = "NAbTiter"
+    new_ws_nab.cell(row=1, column=31).value = "JustifyIfResultisInvalid"
+
+    # create a counter for keep track on row number for the new xlsx file
+    row_counter = 2
+
+    for file_name in file_list:
+        valid_spreadsheet = []
+        sample_number = []
+        cur_wb = load_workbook(file_name, read_only=True, data_only=True)
+        cur_ws = cur_wb['Sample information']
+        row_start = 8
+        spreadsheet_counter = 1
+        while cur_ws.cell(row=row_start, column=2).value is not None:
+            valid_spreadsheet.append('P' + str(spreadsheet_counter))
+            sample_number.append('S' + str(spreadsheet_counter))
+            row_start = row_start + 1
+            spreadsheet_counter = spreadsheet_counter + 1
+
+        for spreadsheet in valid_spreadsheet:
+            cur_ws = cur_wb[spreadsheet]
+            for j in range(1, 32, 1):
+                if j == 1:
+                    new_ws_nab.cell(row=row_counter, column=j).value = cur_ws['C3'].value
+                elif j == 2:
+                    new_ws_nab.cell(row=row_counter, column=j).value = sample_number[valid_spreadsheet.index(spreadsheet)]
+                elif j == 3:
+                    new_ws_nab.cell(row=row_counter, column=j).value = cur_ws['A6'].value
+                elif j == 4:
+                    new_ws_nab.cell(row=row_counter, column=j).value = cur_ws['C6'].value
+                elif j == 5:
+                    if isinstance(cur_ws['D6'].value, datetime.datetime):
+                        extraction_date = str(cur_ws['D6'].value).split()
+                        formal_date = datetime.datetime.strptime(extraction_date[0], '%Y-%m-%d').strftime('%d%b%Y')
+                        new_ws_nab.cell(row=row_counter, column=j).value = formal_date
+                    else:
+                        new_ws_nab.cell(row=row_counter, column=j).value = str(cur_ws['D6'].value)
+                elif 6 <= j <= 9:
+                    new_ws_nab.cell(row=row_counter, column=j).value = \
+                        round(float(cur_ws.cell(row=j + 26, column=3).value), 1)
+                elif 10 <= j <= 13:
+                    new_ws_nab.cell(row=row_counter, column=j).value = \
+                        round(float(cur_ws.cell(row=j + 22, column=5).value), 1)
+                elif 14 <= j <= 17:
+                    new_ws_nab.cell(row=row_counter, column=j).value = \
+                        round(float(cur_ws.cell(row=j + 18, column=9).value), 1)
+                elif 18 <= j <= 23:
+                    new_ws_nab.cell(row=row_counter, column=j).value = \
+                        round(float(cur_ws.cell(row=j + 39, column=3).value))
+                elif 24 <= j <= 29:
+                    new_ws_nab.cell(row=row_counter, column=j).value = \
+                        round(float(cur_ws.cell(row=j + 33, column=4).value))
+                elif j == 31:
+                    new_ws_nab.cell(row=row_counter, column=j).value = cur_ws['F57'].value
+                else:
+                    new_ws_nab.cell(row=row_counter, column=j).value = cur_ws['E57'].value
+            row_counter = row_counter + 1
+
+    nab_data_list = []
+    keys = []
+    for j in range(1, 32, 1):
+        keys.append(new_ws_nab.cell(row=1, column=j).value)
+    for row_number in range(1, row_counter):
+        if row_number == 1:
+            continue
+        row_data = {}
+        for j in range(1, 32, 1):
+            row_data[keys[j - 1]] = new_ws_nab.cell(row=row_number, column=j).value
+        nab_data_list.append(row_data)
+    print(json.dumps(nab_data_list))
+
+
 def main():
     if sys.argv[2] == 'qPCRqc':
         qpcr_qc_summary(sys.argv[1])
@@ -680,7 +790,6 @@ def main():
         wes_sample_analysis(sys.argv[1])
     elif sys.argv[2] == 'nabDataSummary':
         nab_data(sys.argv[1])
-
 
 if __name__ == '__main__':
     main()

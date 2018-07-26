@@ -53,12 +53,36 @@
     <% for(var i = 0; i < result.length; i++) { %>
     <tr>
         <td><%= result[i].RunNumber %></td>
-        <td><%= result[i].TimePoint %></td>
-        <td><%= result[i].AnimalID %></td>
-        <td><%= result[i].ConcngPermL %></td>
-        <td><%= result[i].Dilution %></td>
-        <td><%= result[i].AdjustedConcngPermL %></td>
-        <td><%= result[i].Comment %></td>
+        <td><%= result[i].SampleNumber %></td>
+        <td><%= result[i].SubjectID %></td>
+        <td><%= result[i].VisitName %></td>
+        <td><%= result[i].CollectionDate %></td>
+        <td><%= result[i].MINAverage %></td>
+        <td><%= result[i].MAXAverage %></td>
+        <td><%= result[i].MAXEVAverage %></td>
+        <td><%= result[i].FACT1To100Average %></td>
+        <td><%= result[i].MINCVPercentage %></td>
+        <td><%= result[i].MAXCVPercentage %></td>
+        <td><%= result[i].MAXEVCVPercentage %></td>
+        <td><%= result[i].FACT1To100CVPercentage %></td>
+        <td><%= result[i].PercentageIMAXFACT1To100 %></td>
+        <td><%= result[i].EVInterferenceMAXMAXEV %></td>
+        <td><%= result[i].EVEfficiencyFACT1To100FACT1To100EV %></td>
+        <td><%= result[i].SN %></td>
+        <td><%= result[i].S1To1IMAXPercentage %></td>
+        <td><%= result[i].S1To2Point5IMAXPercentage %></td>
+        <td><%= result[i].S1To5IMAXPercentage %></td>
+        <td><%= result[i].S1To10IMAXPercentage %></td>
+        <td><%= result[i].S1To100IMAXPercentage %></td>
+        <td><%= result[i].S1To1000IMAXPercentage %></td>
+        <td><%= result[i].S1To1IEVPercentage %></td>
+        <td><%= result[i].S1To2Point5IEVPercentage %></td>
+        <td><%= result[i].S1To5IEVPercentage %></td>
+        <td><%= result[i].S1To10IEVPercentage %></td>
+        <td><%= result[i].S1To100IEVPercentage %></td>
+        <td><%= result[i].S1To1000IEVPercentage %></td>
+        <td><%= result[i].NAbTiter %></td>
+        <td><%= result[i].JustifyIfResultisInvalid %></td>
     </tr>
     <% } %>
     </tbody>

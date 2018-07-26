@@ -35,6 +35,8 @@ module.exports = function (app, passport) {
     app.get('/wesQCDataSummary/download', home.loggedIn, download.wesQCDataDownload);
     app.get('/wesSampleAnalysisDataSummary/download', home.loggedIn, download.wesSampleAnalysisDownload);
 
+    app.get('/nabDataSummary/download', home.loggedIn, download.nabDataDownload);
+
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/home', // redirect to the secure profile section
         failureRedirect: '/signup', // redirect back to the signup page if there is an error

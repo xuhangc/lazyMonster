@@ -323,4 +323,37 @@ exports.wesUpperandLowerBondDownload = function (req, res) {
     });
 }
 
+exports.nabDataDownload = function (req, res) {
+    nabData.find({UserId: req.user._id}, {
+        _id: 0,
+        UserId: 0,
+        __v: 0,
+        createdAt: 0,
+        updatedAt: 0
+    }, function (err, data) {
+        var model = mongoXlsx.buildDynamicModel(data);
+        mongoXlsx.mongoData2Xlsx(data, model, function (err, data) {
+            var d = new Date();
+            var timestr = d.yyyymmddhhmm();
+            res.download(data.fullPath, "NAb_Data_Summary_" + timestr + ".xlsx", function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                fs.unlink(data.fullPath, function (err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        nabData.remove({}, function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            console.log('collection removed');
+                        });
+                    }
+                });
+            });
+        });
+    });
+}
+
 

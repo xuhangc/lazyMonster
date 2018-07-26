@@ -58,4 +58,31 @@ $(document).ready(function () {
                 break;
         }
     });
+
+    $('#jump').on('change', function () {
+        if ($(this).val() == "qPCR") {
+            $('#jump-option').children().remove();
+            $('#jump-option').append('<option></option>');
+            $('#jump-option').append('<option value="/qPCRqc">QC Summary</option>');
+            $('#jump-option').append('<option value="/qPCRraw">Sample Result Summary</option>');
+            $('#jump-option').append('<option value="/qPCRretest">Retest Summary</option>');
+            $('#jump-option').append('<option value="/qPCReachqc">QC Detail Summary</option>');
+        } else if ($(this).val() == "wes") {
+            $('#jump-option').children().remove();
+            $('#jump-option').append('<option></option>');
+            $('#jump-option').append('<option value="/wesLinearRegressionDataSummary">Linear Regression Data Summary</option>');
+            $('#jump-option').append('<option value="/wesStandardCurveDataSummary">Standard Curve Data Summary</option>');
+            $('#jump-option').append('<option value="/wesUpperandLowerBondSummary">Upper and Lower bond Summary</option>');
+            $('#jump-option').append('<option value="/wesQCDataSummary">QC Data Summary</option>');
+            $('#jump-option').append('<option value="/wesSampleAnalysisDataSummary">Sample Analysis Data Summary</option>');
+        } else if ($(this).val() == "empty") {
+            $('#jump-option').children().remove();
+        } else {
+            $('#jump-option').children().remove();
+            $('#jump-option').append('<option></option>');
+            $('#jump-option').append('<option value="/nabDataSummary">Data Summary</option>');
+
+        }
+
+    });
 });

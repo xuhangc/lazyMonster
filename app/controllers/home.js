@@ -280,16 +280,45 @@ exports.upload = function (req, res) {
                                     });
                                     elem.save();
                                 }
-
                             } else if (req.params.operation == 'nabDataSummary') {
                                 console.log(message);
                                 for (var i = 0; i < message.length; i++) {
                                     var elem = new nabData({
                                         UserId: req.session.user._id,
+                                        RunNumber: message[i].RunNumber,
+                                        SampleNumber: message[i].SampleNumber,
+                                        SubjectID: message[i].SubjectID,
+                                        VisitName: message[i].VisitName,
+                                        CollectionDate: message[i].CollectionDate,
+                                        MINAverage: message[i].MINAverage,
+                                        MAXAverage: message[i].MAXAverage,
+                                        MAXEVAverage: message[i].MAXEVAverage,
+                                        FACT1To100Average: message[i].FACT1To100Average,
+                                        MINCVPercentage: message[i].MINCVPercentage,
+                                        MAXCVPercentage: message[i].MAXCVPercentage,
+                                        MAXEVCVPercentage: message[i].MAXEVCVPercentage,
+                                        FACT1To100CVPercentage: message[i].FACT1To100CVPercentage,
+                                        PercentageIMAXFACT1To100: message[i].PercentageIMAXFACT1To100,
+                                        EVInterferenceMAXMAXEV: message[i].EVInterferenceMAXMAXEV,
+                                        EVEfficiencyFACT1To100FACT1To100EV: message[i].EVEfficiencyFACT1To100FACT1To100EV,
+                                        SN: message[i].SN,
+                                        S1To1IMAXPercentage: message[i].S1To1IMAXPercentage,
+                                        S1To2Point5IMAXPercentage: message[i].S1To2Point5IMAXPercentage,
+                                        S1To5IMAXPercentage: message[i].S1To5IMAXPercentage,
+                                        S1To10IMAXPercentage: message[i].S1To10IMAXPercentage,
+                                        S1To100IMAXPercentage: message[i].S1To100IMAXPercentage,
+                                        S1To1000IMAXPercentage: message[i].S1To1000IMAXPercentage,
+                                        S1To1IEVPercentage: message[i].S1To1IEVPercentage,
+                                        S1To2Point5IEVPercentage: message[i].S1To2Point5IEVPercentage,
+                                        S1To5IEVPercentage: message[i].S1To5IEVPercentage,
+                                        S1To10IEVPercentage: message[i].S1To10IEVPercentage,
+                                        S1To100IEVPercentage: message[i].S1To100IEVPercentage,
+                                        S1To1000IEVPercentage: message[i].S1To1000IEVPercentage,
+                                        NAbTiter: message[i].NAbTiter,
+                                        JustifyIfResultisInvalid: message[i].JustifyIfResultisInvalid,
                                     });
                                     elem.save();
                                 }
-
                             } else {
                                 console.log(message);
                             }
