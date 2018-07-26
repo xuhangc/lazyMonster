@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $('#type').on('change', function () {
         if ($(this).val() == "qPCR") {
             $("#form").attr("action", "/upload/qPCRqc");
@@ -31,11 +32,9 @@ $(document).ready(function () {
                 $("#form").attr("action", "/upload/qPCRretest");
                 break;
             case "QC Detail Summary":
-                window.alert();
                 $("#form").attr("action", "/upload/qPCReachqc");
                 break;
             case "Wes Linear Regression Data Summary":
-                window.alert();
                 $("#form").attr("action", "/upload/wesLinearRegressionDataSummary");
                 break;
             case "Wes Standard Curve Data Summary":
@@ -85,4 +84,11 @@ $(document).ready(function () {
         }
 
     });
+
+    $('#start').click(function(){
+        $("#wait").css("display", "block");
+    });
+
+
 });
+

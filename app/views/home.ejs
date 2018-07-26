@@ -4,6 +4,7 @@
     <title>Home Page</title>
     <link rel='stylesheet' href='../../public/css/home.css'/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
     <script src="../../public/js/home.js"></script>
 </head>
 <body>
@@ -31,7 +32,7 @@
     <form id="form" action="/upload/qPCRqc" method="post" enctype="multipart/form-data">
         <h2>Upload</h2>
         <input type="file" name="excel" webkitdirectory directory>
-        <input type="submit" value="start">
+        <input type="submit" value="start" id="start">
     </form>
     <h2>Check Result</h2>
     <select id="jump">
@@ -43,5 +44,6 @@
     <select id="jump-option" onchange="window.location.href = this.value;">
     </select><br>
 </div>
+<div class="se-pre-con" id="wait"></div>
 </body>
 </html>
