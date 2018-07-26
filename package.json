@@ -23,6 +23,7 @@
     "express-mailer": "^0.3.0",
     "express-session": "latest",
     "fs-extra": "latest",
+    "helmet": "^3.13.0",
     "http-proxy": "latest",
     "md5": "latest",
     "mime": "latest",

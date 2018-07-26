@@ -1,24 +1,14 @@
 var express = require('express');
-
 var app = express();
-var multer = require('multer')
-var constants = require('constants');
-var constant = require('./config/constants');
-
-
 var port = process.env.PORT || 8042;
-var mongoose = require('mongoose');
 var passport = require('passport');
 var flash = require('connect-flash');
 var path = require('path');
-
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
-var dateFormat = require('dateformat');
-var now = new Date();
+var helmet = require('helmet');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -61,6 +51,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+app.use(helmet());
+app.use(helmet.noCache());
+app.use(helmet.permittedCrossDomainPolicies());
+app.use(helmet.referrerPolicy());
 app.use("/assets", express.static(__dirname + "/assets"));
 app.use("/public", express.static(__dirname + "/public"));
 
