@@ -9,7 +9,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var helmet = require('helmet');
-
+var expectCt = require('expect-ct');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -55,6 +55,11 @@ app.use(helmet());
 app.use(helmet.noCache());
 app.use(helmet.permittedCrossDomainPolicies());
 app.use(helmet.referrerPolicy());
+app.use(expectCt({
+    enforce: true,
+    maxAge: 123
+}));
+
 app.use("/assets", express.static(__dirname + "/assets"));
 app.use("/public", express.static(__dirname + "/public"));
 
