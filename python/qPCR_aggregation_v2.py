@@ -665,6 +665,8 @@ def nab_data(folder_name):
     file_list = []
     for file_name in file_path_list:
         file_list.append(str(file_name))
+
+    print(json.dumps(file_list))
     new_ws_nab = new_wb.create_sheet(title="NAB Summary", index=0)
     new_ws_nab.cell(row=1, column=1).value = "RunNumber"
     new_ws_nab.cell(row=1, column=2).value = "SampleNumber"
@@ -702,6 +704,7 @@ def nab_data(folder_name):
     row_counter = 2
 
     for file_name in file_list:
+        print(json.dumps(file_name))
         valid_spreadsheet = []
         sample_number = []
         # cur_wb = load_workbook(file_name, read_only=True, data_only=True)
@@ -714,8 +717,10 @@ def nab_data(folder_name):
             sample_number.append('S' + str(spreadsheet_counter))
             row_start = row_start + 1
             spreadsheet_counter = spreadsheet_counter + 1
-
+        print(json.dumps(valid_spreadsheet))
+        
         for spreadsheet in valid_spreadsheet:
+            print(json.dumps(spreadsheet))
             cur_ws = cur_wb[spreadsheet]
             for j in range(1, 32, 1):
                 if j == 1:
@@ -752,20 +757,18 @@ def nab_data(folder_name):
                     new_ws_nab.cell(row=row_counter, column=j).value = cur_ws['F57'].value
                 else:
                     new_ws_nab.cell(row=row_counter, column=j).value = cur_ws['E57'].value
+            print(json.dumps(row_counter))
             row_counter = row_counter + 1
 
     nab_data_list = []
     keys = []
     for j in range(1, 32, 1):
         keys.append(new_ws_nab.cell(row=1, column=j).value)
-
     for row_number in range(1, row_counter):
-        print(json.dumps(row_number))
         if row_number == 1:
             continue
         row_data = {}
         for j in range(1, 32, 1):
-            print(json.dumps(new_ws_nab.cell(row=row_number, column=j).value))
             row_data[keys[j - 1]] = new_ws_nab.cell(row=row_number, column=j).value
         nab_data_list.append(row_data)
     print(json.dumps(nab_data_list))
