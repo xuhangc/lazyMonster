@@ -702,7 +702,6 @@ def nab_data(folder_name):
     row_counter = 2
 
     for file_name in file_list:
-        print(json.dumps(file_name))
         valid_spreadsheet = []
         sample_number = []
         # cur_wb = load_workbook(file_name, read_only=True, data_only=True)

@@ -275,7 +275,6 @@ exports.upload = function (req, res) {
                                             elem.save();
                                         }
                                     } else if (req.params.operation == 'nabDataSummary') {
-                                        console.log(message);
                                         for (var i = 0; i < message.length; i++) {
                                             if (message[i].RunNumber !== undefined) {
                                                 var elem = new nabData({
