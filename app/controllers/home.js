@@ -277,6 +277,8 @@ exports.upload = function (req, res) {
                                     } else if (req.params.operation == 'nabDataSummary') {
                                         console.log(message);
                                         for (var i = 0; i < message.length; i++) {
+                                            console.log(message[i].RunNumber);
+                                            console.log(message[i] === undefined);
                                             var elem = new nabData({
                                                 UserId: req.session.user._id,
                                                 RunNumber: message[i].RunNumber,
