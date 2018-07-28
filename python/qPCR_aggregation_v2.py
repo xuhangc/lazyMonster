@@ -664,7 +664,6 @@ def nab_data(folder_name):
     file_path_list = p.glob('Spark200*.xlsx')
     file_list = []
     for file_name in file_path_list:
-        print(json.dumps(file_name))
         file_list.append(str(file_name))
     new_ws_nab = new_wb.create_sheet(title="NAB Summary", index=0)
     new_ws_nab.cell(row=1, column=1).value = "RunNumber"
