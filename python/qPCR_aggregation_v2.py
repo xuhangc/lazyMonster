@@ -660,14 +660,11 @@ def wes_sample_analysis(folder_name):
 
 
 def nab_data(folder_name):
-
-    print(json.dumps("check1"))
     p = Path(folder_name)
     file_path_list = p.glob('Spark200 Gluc 2D*.xlsx')
     file_list = []
     for file_name in file_path_list:
         file_list.append(str(file_name))
-    print(json.dumps("check2"))
     new_ws_nab = new_wb.create_sheet(title="NAB Summary", index=0)
     new_ws_nab.cell(row=1, column=1).value = "RunNumber"
     new_ws_nab.cell(row=1, column=2).value = "SampleNumber"
@@ -756,12 +753,12 @@ def nab_data(folder_name):
                 else:
                     new_ws_nab.cell(row=row_counter, column=j).value = cur_ws['E57'].value
             row_counter = row_counter + 1
-    print(json.dumps("check3"))
 
     nab_data_list = []
     keys = []
     for j in range(1, 32, 1):
         keys.append(new_ws_nab.cell(row=1, column=j).value)
+        print(json.dumps(j))
     for row_number in range(1, row_counter):
         if row_number == 1:
             continue
@@ -769,6 +766,7 @@ def nab_data(folder_name):
         for j in range(1, 32, 1):
             row_data[keys[j - 1]] = new_ws_nab.cell(row=row_number, column=j).value
         nab_data_list.append(row_data)
+        print(json.dumps(row_data))
     print(json.dumps(nab_data_list))
 
 
