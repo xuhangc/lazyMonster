@@ -718,7 +718,7 @@ def nab_data(folder_name):
             row_start = row_start + 1
             spreadsheet_counter = spreadsheet_counter + 1
         print(json.dumps(valid_spreadsheet))
-        
+
         for spreadsheet in valid_spreadsheet:
             print(json.dumps(spreadsheet))
             cur_ws = cur_wb[spreadsheet]
