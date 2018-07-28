@@ -329,12 +329,11 @@ exports.upload = function (req, res) {
                                 }
                                 else {
                                     console.log('no error in python');
-                                    // rimraf(filepath, function (err) {
-                                    //     if (err) throw err;
-                                    //     console.log('able to delete uploaded files');
-                                    //     return res.redirect('/' + req.params.operation);
-                                    // });
-                                    return res.redirect('/' + req.params.operation);
+                                    rimraf(filepath, function (err) {
+                                        if (err) throw err;
+                                        console.log('able to delete uploaded files');
+                                        return res.redirect('/' + req.params.operation);
+                                    });
                                 }
                             });
                             callback(null, 'xyz\n');
