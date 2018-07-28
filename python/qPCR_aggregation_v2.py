@@ -661,9 +661,9 @@ def wes_sample_analysis(folder_name):
 
 def nab_data(folder_name):
     p = Path(folder_name)
-    print(json.dumps(folder_name))
+    #print(json.dumps(folder_name))
     file_path_list = p.glob('*.xlsx')
-    print(json.dumps(file_path_list))
+    #print(json.dumps(file_path_list))
     file_list = []
     for file_name in file_path_list:
         file_list.append(str(file_name))
