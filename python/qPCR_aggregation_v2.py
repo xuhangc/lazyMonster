@@ -1,3 +1,4 @@
+import warnings
 import os
 import fnmatch
 import datetime
@@ -705,7 +706,8 @@ def nab_data(folder_name):
     for file_name in file_list:
         valid_spreadsheet = []
         sample_number = []
-        cur_wb = load_workbook(file_name, read_only=True, data_only=True)
+        # cur_wb = load_workbook(file_name, read_only=True, data_only=True)
+        cur_wb = load_workbook(file_name, data_only=True)
         cur_ws = cur_wb['Sample information']
         row_start = 8
         spreadsheet_counter = 1
@@ -792,4 +794,5 @@ def main():
         nab_data(sys.argv[1])
 
 if __name__ == '__main__':
+    warnings.filterwarnings('ignore')
     main()
