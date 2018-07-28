@@ -758,15 +758,16 @@ def nab_data(folder_name):
     keys = []
     for j in range(1, 32, 1):
         keys.append(new_ws_nab.cell(row=1, column=j).value)
-        print(json.dumps(j))
+
     for row_number in range(1, row_counter):
+        print(json.dumps(row_number))
         if row_number == 1:
             continue
         row_data = {}
         for j in range(1, 32, 1):
+            print(json.dumps(new_ws_nab.cell(row=row_number, column=j).value))
             row_data[keys[j - 1]] = new_ws_nab.cell(row=row_number, column=j).value
         nab_data_list.append(row_data)
-        print(json.dumps(row_data))
     print(json.dumps(nab_data_list))
 
 
