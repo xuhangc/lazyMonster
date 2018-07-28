@@ -661,12 +661,12 @@ def wes_sample_analysis(folder_name):
 
 def nab_data(folder_name):
     p = Path(folder_name)
-    file_path_list = p.glob('Spark200 Gluc 2D*.xlsx')
+    print(json.dumps(folder_name))
+    file_path_list = p.glob('*.xlsx')
+    print(json.dumps(file_path_list))
     file_list = []
     for file_name in file_path_list:
         file_list.append(str(file_name))
-
-    print(json.dumps(file_list))
     new_ws_nab = new_wb.create_sheet(title="NAB Summary", index=0)
     new_ws_nab.cell(row=1, column=1).value = "RunNumber"
     new_ws_nab.cell(row=1, column=2).value = "SampleNumber"
@@ -717,10 +717,8 @@ def nab_data(folder_name):
             sample_number.append('S' + str(spreadsheet_counter))
             row_start = row_start + 1
             spreadsheet_counter = spreadsheet_counter + 1
-        print(json.dumps(valid_spreadsheet))
 
         for spreadsheet in valid_spreadsheet:
-            print(json.dumps(spreadsheet))
             cur_ws = cur_wb[spreadsheet]
             for j in range(1, 32, 1):
                 if j == 1:
@@ -757,7 +755,6 @@ def nab_data(folder_name):
                     new_ws_nab.cell(row=row_counter, column=j).value = cur_ws['F57'].value
                 else:
                     new_ws_nab.cell(row=row_counter, column=j).value = cur_ws['E57'].value
-            print(json.dumps(row_counter))
             row_counter = row_counter + 1
 
     nab_data_list = []
