@@ -768,6 +768,175 @@ def nab_data(folder_name):
     print(json.dumps(nab_data_list))
 
 
+def tissue_wes_extract_excels(folder_name):
+    file_list = []
+    p = Path(folder_name)
+    tissue_wes_file_list = list(p.glob('Tissue_Wes_Analysis*.xlsx'))
+    for tissue_wes_file in tissue_wes_file_list:
+        file_list.append(tissue_wes_file)
+    return file_list
+
+
+def tissue_wes_linear_regression(folder_name):
+    file_list = tissue_wes_extract_excels(folder_name)
+    result = []
+    header = ['RumNumber', 'Slope', 'Intercept', 'RSquare']
+    result.append(header)
+    for file_name in file_list:
+        cur_wb = load_workbook(file_name, read_only=True, data_only=True)
+        cur_ws = cur_wb['Data Analysis']
+        cur_result = []
+        for j in range(1, len(header) + 1, 1):
+            if j == 1:
+                cur_result.append(cur_ws.cell(row=2, column=2).value)
+            else:
+                cur_result.append(round(float(cur_ws.cell(row=24, column=j - 1).value)))
+        result.append(cur_result)
+
+    transfer_to_json(result, len(header))
+
+
+def tissue_wes_standard_curve(folder_path):
+    file_list = tissue_wes_extract_excels(folder_path)
+    result = []
+    header = ['RunNumber', 'Std', 'TPP1ConcngPermL', 'Area', 'BackCalculatedConcngPermL', 'PercentRE']
+    result.append(header)
+    for file_name in file_list:
+        cur_wb = load_workbook(file_name, read_only=True, data_only=True)
+        cur_ws = cur_wb['Data Analysis']
+        row_start = 27
+        while row_start != 36:
+            cur_result = []
+            for j in range(1, len(header) + 1, 1):
+                if j == 1:
+                    cur_result.append(cur_ws.cell(row=2, column=2).value)
+                else:
+                    if cur_ws.cell(row=row_start, column=j - 1).value == "Masked" or cur_ws.cell(row=row_start,
+                                                                                                 column=j - 1).value == "NA":
+                        cur_result.append(cur_ws.cell(row=row_start, column=j - 1).value)
+                    else:
+                        if j == 3 or j == 5:
+                            cur_result.append(round(float(cur_ws.cell(row=row_start, column=j - 1).value), 3))
+                        elif j == 4:
+                            cur_result.append((round(float(cur_ws.cell(row=row_start, column=j - 1).value))))
+                        elif j == 6:
+                            if row_start == 35:
+                                cur_result.append(None)
+                            else:
+                                cur_result.append(round(float(cur_ws.cell(row=row_start, column=j - 1).value), 1))
+                        else:
+                            cur_result.append(cur_ws.cell(row=row_start, column=j - 1).value)
+            result.append(cur_result)
+            row_start = row_start + 1
+    transfer_to_json(result, len(header))
+
+
+def tissue_wes_upper_and_lower_bond(folder_path):
+    file_list = tissue_wes_extract_excels(folder_path)
+    result = []
+    header = ['RunNumber', 'ULOQ', 'LLOQ']
+    result.append(header)
+    for file_name in file_list:
+        cur_wb = load_workbook(file_name, read_only=True, data_only=True)
+        cur_ws = cur_wb['Data Analysis']
+        cur_result = []
+        for j in range(1, len(header) + 1, 1):
+            if j == 1:
+                cur_result.append(cur_ws.cell(row=2, column=2).value)
+            elif j == 2:
+                if cur_ws.cell(row=37, column=3).value == "NA":
+                    cur_result.append(cur_ws.cell(row=37, column=3).value)
+                else:
+                    cur_result.append(round(float(cur_ws.cell(row=37, column=3).value), 3))
+            else:
+                if cur_ws.cell(row=37, column=5).value == "NA":
+                    cur_result.append(cur_ws.cell(row=37, column=5).value)
+                else:
+                    cur_result.append(round(float(cur_ws.cell(row=37, column=5).value), 3))
+        result.append(cur_result)
+    transfer_to_json(result, len(header))
+
+
+def tissue_wes_qc_data(folder_path):
+    file_list = tissue_wes_extract_excels(folder_path)
+    result = []
+    header = ['RunNumber', 'QCIn1To10CSF', 'SpikedConcngPermL', 'Area', 'ConcngPermL', 'PercentRE']
+    result.append(header)
+    for file_name in file_list:
+        cur_wb = load_workbook(file_name, read_only=True, data_only=True)
+        cur_ws = cur_wb['Data Analysis']
+        row_start = 42
+        while row_start != 45:
+            cur_result = []
+            for j in range(1, len(header) + 1, 1):
+                if j == 1:
+                    cur_result.append(cur_ws.cell(row=2, column=2).value)
+                elif j == 2:
+                    cur_result.append(cur_ws.cell(row=row_start, column=j - 1).value)
+                elif j == 3 or j == 5:
+                    cur_result.append(round(float(cur_ws.cell(row=row_start, column=j - 1).value), 3))
+                elif j == 6:
+                    cur_result.append(round(float(cur_ws.cell(row=row_start, column=j - 1).value), 1))
+                else:
+                    cur_result.append(round(float(cur_ws.cell(row=row_start, column=j - 1).value)))
+            result.append(cur_result)
+            row_start = row_start + 1
+
+    transfer_to_json(result, len(header))
+
+
+def tissue_wes_sample_analysis(folder_path):
+    file_list = tissue_wes_extract_excels(folder_path)
+    result = []
+    header = ['RunNumber', 'AnimalID', 'TimePoint', 'ROA', 'TissueType', 'PunchNumber', 'RelativeToInjection',
+              'CollectionDate', 'PeakArea', 'ConcngPermL', 'TotalProtein', 'AdjustedConcngPermL', 'ReportedCon',
+              'LoadingIssue', 'ActinLoadingCtrlArea']
+    result.append(header)
+    for file_name in file_list:
+        cur_wb = load_workbook(file_name, read_only=True, data_only=True)
+        cur_ws = cur_wb['Data Analysis']
+        row_start = 67
+        while cur_ws.cell(row=row_start, column=2).value != "NA":
+            cur_result = []
+            for j in range(1, len(header) + 1, 1):
+                if j == 1:
+                    cur_result.append(cur_ws.cell(row=2, column=2).value)
+                elif j == 9 or j == 11:
+                    cur_result.append(round(float(cur_ws.cell(row=row_start, column=j).value)))
+                elif j == 10 or j == 12:
+                    cur_result.append(round(float(cur_ws.cell(row=row_start, column=j).value), 3))
+                elif j == 13:
+                    if cur_ws.cell(row=row_start, column=j).value == "Run Failure, retest" or cur_ws.cell(
+                            row=row_start, column=j).value == "AQL, retest needed" or cur_ws.cell(
+                        row=row_start, column=j).value == "BQL, no retest" or cur_ws.cell(
+                        row=row_start, column=j).value == "BQL, retest" or cur_ws.cell(
+                        row=row_start, column=j).value == "Loading issue":
+                        cur_result.append(cur_ws.cell(row=row_start, column=j).value)
+                    else:
+                        cur_result.append(round(float(cur_ws.cell(row=row_start, column=j).value), 3))
+                elif j == 15:
+                    cur_result.append(round(float(cur_ws.cell(row=row_start - 16, column=j - 11).value)))
+                else:
+                    cur_result.append(cur_ws.cell(row=row_start, column=j).value)
+            result.append(cur_result)
+            row_start = row_start + 1
+
+    transfer_to_json(result, len(header))
+
+
+def transfer_to_json(result, col_number):
+    result_list = []
+    keys = []
+    for j in range(0, col_number, 1):
+        keys.append(result[0][j])
+    for row_number in range(1, len(result), 1):
+        row_data = {}
+        for j in range(0, col_number, 1):
+            row_data[keys[j]] = result[row_number][j]
+        result_list.append(row_data)
+
+    print(json.dumps(result_list))
+
 def main():
     if sys.argv[2] == 'qPCRqc':
         qpcr_qc_summary(sys.argv[1])
