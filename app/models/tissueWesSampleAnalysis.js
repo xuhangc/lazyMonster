@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var wesTissueSampleAnalysisSchema = mongoose.Schema({
+var tissueWesSampleAnalysisSchema = mongoose.Schema({
     UserId: {
         type: mongoose.Schema.ObjectId,
         ref: 'ex_users'
@@ -22,6 +22,6 @@ var wesTissueSampleAnalysisSchema = mongoose.Schema({
     ActinLoadingCtrlArea: String,
 }, {timestamps: true});
 
-wesTissueSampleAnalysisSchema.index({createdAt: 1}, {expireAfterSeconds: 600});
+tissueWesSampleAnalysisSchema.index({createdAt: 1}, {expireAfterSeconds: 600});
 
-module.exports = mongoose.model('wesTissueSampleAnalysis', wesTissueSampleAnalysisSchema);
+module.exports = mongoose.model('tissueWesSampleAnalysis', tissueWesSampleAnalysisSchema);

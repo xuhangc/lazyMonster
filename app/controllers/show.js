@@ -11,6 +11,13 @@ var wesSampleAnalysis = require('../models/wesSampleAnalysis');
 
 var nabData = require('../models/nabData');
 
+var tissueWesLinearRegression = require('../models/tissueWesLinearRegression');
+var tissueWesStandardCurve = require('../models/tissueWesStandardCurve');
+var tissueWesUpperandLowerBond = require('../models/tissueWesUpperandLowerBond');
+var tissueWesQCData = require('../models/tissueWesQCData');
+var tissueWesSampleAnalysis = require('../models/tissueWesSampleAnalysis');
+var tissueWesSampleAnalysis88 = require('../models/tissueWesSampleAnalysis88');
+
 var mongoose = require('mongoose');
 
 exports.qPCRqc = function (req, res) {

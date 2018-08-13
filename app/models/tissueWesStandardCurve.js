@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var wesTissueStandardCurveSchema = mongoose.Schema({
+var tissueWesStandardCurveSchema = mongoose.Schema({
     UserId: {
         type: mongoose.Schema.ObjectId,
         ref: 'ex_users'
@@ -13,6 +13,6 @@ var wesTissueStandardCurveSchema = mongoose.Schema({
     PercentRE: String,
 }, {timestamps: true});
 
-wesTissueStandardCurveSchema.index({createdAt: 1}, {expireAfterSeconds: 600});
+tissueWesStandardCurveSchema.index({createdAt: 1}, {expireAfterSeconds: 600});
 
-module.exports = mongoose.model('wesTissueStandardCurve', wesTissueStandardCurveSchema);
+module.exports = mongoose.model('tissueWesStandardCurve', tissueWesStandardCurveSchema);

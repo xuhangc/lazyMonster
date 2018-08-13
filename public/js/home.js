@@ -16,6 +16,15 @@ $(document).ready(function () {
             $("#option").append('<option value="Wes Upper and Lower bond Summary">Upper and Lower bond Summary</option>');
             $("#option").append('<option value="Wes QC Data Summary">QC Data Summary</option>');
             $("#option").append('<option value="Wes Sample Analysis Data Summary">Sample Analysis Data Summary</option>');
+        } else if ($(this).val() == "westissue") {
+            $("#form").attr("action", "/upload/wesTissueLinearRegressionDataSummary");
+            $('#option').children().remove();
+            $("#option").append('<option value="Tissue Wes Linear Regression Data Summary">Linear Regression Data Summary</option>');
+            $("#option").append('<option value="Tissue Wes Standard Curve Data Summary">Standard Curve Data Summary</option>');
+            $("#option").append('<option value="Tissue Wes Upper and Lower bond Summary">Upper and Lower bond Summary</option>');
+            $("#option").append('<option value="Tissue Wes QC Data Summary">QC Data Summary</option>');
+            $("#option").append('<option value="Tissue Wes Sample Analysis Data Summary">Sample Analysis Data Summary</option>');
+            $("#option").append('<option value="Tissue Wes Sample Analysis Data Summary 88">Sample Analysis Data Summary (Peak 88)</option>');
         } else {
             $("#form").attr("action", "/upload/nabDataSummary");
             $('#option').children().remove();
@@ -52,6 +61,8 @@ $(document).ready(function () {
             case "NAB Data Summary":
                 $("#form").attr("action", "/upload/nabDataSummary");
                 break;
+            case "Tissue Wes Linear Regression Data Summary":
+
             default:
                 $("#form").attr("action", "/upload/qPCRqc");
                 break;
@@ -85,10 +96,8 @@ $(document).ready(function () {
 
     });
 
-    $('#start').click(function(){
+    $('#start').click(function () {
         $("#wait").css("display", "block");
     });
-
-
 });
 

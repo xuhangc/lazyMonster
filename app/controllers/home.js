@@ -116,7 +116,7 @@ exports.upload = function (req, res) {
                         scriptPath: path.join(__dirname + "../../../python"),
                         args: [filepath, req.params.operation]
                     };
-                    var shell = new PythonShell('qPCR_aggregation_v2.py', options);
+                    var shell = new PythonShell('date_aggregation.py', options);
                     async.parallel({
                         one: function (callback) {
                             shell.on('message', function (message) {
