@@ -25,9 +25,9 @@ module.exports = function (app, passport) {
     app.get('/nabDataSummary', home.loggedIn, show.nabDataSummary); // NAb data
 
     app.get('/qPCRqc/download', home.loggedIn, download.qPCRqcSummaryDownload); //qc download
-    app.get('/qPCRraw/download', home.loggedIn, download.qPCRrawDataAggregationDownload);
-    app.get('/qPCRretest/download', home.loggedIn, download.qPCRretestInfoAggregationDownload);
-    app.get('/qPCReachqc/download', home.loggedIn, download.qPCRQCinDetailDownload);
+    app.get('/qPCRraw/download', home.loggedIn, download.qPCRrawDataAggregationDownload); // sample data download
+    app.get('/qPCRretest/download', home.loggedIn, download.qPCRretestInfoAggregationDownload); // retest data download
+    app.get('/qPCReachqc/download', home.loggedIn, download.qPCRQCinDetailDownload); // qc detail download
 
     app.get('/wesLinearRegressionDataSummary/download', home.loggedIn, download.wesLinearRegressionDownload);
     app.get('/wesStandardCurveDataSummary/download', home.loggedIn, download.wesStandardCurveDownload);

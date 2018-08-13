@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tissue Wes Sample Analysis Data Summary (Peak 88) Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+</head>
+<body>
+<table id="table_id" class="display">
+    <thead>
+    <tr>
+        <th>Run number</th>
+        <th>Animal ID</th>
+        <th>Time Point</th>
+        <th>ROA</th>
+        <th>Tissue Type</th>
+        <th>Punch Number</th>
+        <th>Relative To Injection</th>
+        <th>Collection Date</th>
+        <th>Peak Area</th>
+        <th>Conc (ng/mL)</th>
+        <th>Total Protein</th>
+        <th>Adjusted Conc (ng/mL)</th>
+        <th>Reported Conc</th>
+        <th>Loading Issue</th>
+        <th>Actin Loading Control Area</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for(var i = 0; i < result.length; i++) { %>
+    <tr>
+        <td><%= result[i].RunNumber %></td>
+        <td><%= result[i].AnimalID %></td>
+        <td><%= result[i].TimePoint %></td>
+        <td><%= result[i].ROA %></td>
+        <td><%= result[i].TissueType %></td>
+        <td><%= result[i].PunchNumber %></td>
+        <td><%= result[i].RelativeToInjection %></td>
+        <td><%= result[i].CollectionDate %></td>
+        <td><%= result[i].PeakArea %></td>
+        <td><%= result[i].ConcngPermL %></td>
+        <td><%= result[i].TotalProtein %></td>
+        <td><%= result[i].AdjustedConcngPermL %></td>
+        <td><%= result[i].ReportedCon %></td>
+        <td><%= result[i].LoadingIssue %></td>
+        <td><%= result[i].ActinLoadingCtrlArea %></td>
+    </tr>
+    <% } %>
+    </tbody>
+</table>
+<form action="/home">
+    <input type="submit" value="Back to Home">
+</form>
+<form action="/tissueWesSampleAnalysis88DataSummary/download">
+    <input type="submit" value="Download Tissue Wes Sample Analysis Data Summary Result (Peak 88)">
+</form>
+</body>
+</html>

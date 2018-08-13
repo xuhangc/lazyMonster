@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tissue Wes Standard Curve Data Summary Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+</head>
+<body>
+<table id="table_id" class="display">
+    <thead>
+    <tr>
+        <th>Run number</th>
+        <th>Std</th>
+        <th>TPP1 Conc (ng/mL)</th>
+        <th>Area</th>
+        <th>Back calculated Conc. (ng/mL)</th>
+        <th>%RE</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for(var i = 0; i < result.length; i++) { %>
+    <tr>
+        <td><%= result[i].RunNumber %></td>
+        <td><%= result[i].Std %></td>
+        <td><%= result[i].TPP1ConcngPermL %></td>
+        <td><%= result[i].Area %></td>
+        <td><%= result[i].BackCalculatedConcngPermL %></td>
+        <td><%= result[i].PercentRE %></td>
+    </tr>
+    <% } %>
+    </tbody>
+</table>
+<form action="/home">
+    <input type="submit" value="Back to Home">
+</form>
+<form action="/tissueWesStandardCurveDataSummary/download">
+    <input type="submit" value="Download Tissue Wes Standard Curve Data Summary Result">
+</form>
+</body>
+</html>
