@@ -131,3 +131,71 @@ exports.nabDataSummary = function (req, res) {
     });
 }
 
+exports.tissueWesLinearRegressionDataSummary = function (req, res) {
+    tissueWesLinearRegression.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('tissueWesLinearRegressionDataSummary.ejs', {
+            error: req.flash("error"),
+            success: req.flash("success"),
+            session: req.session,
+            result: result
+        });
+    });
+}
+
+exports.tissueWesStandardCurveDataSummary = function (req, res) {
+    tissueWesStandardCurve.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('tissueWesStandardCurveDataSummary.ejs', {
+            error: req.flash("error"),
+            success: req.flash("success"),
+            session: req.session,
+            result: result
+        });
+    });
+}
+
+exports.tissueWesUpperandLowerBondSummary = function (req, res) {
+    tissueWesUpperandLowerBond.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('tissueWesUpperandLowerBondSummary.ejs', {
+            error: req.flash("error"),
+            success: req.flash("success"),
+            session: req.session,
+            result: result
+        });
+    });
+}
+
+exports.tissueWesQCDataSummary = function (req, res) {
+    tissueWesQCData.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('tissueWesQCDataSummary.ejs', {
+            error: req.flash("error"),
+            success: req.flash("success"),
+            session: req.session,
+            result: result
+        });
+    });
+}
+
+exports.tissueWesSampleAnalysisDataSummary = function (req, res) {
+    tissueWesSampleAnalysis.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('tissueWesSampleAnalysisDataSummary.ejs', {
+            error: req.flash("error"),
+            success: req.flash("success"),
+            session: req.session,
+            result: result
+        });
+    });
+}
+
+exports.tissueWesSampleAnalysis88DataSummary = function (req, res) {
+    tissueWesSampleAnalysis88.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('tissueWesSampleAnalysis88DataSummary.ejs', {
+            error: req.flash("error"),
+            success: req.flash("success"),
+            session: req.session,
+            result: result
+        });
+    });
+}
+
+
+

@@ -24,6 +24,13 @@ module.exports = function (app, passport) {
 
     app.get('/nabDataSummary', home.loggedIn, show.nabDataSummary); // NAb data
 
+    app.get('/tissueWesLinearRegressionDataSummary', home.loggedIn, show.tissueWesLinearRegressionDataSummary);
+    app.get('/tissueWesStandardCurveDataSummary', home.loggedIn, show.tissueWesStandardCurveDataSummary);
+    app.get('/tissueWesUpperandLowerBondSummary', home.loggedIn, show.tissueWesUpperandLowerBondSummary);
+    app.get('/tissueWesQCDataSummary', home.loggedIn, show.tissueWesQCDataSummary);
+    app.get('/tissueWesSampleAnalysisDataSummary', home.loggedIn, show.tissueWesSampleAnalysisDataSummary);
+    app.get('/tissueWesSampleAnalysis88DataSummary', home.loggedIn, show.tissueWesSampleAnalysis88DataSummary);
+
     app.get('/qPCRqc/download', home.loggedIn, download.qPCRqcSummaryDownload); //qc download
     app.get('/qPCRraw/download', home.loggedIn, download.qPCRrawDataAggregationDownload); // sample data download
     app.get('/qPCRretest/download', home.loggedIn, download.qPCRretestInfoAggregationDownload); // retest data download
