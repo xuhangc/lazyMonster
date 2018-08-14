@@ -44,6 +44,14 @@ module.exports = function (app, passport) {
 
     app.get('/nabDataSummary/download', home.loggedIn, download.nabDataDownload);
 
+    app.get('/tissueWesLinearRegressionDataSummary/download', home.loggedIn, download.tissueWesLinearRegressionDownload);
+    app.get('/tissueWesStandardCurveDataSummary/download', home.loggedIn, download.tissueWesStandardCurveDownload);
+    app.get('/tissueWesUpperandLowerBondSummary/download', home.loggedIn, download.tissueWesUpperandLowerBondDownload);
+    app.get('/tissueWesQCDataSummary/download', home.loggedIn, download.tissueWesQCDataDownload);
+    app.get('/tissueWesSampleAnalysisDataSummary/download', home.loggedIn, download.tissueWesSampleAnalysisDownload);
+    app.get('/tissueWesSampleAnalysis88DataSummary/download', home.loggedIn, download.tissueWesSampleAnalysis88Download);
+
+
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/home', // redirect to the secure profile section
         failureRedirect: '/signup', // redirect back to the signup page if there is an error

@@ -1004,6 +1004,19 @@ def main():
         wes_sample_analysis(sys.argv[1])
     elif sys.argv[2] == 'nabDataSummary':
         nab_data(sys.argv[1])
+    elif sys.argv[2] == 'tissueWesLinearRegressionDataSummary':
+        tissue_wes_linear_regression(sys.argv[1])
+    elif sys.argv[2] == 'tissueWesStandardCurveDataSummary':
+        tissue_wes_standard_curve(sys.argv[1])
+    elif sys.argv[2] == 'tissueWesUpperandLowerBondSummary':
+        tissue_wes_upper_and_lower_bond(sys.argv[1])
+    elif sys.argv[2] == 'tissueWesQCDataSummary':
+        tissue_wes_qc_data(sys.argv[1])
+    elif sys.argv[2] == 'tissueWesSampleAnalysisDataSummary':
+        tissue_wes_sample_analysis(sys.argv[1])
+    elif sys.argv[2] == 'tissueWesSampleAnalysis88DataSummary':
+        tissue_wes_sample_analysis_88(sys.argv[1])
+
 
 if __name__ == '__main__':
     warnings.filterwarnings('ignore')

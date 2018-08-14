@@ -20,6 +20,13 @@ var wesUpperandLowerBond = require('../models/wesUpperandLowerBond');
 var wesQCData = require('../models/wesQCData');
 var wesSampleAnalysis = require('../models/wesSampleAnalysis');
 
+var tissueWesLinearRegression = require('../models/tissueWesLinearRegression');
+var tissueWesStandardCurve = require('../models/tissueWesStandardCurve');
+var tissueWesUpperandLowerBond = require('../models/tissueWesUpperandLowerBond');
+var tissueWesQCData = require('../models/tissueWesQCData');
+var tissueWesSampleAnalysis = require('../models/tissueWesSampleAnalysis');
+var tissueWesSampleAnalysis88 = require('../models/tissueWesSampleAnalysis88');
+
 var nabData = require('../models/nabData');
 
 Date.prototype.yyyymmddhhmm = function () {
@@ -313,6 +320,97 @@ exports.upload = function (req, res) {
                                                 });
                                                 elem.save();
                                             }
+                                        }
+                                    } else if (req.params.operation == 'tissueWesLinearRegressionDataSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new tissueWesLinearRegression({
+                                                UserId: req.session.user._id,
+                                                RunNumber: message[i].RunNumber,
+                                                Slope: message[i].Slope,
+                                                Intercept: message[i].Intercept,
+                                                RSquare: message[i].RSquare,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'tissueWesStandardCurveDataSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new tissueWesStandardCurve({
+                                                UserId: req.session.user._id,
+                                                RunNumber: message[i].RunNumber,
+                                                Std: message[i].Std,
+                                                TPP1ConcngPermL: message[i].TPP1ConcngPermL,
+                                                Area: message[i].Area,
+                                                BackCalculatedConcngPermL: message[i].BackCalculatedConcngPermL,
+                                                PercentRE: message[i].PercentRE,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'tissueWesUpperandLowerBondSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new tissueWesUpperandLowerBond({
+                                                UserId: req.session.user._id,
+                                                RunNumber: message[i].RunNumber,
+                                                ULOQ: message[i].ULOQ,
+                                                LLOQ: message[i].LLOQ,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'tissueWesQCDataSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new tissueWesQCData({
+                                                UserId: req.session.user._id,
+                                                RunNumber: message[i].RunNumber,
+                                                QCIn1To10CSF: message[i].QCIn1To10CSF,
+                                                SpikedConcngPermL: message[i].SpikedConcngPermL,
+                                                Area: message[i].Area,
+                                                ConcngPermL: message[i].ConcngPermL,
+                                                PercentRE: message[i].PercentRE,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'tissueWesSampleAnalysisDataSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new tissueWesSampleAnalysis({
+                                                UserId: req.session.user._id,
+                                                RunNumber: message[i].RunNumber,
+                                                AnimalID: message[i].AnimalID,
+                                                TimePoint: message[i].TimePoint,
+                                                ROA: message[i].ROA,
+                                                TissueType: message[i].TissueType,
+                                                PunchNumber: message[i].PunchNumber,
+                                                RelativeToInjection: message[i].RelativeToInjection,
+                                                CollectionDate: message[i].CollectionDate,
+                                                PeakArea: message[i].PeakArea,
+                                                ConcngPermL: message[i].ConcngPermL,
+                                                TotalProtein: message[i].TotalProtein,
+                                                AdjustedConcngPermL: message[i].AdjustedConcngPermL,
+                                                ReportedCon: message[i].ReportedCon,
+                                                LoadingIssue: message[i].LoadingIssue,
+                                                ActinLoadingCtrlArea: message[i].ActinLoadingCtrlArea,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'tissueWesSampleAnalysis88DataSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new tissueWesSampleAnalysis88({
+                                                UserId: req.session.user._id,
+                                                RunNumber: message[i].RunNumber,
+                                                AnimalID: message[i].AnimalID,
+                                                TimePoint: message[i].TimePoint,
+                                                ROA: message[i].ROA,
+                                                TissueType: message[i].TissueType,
+                                                PunchNumber: message[i].PunchNumber,
+                                                RelativeToInjection: message[i].RelativeToInjection,
+                                                CollectionDate: message[i].CollectionDate,
+                                                PeakArea: message[i].PeakArea,
+                                                ConcngPermL: message[i].ConcngPermL,
+                                                TotalProtein: message[i].TotalProtein,
+                                                AdjustedConcngPermL: message[i].AdjustedConcngPermL,
+                                                ReportedCon: message[i].ReportedCon,
+                                                LoadingIssue: message[i].LoadingIssue,
+                                                ActinLoadingCtrlArea: message[i].ActinLoadingCtrlArea,
+                                            });
+                                            elem.save();
                                         }
                                     } else {
                                         console.log(message);
