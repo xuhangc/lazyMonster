@@ -892,7 +892,7 @@ def tissue_wes_qc_data(folder_path):
 def tissue_wes_sample_analysis(folder_path):
     file_list = tissue_wes_extract_excels(folder_path)
     result = []
-    header = ['RunNumber', 'AnimalID', 'TimePoint', 'ROA', 'TissueType', 'PunchNumber', 'RelativeToInjection',
+    header = ['RunNumber', 'AnimalID', 'TimePoint', 'ROA', 'TissueType', 'PunchNumber', 'SampleLocation',
               'CollectionDate', 'PeakArea', 'ConcngPermL', 'TotalProtein', 'AdjustedConcngPermL', 'ReportedCon',
               'LoadingIssue', 'ActinLoadingCtrlArea']
     result.append(header)
@@ -931,7 +931,7 @@ def tissue_wes_sample_analysis(folder_path):
 def tissue_wes_sample_analysis_88(folder_path):
     file_list = tissue_wes_extract_excels(folder_path)
     result = []
-    header = ['RunNumber', 'AnimalID', 'TimePoint', 'ROA', 'TissueType', 'PunchNumber', 'RelativeToInjection',
+    header = ['RunNumber', 'AnimalID', 'TimePoint', 'ROA', 'TissueType', 'PunchNumber', 'SampleLocation',
               'CollectionDate', 'PeakArea', 'ConcngPermL', 'TotalProtein', 'AdjustedConcngPermL', 'ReportedCon',
               'LoadingIssue', 'ActinLoadingCtrlArea']
     result.append(header)

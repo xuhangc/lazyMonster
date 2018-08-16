@@ -11,7 +11,7 @@ var tissueWesSampleAnalysis88Schema = mongoose.Schema({
     ROA: String,
     TissueType: String,
     PunchNumber: String,
-    RelativeToInjection: String,
+    SampleLocation: String,
     CollectionDate: String,
     PeakArea: Number,
     ConcngPermL: Number,
