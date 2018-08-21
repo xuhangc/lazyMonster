@@ -12,8 +12,10 @@ var helmet = require('helmet');
 var expectCt = require('expect-ct');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+var Raven = require('raven');
+Raven.config('https://5a8c3ce8df7a4efca5850e650ab32c20@sentry.io/1264633').install();
 
-
+app.use(Raven.requestHandler());
 /***************Mongodb configuratrion********************/
 var mongoose = require('mongoose');
 var configDB = require('./config/database.js');

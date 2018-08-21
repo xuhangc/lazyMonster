@@ -44,6 +44,7 @@
     "patch": "0.0.1",
     "proxy-from-env": "^1.0.0",
     "python-shell": "^0.5.0",
+    "raven": "^2.6.3",
     "request": "latest",
     "rimraf": "^2.6.2",
     "serve-favicon": "^2.5.0",
