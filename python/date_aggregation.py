@@ -590,7 +590,8 @@ def wes_sample_analysis(folder_name):
                     if j == 1:
                         new_ws_sa.cell(row=row_counter, column=j).value = this_run_number
                     elif j == 4 or j == 6:
-                        new_ws_sa.cell(row=row_counter, column=j).value = round(float(cur_ws.cell(row=row_start, column=j - 1).value), 3)
+                        new_ws_sa.cell(row=row_counter, column=j).value = round(
+                            float(cur_ws.cell(row=row_start, column=j - 1).value), 3)
                     else:
                         new_ws_sa.cell(row=row_counter, column=j).value = cur_ws.cell(row=row_start, column=j - 1).value
                 row_start = row_start + 1
@@ -724,7 +725,8 @@ def nab_data(folder_name):
                 if j == 1:
                     new_ws_nab.cell(row=row_counter, column=j).value = cur_ws['C3'].value
                 elif j == 2:
-                    new_ws_nab.cell(row=row_counter, column=j).value = sample_number[valid_spreadsheet.index(spreadsheet)]
+                    new_ws_nab.cell(row=row_counter, column=j).value = sample_number[
+                        valid_spreadsheet.index(spreadsheet)]
                 elif j == 3:
                     new_ws_nab.cell(row=row_counter, column=j).value = cur_ws['A6'].value
                 elif j == 4:
@@ -969,6 +971,89 @@ def tissue_wes_sample_analysis_88(folder_path):
     transfer_to_json(result, len(header))
 
 
+def gaa_enzymatic_extract_excels(folder_name):
+    file_list = []
+    p = Path(folder_name)
+    tissue_wes_file_list = list(p.glob('GAA_Enzymatic_Assay*.xlsx'))
+    for tissue_wes_file in tissue_wes_file_list:
+        file_list.append(tissue_wes_file)
+    return file_list
+
+
+def gaa_enzymatic_standard_curve(folder_path):
+    file_list = gaa_enzymatic_extract_excels(folder_path)
+    result = []
+    header = ['RunNumber', 'Std', 'Conc', 'MeanConc', 'CV', 'PercentRE']
+    result.append(header)
+    for file_name in file_list:
+        cur_wb = load_workbook(file_name, read_only=True, data_only=True)
+        cur_ws = cur_wb['Data analysis']
+        row_start = 6
+        while row_start != 16:
+            cur_result = []
+            for j in range(1, len(header) + 1, 1):
+                if j == 1:
+                    cur_result.append(cur_ws.cell(row=3, column=2).value)
+                elif j == 2:
+                    cur_result.append(cur_ws.cell(row=row_start, column=j - 1).value)
+                elif j == 3:
+                    cur_result.append(round(float(cur_ws.cell(row=row_start, column=j).value), 3))
+                elif j == 4:
+                    cur_result.append(round(float(cur_ws.cell(row=row_start, column=j + 1).value), 3))
+                else:
+                    cur_result.append(round(float(cur_ws.cell(row=row_start, column=j + 2).value), 3))
+            result.append(cur_result)
+            row_start = row_start + 1
+    transfer_to_json(result, len(header))
+
+
+def gaa_enzymatic_qc_analysis(folder_path):
+    file_list = gaa_enzymatic_extract_excels(folder_path)
+    result = []
+    header = ['RunNumber', 'QC', 'MeanResult', 'CVPercentage', 'AdjResults']
+    result.append(header)
+    for file_name in file_list:
+        cur_wb = load_workbook(file_name, read_only=True, data_only=True)
+        cur_ws = cur_wb['Data analysis']
+        row_start = 19
+        while row_start != 25:
+            cur_result = []
+            for j in range(1, len(header) + 1, 1):
+                if j == 1:
+                    cur_result.append(cur_ws.cell(row=3, column=2).value)
+                elif j == 2:
+                    cur_result.append(cur_ws.cell(row=row_start, column=j - 1).value)
+                elif j == 3:
+                    cur_result.append(round(float(cur_ws.cell(row=row_start, column=j + 2).value), 3))
+                else:
+                    cur_result.append(round(float(cur_ws.cell(row=row_start, column=j + 3).value), 3))
+            result.append(cur_result)
+            row_start = row_start + 1
+    transfer_to_json(result, len(header))
+
+
+def gaa_enzymatic_lower_and_upper_bond(folder_path):
+    file_list = gaa_enzymatic_extract_excels(folder_path)
+    result = []
+    header = ['RunNumber', 'ULOQ', 'LLOQ']
+    result.append(header)
+    for file_name in file_list:
+        cur_wb = load_workbook(file_name, read_only=True, data_only=True)
+        cur_ws = cur_wb['Data analysis']
+        cur_result = []
+        for j in range(1, len(header) + 1, 1):
+            if j == 1:
+                cur_result.append(cur_ws.cell(row=3, column=2).value)
+            elif j == 2:
+                cur_result.append(cur_ws.cell(row=26, column=j).value)
+                # cur_result.append(round(float(cur_ws.cell(row=26, column=j).value), 3))
+            else:
+                cur_result.append(cur_ws.cell(row=26, column=j + 1).value)
+                # cur_result.append(round(float(cur_ws.cell(row=26, column=j + 1).value), 3))
+        result.append(cur_result)
+    transfer_to_json(result, len(header))
+
+
 def transfer_to_json(result, col_number):
     result_list = []
     keys = []
@@ -981,6 +1066,7 @@ def transfer_to_json(result, col_number):
         result_list.append(row_data)
 
     print(json.dumps(result_list))
+
 
 def main():
     if sys.argv[2] == 'qPCRqc':
@@ -1016,6 +1102,12 @@ def main():
         tissue_wes_sample_analysis(sys.argv[1])
     elif sys.argv[2] == 'tissueWesSampleAnalysis88DataSummary':
         tissue_wes_sample_analysis_88(sys.argv[1])
+    elif sys.argv[2] == 'gaaEnzymaticStandardCurveDataSummary':
+        gaa_enzymatic_standard_curve(sys.argv[1])
+    elif sys.argv[2] == 'gaaEnzymaticQCAnalysisDataSummary':
+        gaa_enzymatic_qc_analysis(sys.argv[1])
+    elif sys.argv[2] == 'gaaEnzymaticUpperAndLowerBondSummary':
+        gaa_enzymatic_lower_and_upper_bond(sys.argv[1])
 
 
 if __name__ == '__main__':
