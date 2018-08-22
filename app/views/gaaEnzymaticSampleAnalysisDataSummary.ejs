@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GAA Enzymatic Sample Analysis Data Summary Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+</head>
+<body>
+<table id="table_id" class="display">
+    <thead>
+    <tr>
+        <th>Run number</th>
+        <th>Sample No</th>
+        <th>Animal ID</th>
+        <th>Group</th>
+        <th>Dose</th>
+        <th>Sex</th>
+        <th>Timepoint</th>
+        <th>Collection Date</th>
+        <th>Pre-Dilution Factor</th>
+        <th>Dilution Factor (MRD)</th>
+        <th>Mean Result (nmol/hr/mL)</th>
+        <th>%CV</th>
+        <th>Adjusted Results (Dilution Factor (MRD) * Mean Result)</th>
+        <th>Final Reported Results</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for(var i = 0; i < result.length; i++) { %>
+    <tr>
+        <td><%= result[i].RunNumber %></td>
+        <td><%= result[i].SampleNo %></td>
+        <td><%= result[i].AnimalID %></td>
+        <td><%= result[i].Group %></td>
+        <td><%= result[i].Dose %></td>
+        <td><%= result[i].Sex %></td>
+        <td><%= result[i].TimePoint %></td>
+        <td><%= result[i].CollectionDate %></td>
+        <td><%= result[i].PreDilutionFactor %></td>
+        <td><%= result[i].DilutionFactorMRD %></td>
+        <td><%= result[i].MeanResult %></td>
+        <td><%= result[i].PercentageCV %></td>
+        <td><%= result[i].AdjustedResult %></td>
+        <td><%= result[i].ReportedResult %></td>
+    </tr>
+    <% } %>
+    </tbody>
+</table>
+<form action="/home">
+    <input type="submit" value="Back to Home">
+</form>
+<form action="/gaaEnzymaticSampleAnalysisDataSummary/download">
+    <input type="submit" value="Download Wes QC Data Summary Result">
+</form>
+</body>
+</html>

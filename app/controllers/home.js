@@ -29,6 +29,11 @@ var tissueWesSampleAnalysis88 = require('../models/tissueWesSampleAnalysis88');
 
 var nabData = require('../models/nabData');
 
+var gaaEnzymaticUpperandLowerBond = require('../models/gaaEnzymaticUpperandLowerBond');
+var gaaEnzymaticQCData = require('../models/gaaEnzymaticQCData');
+var gaaEnzymaticSampleAnalysis = require('../models/gaaEnzymaticSampleAnalysis');
+var gaaEnzymaticStandardCurve = require('../models/gaaEnzymaticStandardCurve');
+
 Date.prototype.yyyymmddhhmm = function () {
     var yyyy = this.getFullYear();
     var mm = this.getMonth() < 9 ? "0" + (this.getMonth() + 1) : (this.getMonth() + 1); // getMonth() is zero-based
@@ -409,6 +414,58 @@ exports.upload = function (req, res) {
                                                 ReportedCon: message[i].ReportedCon,
                                                 LoadingIssue: message[i].LoadingIssue,
                                                 ActinLoadingCtrlArea: message[i].ActinLoadingCtrlArea,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'gaaEnzymaticStandardCurveDataSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new gaaEnzymaticStandardCurve({
+                                                RunNumber: message[i].RunNumber,
+                                                Std: message[i].Std,
+                                                Conc: message[i].Conc,
+                                                MeanConc: message[i].MeanConc,
+                                                CV: message[i].CV,
+                                                PercentRE: message[i].PercentRE,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'gaaEnzymaticQCDataSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new gaaEnzymaticQCData({
+                                                RunNumber: message[i].RunNumber,
+                                                QC: message[i].QC,
+                                                MeanResult: message[i].MeanResult,
+                                                CVPercentage: message[i].CVPercentage,
+                                                AdjResults: message[i].AdjResults,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'gaaEnzymaticUpperandLowerBondSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new gaaEnzymaticUpperandLowerBond({
+                                                RunNumber: message[i].RunNumber,
+                                                ULOQ: message[i].ULOQ,
+                                                LLOQ: message[i].LLOQ,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'gaaEnzymaticSampleAnalysisDataSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new gaaEnzymaticSampleAnalysis({
+                                                RunNumber: message[i].RunNumber,
+                                                SampleNo: message[i].SampleNo,
+                                                AnimalID: message[i].AnimalID,
+                                                Group: message[i].Group,
+                                                Dose: message[i].Dose,
+                                                Sex: message[i].Sex,
+                                                TimePoint: message[i].TimePoint,
+                                                CollectionDate: message[i].CollectionDate,
+                                                PreDilutionFactor: message[i].PreDilutionFactor,
+                                                DilutionFactorMRD: message[i].DilutionFactorMRD,
+                                                MeanResult: message[i].MeanResult,
+                                                PercentageCV: message[i].PercentageCV,
+                                                AdjustedResult: message[i].AdjustedResult,
+                                                ReportedResult: message[i].ReportedResult,
                                             });
                                             elem.save();
                                         }

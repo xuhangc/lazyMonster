@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var gaaEnzymaticQCSchema = mongoose.Schema({
+var gaaEnzymaticQCDataSchema = mongoose.Schema({
     UserId: {
         type: mongoose.Schema.ObjectId,
         ref: 'ex_users'
@@ -12,6 +12,6 @@ var gaaEnzymaticQCSchema = mongoose.Schema({
     AdjResults: Number,
 }, {timestamps: true});
 
-gaaEnzymaticQCSchema.index({createdAt: 1}, {expireAfterSeconds: 600});
+gaaEnzymaticQCDataSchema.index({createdAt: 1}, {expireAfterSeconds: 600});
 
-module.exports = mongoose.model('gaaEnzymaticQC', gaaEnzymaticQCSchema);
+module.exports = mongoose.model('gaaEnzymaticQCData', gaaEnzymaticQCDataSchema);

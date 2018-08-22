@@ -1104,9 +1104,9 @@ def main():
         tissue_wes_sample_analysis_88(sys.argv[1])
     elif sys.argv[2] == 'gaaEnzymaticStandardCurveDataSummary':
         gaa_enzymatic_standard_curve(sys.argv[1])
-    elif sys.argv[2] == 'gaaEnzymaticQCAnalysisDataSummary':
+    elif sys.argv[2] == 'gaaEnzymaticQCDataSummary':
         gaa_enzymatic_qc_analysis(sys.argv[1])
-    elif sys.argv[2] == 'gaaEnzymaticUpperAndLowerBondSummary':
+    elif sys.argv[2] == 'gaaEnzymaticUpperandLowerBondSummary':
         gaa_enzymatic_lower_and_upper_bond(sys.argv[1])
 
 

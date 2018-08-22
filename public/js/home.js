@@ -13,7 +13,7 @@ $(document).ready(function () {
             $('#option').children().remove();
             $("#option").append('<option value="Wes Linear Regression Data Summary">Linear Regression Data Summary</option>');
             $("#option").append('<option value="Wes Standard Curve Data Summary">Standard Curve Data Summary</option>');
-            $("#option").append('<option value="Wes Upper and Lower bond Summary">Upper and Lower bond Summary</option>');
+            $("#option").append('<option value="Wes Upper and Lower bond Summary">Upper and Lower Bond Summary</option>');
             $("#option").append('<option value="Wes QC Data Summary">QC Data Summary</option>');
             $("#option").append('<option value="Wes Sample Analysis Data Summary">Sample Analysis Data Summary</option>');
         } else if ($(this).val() == "westissue") {
@@ -21,10 +21,17 @@ $(document).ready(function () {
             $('#option').children().remove();
             $("#option").append('<option value="Tissue Wes Linear Regression Data Summary">Linear Regression Data Summary</option>');
             $("#option").append('<option value="Tissue Wes Standard Curve Data Summary">Standard Curve Data Summary</option>');
-            $("#option").append('<option value="Tissue Wes Upper and Lower bond Summary">Upper and Lower bond Summary</option>');
+            $("#option").append('<option value="Tissue Wes Upper and Lower bond Summary">Upper and Lower Bond Summary</option>');
             $("#option").append('<option value="Tissue Wes QC Data Summary">QC Data Summary</option>');
             $("#option").append('<option value="Tissue Wes Sample Analysis Data Summary">Sample Analysis Data Summary</option>');
             $("#option").append('<option value="Tissue Wes Sample Analysis 88 Data Summary">Sample Analysis Data Summary (Peak 88)</option>');
+        } else if ($(this).val() == "gaaenzymatic") {
+            $("#form").attr("action", "/upload/gaaEnzymaticStandardCurveDataSummary");
+            $('#option').children().remove();
+            $("#option").append('<option value="GAA Enzymatic Assay Standard Curve Data Summary">Standard Curve Data Summary</option>');
+            $("#option").append('<option value="GAA Enzymatic Assay QC Data Summary">QC Data Summary</option>');
+            $("#option").append('<option value="GAA Enzymatic Assay Upper and Lower bond Summary">Upper and Lower Bond Summary</option>');
+            $("#option").append('<option value="GAA Enzymatic Assay Sample Analysis Data Summary">Sample Analysis Data SummarySample Analysis Data Summary</option>');
         } else {
             $("#form").attr("action", "/upload/nabDataSummary");
             $('#option').children().remove();
@@ -79,6 +86,18 @@ $(document).ready(function () {
             case "Tissue Wes Sample Analysis 88 Data Summary":
                 $("#form").attr("action", "/upload/tissueWesSampleAnalysis88DataSummary");
                 break;
+            case "GAA Enzymatic Assay Standard Curve Data Summary":
+                $("#form").attr("action", "/upload/gaaEnzymaticStandardCurveDataSummary");
+                break;
+            case "GAA Enzymatic Assay QC Data Summary":
+                $("#form").attr("action", "/upload/gaaEnzymaticQCDataSummary");
+                break;
+            case "GAA Enzymatic Assay Upper and Lower bond Summary":
+                $("#form").attr("action", "/upload/gaaEnzymaticUpperandLowerBondSummary");
+                break;
+            case "GAA Enzymatic Assay Sample Analysis Data Summary":
+                $("#form").attr("action", "/upload/gaaEnzymaticSampleAnalysisDataSummary");
+                break;
             default:
                 $("#form").attr("action", "/upload/qPCRqc");
                 break;
@@ -112,6 +131,13 @@ $(document).ready(function () {
             $('#jump-option').append('<option value="/tissueWesQCDataSummary">QC Data Summary</option>');
             $('#jump-option').append('<option value="/tissueWesSampleAnalysisDataSummary">Sample Analysis Data Summary</option>');
             $('#jump-option').append('<option value="/tissueWesSampleAnalysis88DataSummary">Sample Analysis Data Summary (Peak 88)</option>');
+        } else if ($(this).val() == "gaaenzymatic") {
+            $('#jump-option').children().remove();
+            $('#jump-option').append('<option></option>');
+            $('#jump-option').append('<option value="/gaaEnzymaticStandardCurveDataSummary">Standard Curve Data Summary</option>');
+            $('#jump-option').append('<option value="/gaaEnzymaticQCDataSummary">QC Data Summary</option>');
+            $('#jump-option').append('<option value="/gaaEnzymaticUpperandLowerBondSummary">Upper and Lower Bond Summary</option>');
+            $('#jump-option').append('<option value="/gaaEnzymaticSampleAnalysisDataSummary">Sample Analysis Data Summary</option>');
         } else {
             $('#jump-option').children().remove();
             $('#jump-option').append('<option></option>');

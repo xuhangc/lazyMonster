@@ -31,6 +31,11 @@ module.exports = function (app, passport) {
     app.get('/tissueWesSampleAnalysisDataSummary', home.loggedIn, show.tissueWesSampleAnalysisDataSummary);
     app.get('/tissueWesSampleAnalysis88DataSummary', home.loggedIn, show.tissueWesSampleAnalysis88DataSummary);
 
+    app.get('/gaaEnzymaticStandardCurveDataSummary', home.loggedIn, show.gaaEnzymaticStandardCurveDataSummary);
+    app.get('/gaaEnzymaticQCDataSummary', home.loggedIn, show.gaaEnzymaticQCDataSummary);
+    app.get('/gaaEnzymaticUpperandLowerBondSummary', home.loggedIn, show.gaaEnzymaticUpperandLowerBondSummary);
+    app.get('/gaaEnzymaticSampleAnalysisDataSummary', home.loggedIn, show.gaaEnzymaticSampleAnalysisDataSummary);
+
     app.get('/qPCRqc/download', home.loggedIn, download.qPCRqcSummaryDownload); //qc download
     app.get('/qPCRraw/download', home.loggedIn, download.qPCRrawDataAggregationDownload); // sample data download
     app.get('/qPCRretest/download', home.loggedIn, download.qPCRretestInfoAggregationDownload); // retest data download
@@ -51,7 +56,11 @@ module.exports = function (app, passport) {
     app.get('/tissueWesSampleAnalysisDataSummary/download', home.loggedIn, download.tissueWesSampleAnalysisDownload);
     app.get('/tissueWesSampleAnalysis88DataSummary/download', home.loggedIn, download.tissueWesSampleAnalysis88Download);
 
-
+    app.get('/gaaEnzymaticStandardCurveDataSummary/download', home.loggedIn, download.gaaEnzymaticStandardCurveDownload);
+    app.get('/gaaEnzymaticQCDataSummary/download', home.loggedIn, download.gaaEnzymaticQCDataDownload);
+    app.get('/gaaEnzymaticUpperandLowerBondSummary/download', home.loggedIn, download.gaaEnzymaticUpperandLowerBondDownload);
+    app.get('/gaaEnzymaticSampleAnalysisDataSummary/download', home.loggedIn, download.gaaEnzymaticSampleAnalysisDownload);
+    
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/home', // redirect to the secure profile section
         failureRedirect: '/signup', // redirect back to the signup page if there is an error

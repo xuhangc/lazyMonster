@@ -18,6 +18,11 @@ var tissueWesQCData = require('../models/tissueWesQCData');
 var tissueWesSampleAnalysis = require('../models/tissueWesSampleAnalysis');
 var tissueWesSampleAnalysis88 = require('../models/tissueWesSampleAnalysis88');
 
+var gaaEnzymaticUpperandLowerBond = require('../models/gaaEnzymaticUpperandLowerBond');
+var gaaEnzymaticQCData = require('../models/gaaEnzymaticQCData');
+var gaaEnzymaticSampleAnalysis = require('../models/gaaEnzymaticSampleAnalysis');
+var gaaEnzymaticStandardCurve  = require('../models/gaaEnzymaticStandardCurve');
+
 var mongoose = require('mongoose');
 
 exports.qPCRqc = function (req, res) {
@@ -197,5 +202,46 @@ exports.tissueWesSampleAnalysis88DataSummary = function (req, res) {
     });
 }
 
+exports.gaaEnzymaticStandardCurveDataSummary = function (req, res) {
+    gaaEnzymaticStandardCurve.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('gaaEnzymaticStandardCurveDataSummary.ejs', {
+            error: req.flash("error"),
+            success: req.flash("success"),
+            session: req.session,
+            result: result
+        });
+    });
+}
 
+exports.gaaEnzymaticQCDataSummary = function (req, res) {
+    gaaEnzymaticQCData.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('gaaEnzymaticQCDataSummary.ejs', {
+            error: req.flash("error"),
+            success: req.flash("success"),
+            session: req.session,
+            result: result
+        });
+    });
+}
 
+exports.gaaEnzymaticUpperandLowerBondSummary = function (req, res) {
+    gaaEnzymaticUpperandLowerBond.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('gaaEnzymaticUpperandLowerBondSummary.ejs', {
+            error: req.flash("error"),
+            success: req.flash("success"),
+            session: req.session,
+            result: result
+        });
+    });
+}
+
+exports.gaaEnzymaticSampleAnalysisDataSummary = function (req, res) {
+    gaaEnzymaticSampleAnalysis.find({UserId: req.session.user._id}, function (err, result) {
+        res.render('gaaEnzymaticSampleAnalysisDataSummary.ejs', {
+            error: req.flash("error"),
+            success: req.flash("success"),
+            session: req.session,
+            result: result
+        });
+    });
+}
