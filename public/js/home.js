@@ -17,7 +17,7 @@ $(document).ready(function () {
             $("#option").append('<option value="Wes QC Data Summary">QC Data Summary</option>');
             $("#option").append('<option value="Wes Sample Analysis Data Summary">Sample Analysis Data Summary</option>');
         } else if ($(this).val() == "westissue") {
-            $("#form").attr("action", "/upload/wesTissueLinearRegressionDataSummary");
+            $("#form").attr("action", "/upload/tissueWesLinearRegressionDataSummary");
             $('#option').children().remove();
             $("#option").append('<option value="Tissue Wes Linear Regression Data Summary">Linear Regression Data Summary</option>');
             $("#option").append('<option value="Tissue Wes Standard Curve Data Summary">Standard Curve Data Summary</option>');
@@ -31,7 +31,7 @@ $(document).ready(function () {
             $("#option").append('<option value="GAA Enzymatic Assay Standard Curve Data Summary">Standard Curve Data Summary</option>');
             $("#option").append('<option value="GAA Enzymatic Assay QC Data Summary">QC Data Summary</option>');
             $("#option").append('<option value="GAA Enzymatic Assay Upper and Lower bond Summary">Upper and Lower Bond Summary</option>');
-            $("#option").append('<option value="GAA Enzymatic Assay Sample Analysis Data Summary">Sample Analysis Data SummarySample Analysis Data Summary</option>');
+            $("#option").append('<option value="GAA Enzymatic Assay Sample Analysis Data Summary">Sample Analysis Data Summary</option>');
         } else {
             $("#form").attr("action", "/upload/nabDataSummary");
             $('#option').children().remove();

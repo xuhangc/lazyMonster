@@ -777,7 +777,7 @@ def nab_data(folder_name):
 def tissue_wes_extract_excels(folder_name):
     file_list = []
     p = Path(folder_name)
-    tissue_wes_file_list = list(p.glob('Tissue_Wes_Analysis*.xlsx'))
+    tissue_wes_file_list = list(p.glob('Tissue_Wes*.xlsx'))
     for tissue_wes_file in tissue_wes_file_list:
         file_list.append(tissue_wes_file)
     return file_list
@@ -786,11 +786,11 @@ def tissue_wes_extract_excels(folder_name):
 def tissue_wes_linear_regression(folder_name):
     file_list = tissue_wes_extract_excels(folder_name)
     result = []
-    header = ['RumNumber', 'Slope', 'Intercept', 'RSquare']
+    header = ['RunNumber', 'Slope', 'Intercept', 'RSquare']
     result.append(header)
     for file_name in file_list:
         cur_wb = load_workbook(file_name, read_only=True, data_only=True)
-        cur_ws = cur_wb['Data Analysis']
+        cur_ws = cur_wb['Data Analysis ']
         cur_result = []
         for j in range(1, len(header) + 1, 1):
             if j == 1:
@@ -809,7 +809,7 @@ def tissue_wes_standard_curve(folder_path):
     result.append(header)
     for file_name in file_list:
         cur_wb = load_workbook(file_name, read_only=True, data_only=True)
-        cur_ws = cur_wb['Data Analysis']
+        cur_ws = cur_wb['Data Analysis ']
         row_start = 27
         while row_start != 36:
             cur_result = []
@@ -844,7 +844,7 @@ def tissue_wes_upper_and_lower_bond(folder_path):
     result.append(header)
     for file_name in file_list:
         cur_wb = load_workbook(file_name, read_only=True, data_only=True)
-        cur_ws = cur_wb['Data Analysis']
+        cur_ws = cur_wb['Data Analysis ']
         cur_result = []
         for j in range(1, len(header) + 1, 1):
             if j == 1:
@@ -870,7 +870,7 @@ def tissue_wes_qc_data(folder_path):
     result.append(header)
     for file_name in file_list:
         cur_wb = load_workbook(file_name, read_only=True, data_only=True)
-        cur_ws = cur_wb['Data Analysis']
+        cur_ws = cur_wb['Data Analysis ']
         row_start = 42
         while row_start != 45:
             cur_result = []
@@ -900,9 +900,9 @@ def tissue_wes_sample_analysis(folder_path):
     result.append(header)
     for file_name in file_list:
         cur_wb = load_workbook(file_name, read_only=True, data_only=True)
-        cur_ws = cur_wb['Data Analysis']
+        cur_ws = cur_wb['Data Analysis ']
         row_start = 67
-        while cur_ws.cell(row=row_start, column=2).value != "NA":
+        while cur_ws.cell(row=row_start, column=2).value is not None:
             cur_result = []
             for j in range(1, len(header) + 1, 1):
                 if j == 1:
@@ -941,11 +941,11 @@ def tissue_wes_sample_analysis_88(folder_path):
         cur_wb = load_workbook(file_name, read_only=True, data_only=True)
         cur_ws = cur_wb['Peak 88 DA']
         row_start = 67
-        while cur_ws.cell(row=row_start, column=2).value != "NA":
+        while cur_ws.cell(row=row_start, column=2).value is not None:
             cur_result = []
             for j in range(1, len(header) + 1, 1):
                 if j == 1:
-                    cur_ws = cur_wb['Data Analysis']
+                    cur_ws = cur_wb['Data Analysis ']
                     cur_result.append(cur_ws.cell(row=2, column=2).value)
                     cur_ws = cur_wb['Peak 88 DA']
                 elif j == 9 or j == 11:
@@ -1054,6 +1054,29 @@ def gaa_enzymatic_lower_and_upper_bond(folder_path):
     transfer_to_json(result, len(header))
 
 
+def gaa_enzymatic_sample_analysis(folder_path):
+    file_list = gaa_enzymatic_extract_excels(folder_path)
+    result = []
+    header = ['RunNumber', 'SampleNo', 'AnimalID', 'Group', 'Dose', 'Sex', 'Timepoint', 'CollectionDate',
+              'PreDilutionFactor', 'DilutionFactorMRD', 'MeanResult', 'PercentageCV', 'AdjustedResult',
+              'ReportedResult']
+    result.append(header)
+    for file_name in file_list:
+        cur_wb = load_workbook(file_name, read_only=True, data_only=True)
+        cur_ws = cur_wb['Data analysis']
+        row_start = 33
+        while cur_ws.cell(row=row_start, column=2).value is not None:
+            cur_result = []
+            for j in range(1, len(header) + 1, 1):
+                if j == 1:
+                    cur_result.append(cur_ws.cell(row=3, column=2).value)
+                else:
+                    cur_result.append(cur_ws.cell(row=row_start, column=j - 1).value)
+            result.append(cur_result)
+            row_start = row_start + 1
+    transfer_to_json(result, len(header))
+
+
 def transfer_to_json(result, col_number):
     result_list = []
     keys = []
@@ -1065,7 +1088,7 @@ def transfer_to_json(result, col_number):
             row_data[keys[j]] = result[row_number][j]
         result_list.append(row_data)
 
-    print(json.dumps(result_list))
+    print(json.dumps(result_list, default=str))
 
 
 def main():
@@ -1108,7 +1131,8 @@ def main():
         gaa_enzymatic_qc_analysis(sys.argv[1])
     elif sys.argv[2] == 'gaaEnzymaticUpperandLowerBondSummary':
         gaa_enzymatic_lower_and_upper_bond(sys.argv[1])
-
+    elif sys.argv[2] == 'gaaEnzymaticSampleAnalysisDataSummary':
+        gaa_enzymatic_sample_analysis(sys.argv[1])
 
 if __name__ == '__main__':
     warnings.filterwarnings('ignore')

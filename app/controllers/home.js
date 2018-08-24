@@ -420,6 +420,7 @@ exports.upload = function (req, res) {
                                     } else if (req.params.operation == 'gaaEnzymaticStandardCurveDataSummary') {
                                         for (var i = 0; i < message.length; i++) {
                                             var elem = new gaaEnzymaticStandardCurve({
+                                                UserId: req.session.user._id,
                                                 RunNumber: message[i].RunNumber,
                                                 Std: message[i].Std,
                                                 Conc: message[i].Conc,
@@ -432,6 +433,7 @@ exports.upload = function (req, res) {
                                     } else if (req.params.operation == 'gaaEnzymaticQCDataSummary') {
                                         for (var i = 0; i < message.length; i++) {
                                             var elem = new gaaEnzymaticQCData({
+                                                UserId: req.session.user._id,
                                                 RunNumber: message[i].RunNumber,
                                                 QC: message[i].QC,
                                                 MeanResult: message[i].MeanResult,
@@ -443,6 +445,7 @@ exports.upload = function (req, res) {
                                     } else if (req.params.operation == 'gaaEnzymaticUpperandLowerBondSummary') {
                                         for (var i = 0; i < message.length; i++) {
                                             var elem = new gaaEnzymaticUpperandLowerBond({
+                                                UserId: req.session.user._id,
                                                 RunNumber: message[i].RunNumber,
                                                 ULOQ: message[i].ULOQ,
                                                 LLOQ: message[i].LLOQ,
@@ -452,6 +455,7 @@ exports.upload = function (req, res) {
                                     } else if (req.params.operation == 'gaaEnzymaticSampleAnalysisDataSummary') {
                                         for (var i = 0; i < message.length; i++) {
                                             var elem = new gaaEnzymaticSampleAnalysis({
+                                                UserId: req.session.user._id,
                                                 RunNumber: message[i].RunNumber,
                                                 SampleNo: message[i].SampleNo,
                                                 AnimalID: message[i].AnimalID,

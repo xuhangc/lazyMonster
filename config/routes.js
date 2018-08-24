@@ -60,7 +60,7 @@ module.exports = function (app, passport) {
     app.get('/gaaEnzymaticQCDataSummary/download', home.loggedIn, download.gaaEnzymaticQCDataDownload);
     app.get('/gaaEnzymaticUpperandLowerBondSummary/download', home.loggedIn, download.gaaEnzymaticUpperandLowerBondDownload);
     app.get('/gaaEnzymaticSampleAnalysisDataSummary/download', home.loggedIn, download.gaaEnzymaticSampleAnalysisDownload);
-    
+
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/home', // redirect to the secure profile section
         failureRedirect: '/signup', // redirect back to the signup page if there is an error
