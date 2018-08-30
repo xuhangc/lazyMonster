@@ -732,7 +732,9 @@ def nab_data(folder_name):
                 elif j == 4:
                     new_ws_nab.cell(row=row_counter, column=j).value = cur_ws['C6'].value
                 elif j == 5:
-                    if isinstance(cur_ws['D6'].value, datetime.datetime):
+                    if cur_ws['D6'].value == 'NA':
+                        new_ws_nab.cell(row=row_counter, column=j).value = str(cur_ws['D6'].value)
+                    elif isinstance(cur_ws['D6'].value, datetime.datetime):
                         extraction_date = str(cur_ws['D6'].value).split()
                         # formal_date = datetime.datetime.strptime(extraction_date[0], '%Y-%m-%d').strftime('%d%b%Y')
                         formal_date = datetime.datetime.strptime(extraction_date[0], '%Y-%m-%d').date()
