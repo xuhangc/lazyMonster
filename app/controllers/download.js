@@ -19,6 +19,17 @@ var wesSampleAnalysis = require('../models/wesSampleAnalysis');
 
 var nabData = require('../models/nabData');
 
+var tissueWesLinearRegression = require('../models/tissueWesLinearRegression');
+var tissueWesStandardCurve = require('../models/tissueWesStandardCurve');
+var tissueWesUpperandLowerBond = require('../models/tissueWesUpperandLowerBond');
+var tissueWesQCData = require('../models/tissueWesQCData');
+var tissueWesSampleAnalysis = require('../models/tissueWesSampleAnalysis');
+var tissueWesSampleAnalysis88 = require('../models/tissueWesSampleAnalysis88');
+
+var gaaEnzymaticUpperandLowerBond = require('../models/gaaEnzymaticUpperandLowerBond');
+var gaaEnzymaticQCData = require('../models/gaaEnzymaticQCData');
+var gaaEnzymaticSampleAnalysis = require('../models/gaaEnzymaticSampleAnalysis');
+var gaaEnzymaticStandardCurve  = require('../models/gaaEnzymaticStandardCurve');
 
 Date.prototype.yyyymmddhhmm = function () {
     var yyyy = this.getFullYear();
@@ -357,3 +368,332 @@ exports.nabDataDownload = function (req, res) {
 }
 
 
+exports.tissueWesLinearRegressionDownload = function (req, res) {
+    tissueWesLinearRegression.find({UserId: req.user._id}, {
+        _id: 0,
+        UserId: 0,
+        __v: 0,
+        createdAt: 0,
+        updatedAt: 0
+    }, function (err, data) {
+        var model = mongoXlsx.buildDynamicModel(data);
+        mongoXlsx.mongoData2Xlsx(data, model, function (err, data) {
+            var d = new Date();
+            var timestr = d.yyyymmddhhmm();
+            res.download(data.fullPath, "Tissue_Wes_Linear_Regression_Data_Summary_" + timestr + ".xlsx", function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                fs.unlink(data.fullPath, function (err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        nabData.remove({}, function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            console.log('collection removed');
+                        });
+                    }
+                });
+            });
+        });
+    });
+}
+
+exports.tissueWesStandardCurveDownload = function (req, res) {
+    tissueWesStandardCurve.find({UserId: req.user._id}, {
+        _id: 0,
+        UserId: 0,
+        __v: 0,
+        createdAt: 0,
+        updatedAt: 0
+    }, function (err, data) {
+        var model = mongoXlsx.buildDynamicModel(data);
+        mongoXlsx.mongoData2Xlsx(data, model, function (err, data) {
+            var d = new Date();
+            var timestr = d.yyyymmddhhmm();
+            res.download(data.fullPath, "Tissue_Wes_Standard_Curve_Data_Summary_" + timestr + ".xlsx", function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                fs.unlink(data.fullPath, function (err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        nabData.remove({}, function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            console.log('collection removed');
+                        });
+                    }
+                });
+            });
+        });
+    });
+}
+
+exports.tissueWesUpperandLowerBondDownload = function (req, res) {
+    tissueWesUpperandLowerBond.find({UserId: req.user._id}, {
+        _id: 0,
+        UserId: 0,
+        __v: 0,
+        createdAt: 0,
+        updatedAt: 0
+    }, function (err, data) {
+        var model = mongoXlsx.buildDynamicModel(data);
+        mongoXlsx.mongoData2Xlsx(data, model, function (err, data) {
+            var d = new Date();
+            var timestr = d.yyyymmddhhmm();
+            res.download(data.fullPath, "Tissue_Wes_Upper_and_Lower_Bond_Summary_" + timestr + ".xlsx", function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                fs.unlink(data.fullPath, function (err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        nabData.remove({}, function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            console.log('collection removed');
+                        });
+                    }
+                });
+            });
+        });
+    });
+}
+
+exports.tissueWesQCDataDownload = function (req, res) {
+    tissueWesQCData.find({UserId: req.user._id}, {
+        _id: 0,
+        UserId: 0,
+        __v: 0,
+        createdAt: 0,
+        updatedAt: 0
+    }, function (err, data) {
+        var model = mongoXlsx.buildDynamicModel(data);
+        mongoXlsx.mongoData2Xlsx(data, model, function (err, data) {
+            var d = new Date();
+            var timestr = d.yyyymmddhhmm();
+            res.download(data.fullPath, "Tissue_Wes_QC_Data_Summary_" + timestr + ".xlsx", function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                fs.unlink(data.fullPath, function (err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        nabData.remove({}, function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            console.log('collection removed');
+                        });
+                    }
+                });
+            });
+        });
+    });
+}
+
+exports.tissueWesSampleAnalysisDownload = function (req, res) {
+    tissueWesSampleAnalysis.find({UserId: req.user._id}, {
+        _id: 0,
+        UserId: 0,
+        __v: 0,
+        createdAt: 0,
+        updatedAt: 0
+    }, function (err, data) {
+        var model = mongoXlsx.buildDynamicModel(data);
+        mongoXlsx.mongoData2Xlsx(data, model, function (err, data) {
+            var d = new Date();
+            var timestr = d.yyyymmddhhmm();
+            res.download(data.fullPath, "Tissue_Wes_Sample_Analysis_Data_Summary_" + timestr + ".xlsx", function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                fs.unlink(data.fullPath, function (err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        nabData.remove({}, function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            console.log('collection removed');
+                        });
+                    }
+                });
+            });
+        });
+    });
+}
+
+exports.tissueWesSampleAnalysis88Download = function (req, res) {
+    tissueWesSampleAnalysis88.find({UserId: req.user._id}, {
+        _id: 0,
+        UserId: 0,
+        __v: 0,
+        createdAt: 0,
+        updatedAt: 0
+    }, function (err, data) {
+        var model = mongoXlsx.buildDynamicModel(data);
+        mongoXlsx.mongoData2Xlsx(data, model, function (err, data) {
+            var d = new Date();
+            var timestr = d.yyyymmddhhmm();
+            res.download(data.fullPath, "Tissue_Wes_Sample_Analysis_88Peak_Data_Summary_" + timestr + ".xlsx", function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                fs.unlink(data.fullPath, function (err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        nabData.remove({}, function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            console.log('collection removed');
+                        });
+                    }
+                });
+            });
+        });
+    });
+}
+
+exports.gaaEnzymaticStandardCurveDownload = function (req, res) {
+    gaaEnzymaticStandardCurve.find({UserId: req.user._id}, {
+        _id: 0,
+        UserId: 0,
+        __v: 0,
+        createdAt: 0,
+        updatedAt: 0
+    }, function (err, data) {
+        var model = mongoXlsx.buildDynamicModel(data);
+        mongoXlsx.mongoData2Xlsx(data, model, function (err, data) {
+            var d = new Date();
+            var timestr = d.yyyymmddhhmm();
+            res.download(data.fullPath, "GAA_Enzymatic_Standard_Curve_Data_Summary_" + timestr + ".xlsx", function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                fs.unlink(data.fullPath, function (err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        nabData.remove({}, function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            console.log('collection removed');
+                        });
+                    }
+                });
+            });
+        });
+    });
+}
+
+exports.gaaEnzymaticQCDataDownload = function (req, res) {
+    gaaEnzymaticQCData.find({UserId: req.user._id}, {
+        _id: 0,
+        UserId: 0,
+        __v: 0,
+        createdAt: 0,
+        updatedAt: 0
+    }, function (err, data) {
+        var model = mongoXlsx.buildDynamicModel(data);
+        mongoXlsx.mongoData2Xlsx(data, model, function (err, data) {
+            var d = new Date();
+            var timestr = d.yyyymmddhhmm();
+            res.download(data.fullPath, "GAA_Enzymatic_QC_Data_Summary_" + timestr + ".xlsx", function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                fs.unlink(data.fullPath, function (err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        nabData.remove({}, function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            console.log('collection removed');
+                        });
+                    }
+                });
+            });
+        });
+    });
+}
+
+exports.gaaEnzymaticUpperandLowerBondDownload = function (req, res) {
+    gaaEnzymaticUpperandLowerBond.find({UserId: req.user._id}, {
+        _id: 0,
+        UserId: 0,
+        __v: 0,
+        createdAt: 0,
+        updatedAt: 0
+    }, function (err, data) {
+        var model = mongoXlsx.buildDynamicModel(data);
+        mongoXlsx.mongoData2Xlsx(data, model, function (err, data) {
+            var d = new Date();
+            var timestr = d.yyyymmddhhmm();
+            res.download(data.fullPath, "GAA_Enzymatic_Upper_and_Lower_Bond_Summary_" + timestr + ".xlsx", function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                fs.unlink(data.fullPath, function (err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        nabData.remove({}, function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            console.log('collection removed');
+                        });
+                    }
+                });
+            });
+        });
+    });
+}
+
+exports.gaaEnzymaticSampleAnalysisDownload = function (req, res) {
+    gaaEnzymaticSampleAnalysis.find({UserId: req.user._id}, {
+        _id: 0,
+        UserId: 0,
+        __v: 0,
+        createdAt: 0,
+        updatedAt: 0
+    }, function (err, data) {
+        var model = mongoXlsx.buildDynamicModel(data);
+        mongoXlsx.mongoData2Xlsx(data, model, function (err, data) {
+            var d = new Date();
+            var timestr = d.yyyymmddhhmm();
+            res.download(data.fullPath, "GAA_Enzymatic_Sample_Analysis_Data_Summary_" + timestr + ".xlsx", function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                fs.unlink(data.fullPath, function (err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        nabData.remove({}, function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            console.log('collection removed');
+                        });
+                    }
+                });
+            });
+        });
+    });
+}

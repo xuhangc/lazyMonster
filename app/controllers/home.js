@@ -20,7 +20,19 @@ var wesUpperandLowerBond = require('../models/wesUpperandLowerBond');
 var wesQCData = require('../models/wesQCData');
 var wesSampleAnalysis = require('../models/wesSampleAnalysis');
 
+var tissueWesLinearRegression = require('../models/tissueWesLinearRegression');
+var tissueWesStandardCurve = require('../models/tissueWesStandardCurve');
+var tissueWesUpperandLowerBond = require('../models/tissueWesUpperandLowerBond');
+var tissueWesQCData = require('../models/tissueWesQCData');
+var tissueWesSampleAnalysis = require('../models/tissueWesSampleAnalysis');
+var tissueWesSampleAnalysis88 = require('../models/tissueWesSampleAnalysis88');
+
 var nabData = require('../models/nabData');
+
+var gaaEnzymaticUpperandLowerBond = require('../models/gaaEnzymaticUpperandLowerBond');
+var gaaEnzymaticQCData = require('../models/gaaEnzymaticQCData');
+var gaaEnzymaticSampleAnalysis = require('../models/gaaEnzymaticSampleAnalysis');
+var gaaEnzymaticStandardCurve = require('../models/gaaEnzymaticStandardCurve');
 
 Date.prototype.yyyymmddhhmm = function () {
     var yyyy = this.getFullYear();
@@ -116,7 +128,7 @@ exports.upload = function (req, res) {
                         scriptPath: path.join(__dirname + "../../../python"),
                         args: [filepath, req.params.operation]
                     };
-                    var shell = new PythonShell('qPCR_aggregation_v2.py', options);
+                    var shell = new PythonShell('date_aggregation.py', options);
                     async.parallel({
                         one: function (callback) {
                             shell.on('message', function (message) {
@@ -313,6 +325,153 @@ exports.upload = function (req, res) {
                                                 });
                                                 elem.save();
                                             }
+                                        }
+                                    } else if (req.params.operation == 'tissueWesLinearRegressionDataSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new tissueWesLinearRegression({
+                                                UserId: req.session.user._id,
+                                                RunNumber: message[i].RunNumber,
+                                                Slope: message[i].Slope,
+                                                Intercept: message[i].Intercept,
+                                                RSquare: message[i].RSquare,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'tissueWesStandardCurveDataSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new tissueWesStandardCurve({
+                                                UserId: req.session.user._id,
+                                                RunNumber: message[i].RunNumber,
+                                                Std: message[i].Std,
+                                                TPP1ConcngPermL: message[i].TPP1ConcngPermL,
+                                                Area: message[i].Area,
+                                                BackCalculatedConcngPermL: message[i].BackCalculatedConcngPermL,
+                                                PercentRE: message[i].PercentRE,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'tissueWesUpperandLowerBondSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new tissueWesUpperandLowerBond({
+                                                UserId: req.session.user._id,
+                                                RunNumber: message[i].RunNumber,
+                                                ULOQ: message[i].ULOQ,
+                                                LLOQ: message[i].LLOQ,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'tissueWesQCDataSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new tissueWesQCData({
+                                                UserId: req.session.user._id,
+                                                RunNumber: message[i].RunNumber,
+                                                QCIn1To10CSF: message[i].QCIn1To10CSF,
+                                                SpikedConcngPermL: message[i].SpikedConcngPermL,
+                                                Area: message[i].Area,
+                                                ConcngPermL: message[i].ConcngPermL,
+                                                PercentRE: message[i].PercentRE,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'tissueWesSampleAnalysisDataSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new tissueWesSampleAnalysis({
+                                                UserId: req.session.user._id,
+                                                RunNumber: message[i].RunNumber,
+                                                AnimalID: message[i].AnimalID,
+                                                TimePoint: message[i].TimePoint,
+                                                ROA: message[i].ROA,
+                                                TissueType: message[i].TissueType,
+                                                PunchNumber: message[i].PunchNumber,
+                                                SampleLocation: message[i].SampleLocation,
+                                                CollectionDate: message[i].CollectionDate,
+                                                PeakArea: message[i].PeakArea,
+                                                ConcngPermL: message[i].ConcngPermL,
+                                                TotalProtein: message[i].TotalProtein,
+                                                AdjustedConcngPermL: message[i].AdjustedConcngPermL,
+                                                ReportedCon: message[i].ReportedCon,
+                                                LoadingIssue: message[i].LoadingIssue,
+                                                ActinLoadingCtrlArea: message[i].ActinLoadingCtrlArea,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'tissueWesSampleAnalysis88DataSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new tissueWesSampleAnalysis88({
+                                                UserId: req.session.user._id,
+                                                RunNumber: message[i].RunNumber,
+                                                AnimalID: message[i].AnimalID,
+                                                TimePoint: message[i].TimePoint,
+                                                ROA: message[i].ROA,
+                                                TissueType: message[i].TissueType,
+                                                PunchNumber: message[i].PunchNumber,
+                                                SampleLocation: message[i].SampleLocation,
+                                                CollectionDate: message[i].CollectionDate,
+                                                PeakArea: message[i].PeakArea,
+                                                ConcngPermL: message[i].ConcngPermL,
+                                                TotalProtein: message[i].TotalProtein,
+                                                AdjustedConcngPermL: message[i].AdjustedConcngPermL,
+                                                ReportedCon: message[i].ReportedCon,
+                                                LoadingIssue: message[i].LoadingIssue,
+                                                ActinLoadingCtrlArea: message[i].ActinLoadingCtrlArea,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'gaaEnzymaticStandardCurveDataSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new gaaEnzymaticStandardCurve({
+                                                UserId: req.session.user._id,
+                                                RunNumber: message[i].RunNumber,
+                                                Std: message[i].Std,
+                                                Conc: message[i].Conc,
+                                                MeanConc: message[i].MeanConc,
+                                                CV: message[i].CV,
+                                                PercentRE: message[i].PercentRE,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'gaaEnzymaticQCDataSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new gaaEnzymaticQCData({
+                                                UserId: req.session.user._id,
+                                                RunNumber: message[i].RunNumber,
+                                                QC: message[i].QC,
+                                                MeanResult: message[i].MeanResult,
+                                                CVPercentage: message[i].CVPercentage,
+                                                AdjResults: message[i].AdjResults,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'gaaEnzymaticUpperandLowerBondSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new gaaEnzymaticUpperandLowerBond({
+                                                UserId: req.session.user._id,
+                                                RunNumber: message[i].RunNumber,
+                                                ULOQ: message[i].ULOQ,
+                                                LLOQ: message[i].LLOQ,
+                                            });
+                                            elem.save();
+                                        }
+                                    } else if (req.params.operation == 'gaaEnzymaticSampleAnalysisDataSummary') {
+                                        for (var i = 0; i < message.length; i++) {
+                                            var elem = new gaaEnzymaticSampleAnalysis({
+                                                UserId: req.session.user._id,
+                                                RunNumber: message[i].RunNumber,
+                                                SampleNo: message[i].SampleNo,
+                                                AnimalID: message[i].AnimalID,
+                                                Group: message[i].Group,
+                                                Dose: message[i].Dose,
+                                                Sex: message[i].Sex,
+                                                TimePoint: message[i].TimePoint,
+                                                CollectionDate: message[i].CollectionDate,
+                                                PreDilutionFactor: message[i].PreDilutionFactor,
+                                                DilutionFactorMRD: message[i].DilutionFactorMRD,
+                                                MeanResult: message[i].MeanResult,
+                                                PercentageCV: message[i].PercentageCV,
+                                                AdjustedResult: message[i].AdjustedResult,
+                                                ReportedResult: message[i].ReportedResult,
+                                            });
+                                            elem.save();
                                         }
                                     } else {
                                         console.log(message);

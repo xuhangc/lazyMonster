@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var wesTissueQCDataSchema = mongoose.Schema({
+var tissueWesQCDataSchema = mongoose.Schema({
     UserId: {
         type: mongoose.Schema.ObjectId,
         ref: 'ex_users'
@@ -13,6 +13,6 @@ var wesTissueQCDataSchema = mongoose.Schema({
     PercentRE: Number,
 }, {timestamps: true});
 
-wesTissueQCDataSchema.index({createdAt: 1}, {expireAfterSeconds: 600});
+tissueWesQCDataSchema.index({createdAt: 1}, {expireAfterSeconds: 600});
 
-module.exports = mongoose.model('wesTissueQCData', wesTissueQCDataSchema);
+module.exports = mongoose.model('tissueWesQCData', tissueWesQCDataSchema);

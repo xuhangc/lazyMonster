@@ -5,7 +5,7 @@ var nabDataSchema = mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'ex_users'
     },
-    RunNumber: Number,
+    RunNumber: String,
     SampleNumber: String,
     SubjectID: String,
     VisitName: String,

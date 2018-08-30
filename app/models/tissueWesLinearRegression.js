@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var wesTissueLinearRegressionSchema = mongoose.Schema({
+var tissueWesLinearRegressionSchema = mongoose.Schema({
     UserId: {
         type: mongoose.Schema.ObjectId,
         ref: 'ex_users'
@@ -11,6 +11,6 @@ var wesTissueLinearRegressionSchema = mongoose.Schema({
     RSquare: Number,
 }, {timestamps: true});
 
-wesTissueLinearRegressionSchema.index({createdAt: 1}, {expireAfterSeconds: 600});
+tissueWesLinearRegressionSchema.index({createdAt: 1}, {expireAfterSeconds: 600});
 
-module.exports = mongoose.model('wesTissueLinearRegression', wesTissueLinearRegressionSchema);
+module.exports = mongoose.model('tissueWesLinearRegression', tissueWesLinearRegressionSchema);

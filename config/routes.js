@@ -24,10 +24,22 @@ module.exports = function (app, passport) {
 
     app.get('/nabDataSummary', home.loggedIn, show.nabDataSummary); // NAb data
 
+    app.get('/tissueWesLinearRegressionDataSummary', home.loggedIn, show.tissueWesLinearRegressionDataSummary);
+    app.get('/tissueWesStandardCurveDataSummary', home.loggedIn, show.tissueWesStandardCurveDataSummary);
+    app.get('/tissueWesUpperandLowerBondSummary', home.loggedIn, show.tissueWesUpperandLowerBondSummary);
+    app.get('/tissueWesQCDataSummary', home.loggedIn, show.tissueWesQCDataSummary);
+    app.get('/tissueWesSampleAnalysisDataSummary', home.loggedIn, show.tissueWesSampleAnalysisDataSummary);
+    app.get('/tissueWesSampleAnalysis88DataSummary', home.loggedIn, show.tissueWesSampleAnalysis88DataSummary);
+
+    app.get('/gaaEnzymaticStandardCurveDataSummary', home.loggedIn, show.gaaEnzymaticStandardCurveDataSummary);
+    app.get('/gaaEnzymaticQCDataSummary', home.loggedIn, show.gaaEnzymaticQCDataSummary);
+    app.get('/gaaEnzymaticUpperandLowerBondSummary', home.loggedIn, show.gaaEnzymaticUpperandLowerBondSummary);
+    app.get('/gaaEnzymaticSampleAnalysisDataSummary', home.loggedIn, show.gaaEnzymaticSampleAnalysisDataSummary);
+
     app.get('/qPCRqc/download', home.loggedIn, download.qPCRqcSummaryDownload); //qc download
-    app.get('/qPCRraw/download', home.loggedIn, download.qPCRrawDataAggregationDownload);
-    app.get('/qPCRretest/download', home.loggedIn, download.qPCRretestInfoAggregationDownload);
-    app.get('/qPCReachqc/download', home.loggedIn, download.qPCRQCinDetailDownload);
+    app.get('/qPCRraw/download', home.loggedIn, download.qPCRrawDataAggregationDownload); // sample data download
+    app.get('/qPCRretest/download', home.loggedIn, download.qPCRretestInfoAggregationDownload); // retest data download
+    app.get('/qPCReachqc/download', home.loggedIn, download.qPCRQCinDetailDownload); // qc detail download
 
     app.get('/wesLinearRegressionDataSummary/download', home.loggedIn, download.wesLinearRegressionDownload);
     app.get('/wesStandardCurveDataSummary/download', home.loggedIn, download.wesStandardCurveDownload);
@@ -36,6 +48,18 @@ module.exports = function (app, passport) {
     app.get('/wesSampleAnalysisDataSummary/download', home.loggedIn, download.wesSampleAnalysisDownload);
 
     app.get('/nabDataSummary/download', home.loggedIn, download.nabDataDownload);
+
+    app.get('/tissueWesLinearRegressionDataSummary/download', home.loggedIn, download.tissueWesLinearRegressionDownload);
+    app.get('/tissueWesStandardCurveDataSummary/download', home.loggedIn, download.tissueWesStandardCurveDownload);
+    app.get('/tissueWesUpperandLowerBondSummary/download', home.loggedIn, download.tissueWesUpperandLowerBondDownload);
+    app.get('/tissueWesQCDataSummary/download', home.loggedIn, download.tissueWesQCDataDownload);
+    app.get('/tissueWesSampleAnalysisDataSummary/download', home.loggedIn, download.tissueWesSampleAnalysisDownload);
+    app.get('/tissueWesSampleAnalysis88DataSummary/download', home.loggedIn, download.tissueWesSampleAnalysis88Download);
+
+    app.get('/gaaEnzymaticStandardCurveDataSummary/download', home.loggedIn, download.gaaEnzymaticStandardCurveDownload);
+    app.get('/gaaEnzymaticQCDataSummary/download', home.loggedIn, download.gaaEnzymaticQCDataDownload);
+    app.get('/gaaEnzymaticUpperandLowerBondSummary/download', home.loggedIn, download.gaaEnzymaticUpperandLowerBondDownload);
+    app.get('/gaaEnzymaticSampleAnalysisDataSummary/download', home.loggedIn, download.gaaEnzymaticSampleAnalysisDownload);
 
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/home', // redirect to the secure profile section
