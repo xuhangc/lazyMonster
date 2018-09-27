@@ -1136,6 +1136,7 @@ def main():
     elif sys.argv[2] == 'gaaEnzymaticSampleAnalysisDataSummary':
         gaa_enzymatic_sample_analysis(sys.argv[1])
 
+
 if __name__ == '__main__':
     warnings.filterwarnings('ignore')
     main()

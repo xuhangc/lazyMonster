@@ -17,7 +17,7 @@ var tissueWesSampleAnalysisSchema = mongoose.Schema({
     ConcngPermL: Number,
     TotalProtein: Number,
     AdjustedConcngPermL: Number,
-    ReportedCon: Number,
+    ReportedCon: String,
     LoadingIssue: String,
     ActinLoadingCtrlArea: String,
 }, {timestamps: true});
